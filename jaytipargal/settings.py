@@ -29,8 +29,14 @@ ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', _default_hosts)
 ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_ENV.split(',') if h.strip()]
 
 # Emergent platform domains
-emergent_domains = ['.preview.emergentagent.com', '.emergent.host']
+emergent_domains = ['.preview.emergentagent.com', '.emergentagent.com', '.emergent.host']
 for domain in emergent_domains:
+    if domain not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(domain)
+
+# Custom domain for production
+custom_domains = ['jaytibirthday.in', 'www.jaytibirthday.in']
+for domain in custom_domains:
     if domain not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append(domain)
 
