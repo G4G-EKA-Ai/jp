@@ -28,8 +28,14 @@ _default_hosts = 'localhost,127.0.0.1,0.0.0.0'
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', _default_hosts)
 ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_ENV.split(',') if h.strip()]
 
-# Emergent platform domains
-emergent_domains = ['.preview.emergentagent.com', '.emergentagent.com', '.emergent.host']
+# Emergent platform domains (including deployment cloud)
+emergent_domains = [
+    '.preview.emergentagent.com', 
+    '.emergentagent.com', 
+    '.emergent.host',
+    '.emergentcf.cloud',  # Emergent deployment cloud
+    '.deploy.emergentcf.cloud',  # Emergent deployment subdomain
+]
 for domain in emergent_domains:
     if domain not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append(domain)
