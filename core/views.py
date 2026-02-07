@@ -159,6 +159,18 @@ def dashboard(request):
     # This makes it special rather than a daily interruption
     show_vivek_message = is_birthday
     
+    # Get daily content and time greeting
+    daily_content = get_daily_content()
+    time_greeting = get_time_greeting()
+    
+    # Get display name from profile if available
+    display_name = None
+    try:
+        if hasattr(request.user, 'profile') and request.user.profile.display_name:
+            display_name = request.user.profile.display_name
+    except:
+        pass
+    
     context = {
         'recent_notes': recent_notes,
         'recent_diary': recent_diary,
@@ -167,6 +179,9 @@ def dashboard(request):
         'show_vivek_message': show_vivek_message,
         'is_birthday': is_birthday,
         'jayti_age': jayti_age,
+        'daily_thought': daily_content['thought'],
+        'time_greeting': time_greeting,
+        'display_name': display_name or 'Jayti',
     }
     
     return render(request, 'core/dashboard.html', context)
