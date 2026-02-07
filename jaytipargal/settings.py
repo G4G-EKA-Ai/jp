@@ -59,6 +59,16 @@ if railway_public_domain and railway_public_domain not in ALLOWED_HOSTS:
 if os.environ.get('RAILWAY_ENVIRONMENT') and not os.environ.get('ALLOWED_HOSTS'):
     ALLOWED_HOSTS.append('*')
 
+# CSRF Trusted Origins for Emergent platform
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.preview.emergentagent.com',
+    'https://jaytibirthday.in',
+    'https://www.jaytibirthday.in',
+    'https://*.railway.app',
+    'http://localhost:3000',
+    'http://localhost:8001',
+]
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
