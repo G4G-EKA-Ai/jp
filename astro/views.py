@@ -787,7 +787,7 @@ def generate_predictions(today, chart_data, dasha_influence=""):
     
     # Check Jupiter's transit
     if 'jupiter' in current_positions and 'jupiter' in natal_positions:
-        jupiter_current = current_positions['jupiter']['house']
+        jupiter_current = current_positions['jupiter'].get('house', 1)
         jupiter_natal = natal_positions['jupiter'].get('house', 1)
         
         if jupiter_current == 10 or jupiter_natal == 10:
@@ -796,7 +796,7 @@ def generate_predictions(today, chart_data, dasha_influence=""):
     
     # Check Saturn's transit
     if 'saturn' in current_positions:
-        saturn_house = current_positions['saturn']['house']
+        saturn_house = current_positions['saturn'].get('house', 1)
         if saturn_house == 10:
             career_score += 10
             career_factors.append("Saturn bringing discipline to career matters")
@@ -817,7 +817,7 @@ def generate_predictions(today, chart_data, dasha_influence=""):
     rel_factors = []
     
     if 'venus' in current_positions:
-        venus_house = current_positions['venus']['house']
+        venus_house = current_positions['venus'].get('house', 1)
         if venus_house in [7, 5, 11]:
             relationship_score += 15
             rel_factors.append("Venus supporting relationship harmony")
@@ -837,12 +837,12 @@ def generate_predictions(today, chart_data, dasha_influence=""):
     health_score = 0
     
     if 'saturn' in current_positions:
-        saturn_house = current_positions['saturn']['house']
+        saturn_house = current_positions['saturn'].get('house', 1)
         if saturn_house in [1, 6]:
             health_score -= 10
     
     if 'sun' in current_positions:
-        sun_house = current_positions['sun']['house']
+        sun_house = current_positions['sun'].get('house', 1)
         if sun_house == 1:
             health_score += 10
     
