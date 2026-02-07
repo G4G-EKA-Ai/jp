@@ -60,10 +60,18 @@ class JaytiBackendTester:
                 # Extract CSRF token from login page
                 if 'csrfmiddlewaretoken' in response.text:
                     import re
-                    csrf_match = re.search(r'name="csrfmiddlewaretoken" value="([^"]*)"', response.text)
-                    if csrf_match:
-                        self.csrf_token = csrf_match.group(1)
-                        print(f"   🔑 CSRF token extracted")
+                    # Try multiple patterns for CSRF token
+                    patterns = [
+                        r'name="csrfmiddlewaretoken" value="([^"]*)"',
+                        r'csrfmiddlewaretoken["\']?\s*:\s*["\']([^"\']*)["\']',
+                        r'csrf_token["\']?\s*:\s*["\']([^"\']*)["\']'
+                    ]
+                    for pattern in patterns:
+                        csrf_match = re.search(pattern, response.text)
+                        if csrf_match:
+                            self.csrf_token = csrf_match.group(1)
+                            print(f"   🔑 CSRF token extracted: {self.csrf_token[:10]}...")
+                            break
                 
                 return True, response
             else:
