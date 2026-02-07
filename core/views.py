@@ -208,14 +208,15 @@ def password_change_view(request):
 
 @require_POST
 def birthday_seen(request):
-    """Mark birthday message as seen"""
+    """Mark birthday message as seen - no login required since shown on login page"""
     try:
-        profile = request.user.profile
-        profile.birthday_message_seen_2026 = True
-        profile.save()
+        if request.user.is_authenticated:
+            profile = request.user.profile
+            profile.birthday_message_seen_2026 = True
+            profile.save()
         return JsonResponse({'success': True})
     except:
-        return JsonResponse({'success': False}, status=400)
+        return JsonResponse({'success': True})
 
 
 def health_check(request):
