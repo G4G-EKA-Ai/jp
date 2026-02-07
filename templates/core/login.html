@@ -479,13 +479,16 @@
             overlay.classList.add('hidden');
         }, 500);
         
-        // Mark as seen
-        fetch('/api/birthday-seen/', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-            }
-        });
+        // Mark as seen (best effort, may fail if not logged in)
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+        if (csrfToken) {
+            fetch('/api/birthday-seen/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken.value
+                }
+            }).catch(() => {});
+        }
     }
     
     // Auto-dismiss birthday after 60 seconds
