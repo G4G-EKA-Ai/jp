@@ -115,7 +115,7 @@ CONTEXT AWARENESS:
 
 def get_ai_response(user_input, user, conversation_history=None):
     """Get response from Gemini API with Mentor Mode context"""
-    if not gemini_model:
+    if not gemini_client:
         return get_fallback_response(user_input)
     
     try:
@@ -150,14 +150,15 @@ def get_ai_response(user_input, user, conversation_history=None):
         
         full_prompt = "\n".join(context_parts)
         
-        # Generate response
-        response = gemini_model.generate_content(
-            full_prompt,
-            generation_config=genai.types.GenerationConfig(
-                temperature=0.7,
-                max_output_tokens=200,
-                top_p=0.9,
-            )
+        # Generate response using new google-genai SDK
+        response = gemini_client.models.generate_content(
+            model=settings.GEMINI_MODEL,
+            contents=full_prompt,
+            config={
+                'temperature': 0.7,
+                'max_output_tokens': 200,
+                'top_p': 0.9,
+            }
         )
         
         # Clean and return response
