@@ -99,7 +99,7 @@ body {
         radial-gradient(circle at 80% 80%, rgba(230, 230, 250, 0.03) 0%, transparent 50%),
         radial-gradient(circle at 40% 20%, rgba(201, 154, 161, 0.02) 0%, transparent 40%);
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
 }
 
 /* Floral Parallax Fill for Short Pages */
