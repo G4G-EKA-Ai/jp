@@ -286,7 +286,7 @@ def create_decomposed_tasks(goal):
 
 @login_required
 def goal_detail(request, pk):
-    """View goal details with tasks"""
+    """View goal details with tasks and progress charts"""
     goal = get_object_or_404(Goal, pk=pk, user=request.user)
     tasks = goal.tasks.all()
     milestones = goal.milestones.all()
@@ -307,11 +307,34 @@ def goal_detail(request, pk):
         goal.completion_percentage = int((completed / tasks.count()) * 100)
         goal.save()
     
+    # Task counts for charts
+    tasks_done_count = tasks.filter(status='done').count()
+    tasks_in_progress_count = tasks.filter(status='in_progress').count()
+    tasks_pending_count = tasks.filter(status__in=['pending', 'at_risk', 'overdue']).count()
+    tasks_blocked_count = tasks.filter(status='blocked').count()
+    
+    # Department distribution for charts
+    dept_strategy = tasks.filter(department='strategy').count()
+    dept_finance = tasks.filter(department='finance').count()
+    dept_hr = tasks.filter(department='hr').count()
+    dept_operations = tasks.filter(department='operations').count()
+    dept_sales = tasks.filter(department='sales').count()
+    
     context = {
         'goal': goal,
         'tasks': tasks,
         'milestones': milestones,
         'tasks_by_status': tasks_by_status,
+        # Chart data
+        'tasks_done_count': tasks_done_count,
+        'tasks_in_progress_count': tasks_in_progress_count,
+        'tasks_pending_count': tasks_pending_count,
+        'tasks_blocked_count': tasks_blocked_count,
+        'dept_strategy': dept_strategy,
+        'dept_finance': dept_finance,
+        'dept_hr': dept_hr,
+        'dept_operations': dept_operations,
+        'dept_sales': dept_sales,
     }
     return render(request, 'goals/goal_detail.html', context)
 
