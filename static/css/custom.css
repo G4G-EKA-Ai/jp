@@ -117,6 +117,9 @@ body {
     pointer-events: none;
     z-index: -1;
 }
+
+/* --------------------------------------------
+   4. PREMIUM CARD STYLING - Dense Layout
    -------------------------------------------- */
 .card {
     border: none;
