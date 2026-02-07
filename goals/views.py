@@ -20,15 +20,33 @@ else:
 
 @login_required
 def goal_list(request):
-    """List all goals"""
+    """List all goals with progress charts"""
     goals = Goal.objects.filter(user=request.user, status='active')
     completed_goals = Goal.objects.filter(user=request.user, status='completed')
+    
+    # Get all tasks for charts
+    all_tasks = Task.objects.filter(goal__user=request.user)
+    tasks_done = all_tasks.filter(status='done').count()
+    tasks_in_progress = all_tasks.filter(status='in_progress').count()
+    tasks_pending = all_tasks.filter(status__in=['pending', 'blocked', 'at_risk', 'overdue']).count()
+    
+    # Calculate overall completion percentage
+    total_goals = goals.count() + completed_goals.count()
+    if total_goals > 0:
+        total_completion = sum(g.completion_percentage for g in goals) + (completed_goals.count() * 100)
+        overall_completion = int(total_completion / total_goals)
+    else:
+        overall_completion = 0
     
     context = {
         'goals': goals,
         'completed_goals': completed_goals,
         'total_active': goals.count(),
         'total_completed': completed_goals.count(),
+        'tasks_done': tasks_done,
+        'tasks_in_progress': tasks_in_progress,
+        'tasks_pending': tasks_pending,
+        'overall_completion': overall_completion,
     }
     return render(request, 'goals/goal_list.html', context)
 
