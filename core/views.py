@@ -69,6 +69,44 @@ def get_daily_content():
     }
 
 
+def get_birthday_countdown():
+    """Calculate days until Jayti's birthday (Feb 6)"""
+    ist_tz = pytz.timezone('Asia/Kolkata')
+    now_utc = timezone.now()
+    today_ist = now_utc.astimezone(ist_tz)
+    
+    current_year = today_ist.year
+    birthday_this_year = datetime(current_year, 2, 6, tzinfo=ist_tz)
+    birthday_next_year = datetime(current_year + 1, 2, 6, tzinfo=ist_tz)
+    
+    # Determine next birthday
+    if today_ist.month == 2 and today_ist.day == 6:
+        # It's her birthday!
+        return {
+            'days_until': 0,
+            'is_today': True,
+            'is_tomorrow': False,
+            'next_birthday': birthday_this_year,
+            'age_on_next_birthday': current_year - 1997
+        }
+    elif today_ist < birthday_this_year.replace(tzinfo=ist_tz):
+        # Birthday hasn't happened yet this year
+        next_birthday = birthday_this_year
+        days_until = (next_birthday.replace(tzinfo=None) - today_ist.replace(tzinfo=None)).days
+    else:
+        # Birthday already passed this year
+        next_birthday = birthday_next_year
+        days_until = (next_birthday.replace(tzinfo=None) - today_ist.replace(tzinfo=None)).days
+    
+    return {
+        'days_until': days_until,
+        'is_today': False,
+        'is_tomorrow': days_until == 1,
+        'next_birthday': next_birthday,
+        'age_on_next_birthday': next_birthday.year - 1997
+    }
+
+
 def get_time_greeting():
     """Get time-appropriate greeting"""
     hour = datetime.now().hour
