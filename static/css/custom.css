@@ -56,8 +56,8 @@ body {
     z-index: 1;
 }
 
-.container-fluid {
-    min-height: 100vh;
+main.py-4 .container-fluid {
+    min-height: calc(100vh - 150px);
 }
 
 /* Dashboard content rows - ensure visibility */
