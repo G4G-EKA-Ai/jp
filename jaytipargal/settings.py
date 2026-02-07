@@ -29,7 +29,7 @@ ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', _default_hosts)
 ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_ENV.split(',') if h.strip()]
 
 # Emergent platform domains
-emergent_domains = ['.preview.emergentagent.com']
+emergent_domains = ['.preview.emergentagent.com', '.emergent.host']
 for domain in emergent_domains:
     if domain not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append(domain)
@@ -62,6 +62,7 @@ if os.environ.get('RAILWAY_ENVIRONMENT') and not os.environ.get('ALLOWED_HOSTS')
 # CSRF Trusted Origins for Emergent platform
 CSRF_TRUSTED_ORIGINS = [
     'https://*.preview.emergentagent.com',
+    'https://*.emergent.host',
     'https://jaytibirthday.in',
     'https://www.jaytibirthday.in',
     'https://*.railway.app',
