@@ -50,13 +50,14 @@ body {
 }
 
 /* Main Dashboard Container - Full Height, No Dead Zones */
-.dashboard-container,
-.container-fluid {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+.dashboard-container {
+    min-height: calc(100vh - 150px);
     position: relative;
     z-index: 1;
+}
+
+.container-fluid {
+    min-height: 100vh;
 }
 
 /* Dashboard content rows - ensure visibility */
