@@ -202,7 +202,7 @@ class JaytiBackendTester:
         success1, _ = self.run_test("Notes List", "GET", "/notes/")
         
         # Test note creation page
-        success2, _ = self.run_test("Note Create Page", "GET", "/notes/new/")
+        success2, _ = self.run_test("Note Create Page", "GET", "/notes/create/")
         
         return success1 and success2
 
