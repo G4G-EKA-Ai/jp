@@ -20,3 +20,13 @@ def ordinal(value):
     else:
         suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(value % 10, 'th')
     return f"{value}{suffix}"
+
+
+@register.filter
+def month_name(value):
+    """Convert month number to month name"""
+    import calendar
+    try:
+        return calendar.month_name[int(value)]
+    except (ValueError, TypeError, IndexError):
+        return value
