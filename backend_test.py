@@ -229,7 +229,7 @@ class JaytiBackendTester:
         success1, _ = self.run_test("Goals List", "GET", "/goals/")
         
         # Test goal creation page
-        success2, _ = self.run_test("Goal Create Page", "GET", "/goals/new/")
+        success2, _ = self.run_test("Goal Create Page", "GET", "/goals/create/")
         
         # Test goals board
         success3, _ = self.run_test("Goals Board", "GET", "/goals/board/")
