@@ -771,6 +771,13 @@ def generate_predictions(today, chart_data, dasha_influence=""):
     jd_today = calculate_julian_day(today.year, today.month, today.day, 12, 0)
     current_positions = calculate_planet_positions(jd_today)
     
+    # Assign houses to current positions
+    house_cusps_today = calculate_houses(jd_today, JAYTI_BIRTH_DATA['latitude'], JAYTI_BIRTH_DATA['longitude'])
+    planet_houses_today = assign_planets_to_houses(current_positions, house_cusps_today)
+    for planet_name, house in planet_houses_today.items():
+        if planet_name in current_positions:
+            current_positions[planet_name]['house'] = house
+    
     # Get natal positions for comparison
     natal_positions = chart_data['planets']
     
