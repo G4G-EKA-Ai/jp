@@ -206,7 +206,6 @@ def password_change_view(request):
     return render(request, 'core/password_change.html', {'form': form})
 
 
-@login_required
 @require_POST
 def birthday_seen(request):
     """Mark birthday message as seen"""

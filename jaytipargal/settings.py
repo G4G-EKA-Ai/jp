@@ -16,7 +16,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'jayti-pargal-personal-companion-2026-secret-key-for-birthday')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'jayti-pargal-2026-secure-key-wV7xK9mP2nQ5rT8uX4yZ6bC1dE3fG5hJ7kL9mN2pQ4sT6vW8xYz')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
@@ -209,7 +209,7 @@ JAYTI_BIRTH_DETAILS = {
 
 # Gemini API Configuration
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
-GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-pro')
+GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-pro')
 
 # Google Service Account Credentials (for Gemini/Vertex AI)
 # Option 1: JSON content directly in environment variable

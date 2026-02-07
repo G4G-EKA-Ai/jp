@@ -286,7 +286,6 @@ def chat_interface(request):
     return render(request, 'ai_chat/chat_interface.html', context)
 
 
-@csrf_exempt
 @require_POST
 def send_message(request):
     """Handle AJAX message sending"""
