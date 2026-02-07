@@ -55,6 +55,14 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+/* Dashboard content rows - ensure visibility */
+.dashboard-container .row {
+    position: relative;
+    z-index: 2;
 }
 
 /* Compressed Bootstrap Spacing Overrides */
