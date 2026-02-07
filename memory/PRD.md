@@ -64,7 +64,7 @@ DEBUG=False
 - **Password:** jayati2026
 
 ## Preview URL
-https://jayti-birthday.preview.emergentagent.com
+https://personal-dashboard-15.preview.emergentagent.com
 
 ## Testing Status
 - **Frontend:** 100% success rate

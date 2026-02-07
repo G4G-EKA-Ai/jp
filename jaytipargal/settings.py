@@ -61,7 +61,7 @@ if os.environ.get('RAILWAY_ENVIRONMENT') and not os.environ.get('ALLOWED_HOSTS')
 
 # CSRF Trusted Origins for Emergent platform
 CSRF_TRUSTED_ORIGINS = [
-    'https://jayti-birthday.preview.emergentagent.com',
+    'https://personal-dashboard-15.preview.emergentagent.com',
     'https://*.emergent.host',
     'https://jaytibirthday.in',
     'https://www.jaytibirthday.in',
