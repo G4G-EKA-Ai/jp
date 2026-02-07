@@ -4,18 +4,17 @@ from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
 from datetime import timedelta
-import google.generativeai as genai
+from google import genai
 import logging
 from .models import Goal, Task, Milestone
 
 logger = logging.getLogger('goals')
 
 # Configure Gemini API
+gemini_client = None
 if settings.GEMINI_API_KEY:
-    genai.configure(api_key=settings.GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel(settings.GEMINI_MODEL)
+    gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
 else:
-    gemini_model = None
     logger.warning("Gemini API key not configured. AI task generation will not work.")
 
 

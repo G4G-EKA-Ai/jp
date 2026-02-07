@@ -7,15 +7,13 @@ from django.conf import settings
 from django.utils import timezone
 from datetime import timedelta
 import json
-import google.generativeai as genai
+from google import genai
 from .models import AIConversation, AIMessage
 
 # Configure Gemini API
+gemini_client = None
 if settings.GEMINI_API_KEY:
-    genai.configure(api_key=settings.GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel(settings.GEMINI_MODEL)
-else:
-    gemini_model = None
+    gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 
 def get_user_context(user):
