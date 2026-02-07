@@ -274,7 +274,7 @@ def chat_interface(request):
     messages = conversation.messages.all()[:50]  # Last 50 messages
     
     # Check if Gemini is available
-    gemini_available = gemini_model is not None
+    gemini_available = gemini_client is not None
     
     context = {
         'messages': messages,
@@ -320,7 +320,7 @@ def send_message(request):
         return JsonResponse({
             'response': ai_response,
             'timestamp': conversation.messages.last().timestamp.isoformat(),
-            'ai_engine': 'gemini' if gemini_model else 'fallback'
+            'ai_engine': 'gemini' if gemini_client else 'fallback'
         })
     
     except Exception as e:
