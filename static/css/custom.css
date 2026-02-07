@@ -284,6 +284,26 @@ main.py-4 .container-fluid {
     50% { transform: translateY(-10px); }
 }
 
+/* Birthday Countdown Widget */
+.birthday-celebration {
+    animation: birthday-pulse 2s ease-in-out infinite;
+}
+
+@keyframes birthday-pulse {
+    0%, 100% { 
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 8px 40px rgba(255, 165, 0, 0.6);
+        transform: scale(1.02);
+    }
+}
+
+.birthday-icons {
+    animation: gentle-bounce 2s ease-in-out infinite;
+}
+
 /* --------------------------------------------
    10. MOOD SELECTOR - Text Instead of Emojis
    -------------------------------------------- */
