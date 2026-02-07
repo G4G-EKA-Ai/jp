@@ -6,8 +6,6 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media/
-staticfiles/
 
 # Environment variables
 .env
@@ -51,15 +49,26 @@ wheels/
 .installed.cfg
 *.egg
 
-# AIML
-*.brn
-aiml/
-
 # Logs
-logs/
+logs/*.log
 
-# Google Cloud / Gemini Service Account Credentials
+# Google Cloud credentials
 *gen-lang-client*.json
 *service-account*.json
 google-credentials.json
 credentials.json
+
+# Emergent platform
+.emergent/
+.ruff_cache/
+test_reports/
+
+# Node
+node_modules/
+yarn-error.log
+
+# Static collected (generated)
+staticfiles/
+
+# Media uploads (user data)
+media/
