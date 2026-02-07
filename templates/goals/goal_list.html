@@ -153,4 +153,96 @@
     </div>
     {% endif %}
 </div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Color palette matching the design
+    const colors = {
+        primary: '#E8B4B8',
+        success: '#90EE90',
+        warning: '#FFD700',
+        secondary: '#D3D3D3',
+        dustyRose: '#C99AA1',
+        cream: '#FFF8F9'
+    };
+
+    // Goals Overview Doughnut Chart
+    const goalsCtx = document.getElementById('goalsOverviewChart');
+    if (goalsCtx) {
+        new Chart(goalsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Active', 'Completed'],
+                datasets: [{
+                    data: [{{ total_active }}, {{ total_completed }}],
+                    backgroundColor: [colors.primary, colors.success],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
+    // Tasks Progress Doughnut Chart
+    const tasksCtx = document.getElementById('tasksProgressChart');
+    if (tasksCtx) {
+        new Chart(tasksCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Done', 'In Progress', 'Pending'],
+                datasets: [{
+                    data: [{{ tasks_done }}, {{ tasks_in_progress }}, {{ tasks_pending }}],
+                    backgroundColor: [colors.success, colors.warning, colors.secondary],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
+    // Completion Rate Gauge Chart
+    const completionCtx = document.getElementById('completionRateChart');
+    if (completionCtx) {
+        const completion = {{ overall_completion }};
+        new Chart(completionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'Remaining'],
+                datasets: [{
+                    data: [completion, 100 - completion],
+                    backgroundColor: [colors.dustyRose, colors.cream],
+                    borderWidth: 0,
+                    cutout: '75%',
+                    circumference: 270,
+                    rotation: 225
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            }
+        });
+    }
+});
+</script>
 {% endblock %}
