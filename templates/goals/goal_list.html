@@ -20,32 +20,48 @@
         </div>
     </div>
 
-    <!-- Stats -->
+    <!-- Progress Overview Charts -->
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
-            <div class="card text-center h-100 p-3">
-                <div class="card-body">
-                    <i class="fas fa-bullseye text-primary mb-2" style="font-size: 2rem;"></i>
-                    <h3 class="mb-1">{{ total_active }}</h3>
-                    <p class="text-muted mb-0">Active Goals</p>
+            <div class="card h-100 shadow-sm" data-testid="goals-overview-chart">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-3">Goals Overview</h6>
+                    <div style="height: 180px; position: relative;">
+                        <canvas id="goalsOverviewChart"></canvas>
+                    </div>
+                    <div class="mt-2">
+                        <span class="badge bg-primary me-1">{{ total_active }} Active</span>
+                        <span class="badge bg-success">{{ total_completed }} Done</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card text-center h-100 p-3">
-                <div class="card-body">
-                    <i class="fas fa-check-circle text-success mb-2" style="font-size: 2rem;"></i>
-                    <h3 class="mb-1">{{ total_completed }}</h3>
-                    <p class="text-muted mb-0">Completed</p>
+            <div class="card h-100 shadow-sm" data-testid="tasks-progress-chart">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-3">Tasks Progress</h6>
+                    <div style="height: 180px; position: relative;">
+                        <canvas id="tasksProgressChart"></canvas>
+                    </div>
+                    <div class="mt-2">
+                        <span class="badge bg-success me-1">{{ tasks_done }} Done</span>
+                        <span class="badge bg-warning text-dark me-1">{{ tasks_in_progress }} In Progress</span>
+                        <span class="badge bg-secondary">{{ tasks_pending }} Pending</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card text-center h-100 p-3">
-                <div class="card-body">
-                    <i class="fas fa-tasks text-info mb-2" style="font-size: 2rem;"></i>
-                    <a href="{% url 'goal_board' %}" class="btn btn-outline-primary btn-sm">View Board</a>
-                    <p class="text-muted mb-0 mt-2 small">Task Overview</p>
+            <div class="card h-100 shadow-sm" data-testid="completion-rate-chart">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-3">Overall Completion</h6>
+                    <div style="height: 180px; position: relative;">
+                        <canvas id="completionRateChart"></canvas>
+                    </div>
+                    <div class="mt-2">
+                        <h4 class="mb-0" style="color: var(--dusty-rose);">{{ overall_completion }}%</h4>
+                        <small class="text-muted">Average Progress</small>
+                    </div>
                 </div>
             </div>
         </div>
