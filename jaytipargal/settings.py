@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+# Also load from backend/.env if exists (Emergent platform)
+load_dotenv(BASE_DIR / 'backend' / '.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +25,15 @@ DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 # Allowed hosts - handles Railway's dynamic hostnames
 # Railway sets its own hostname dynamically, so we need to allow all Railway domains
-_default_hosts = 'localhost,127.0.0.1'
+_default_hosts = 'localhost,127.0.0.1,0.0.0.0'
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', _default_hosts)
 ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_ENV.split(',') if h.strip()]
+
+# Emergent platform domains
+emergent_domains = ['.preview.emergentagent.com']
+for domain in emergent_domains:
+    if domain not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(domain)
 
 # Railway deployment: Add Railway domain patterns
 # Railway domains follow pattern: *.up.railway.app
