@@ -9,13 +9,12 @@ import os
 import dj_database_url
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
-# Also load from backend/.env if exists (Emergent platform)
-load_dotenv(BASE_DIR / 'backend' / '.env')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables
+load_dotenv(BASE_DIR / 'backend' / '.env')
+load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'jayti-pargal-2026-secure-key-wV7xK9mP2nQ5rT8uX4yZ6bC1dE3fG5hJ7kL9mN2pQ4sT6vW8xYz')
