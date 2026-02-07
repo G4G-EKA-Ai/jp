@@ -10,12 +10,13 @@ A personal, feature-rich website created as a birthday gift for Jayti. Built wit
 
 ## Core Features (Implemented)
 1. ✅ **Dashboard** - Main hub with Karma, Dharma, Doubt, Memory, Thoughts cards
-2. ✅ **Notes** - Create, edit, pin notes with tags
-3. ✅ **Diary** - Journal entries with mood tracking
-4. ✅ **Goals** - Goal tracking with Kanban board and progress charts
-5. ✅ **Vedic Astrology** - Birth chart with Whole Sign Houses, Dasha periods, 12 Houses
-6. ✅ **AI Chat (Ask Jayti)** - Gemini 1.5 Pro integration
-7. ✅ **Health Check** - `/health/` endpoint for deployment verification
+2. ✅ **Birthday Countdown Widget** - Shows days until Feb 6, with special celebration on birthday
+3. ✅ **Notes** - Create, edit, pin notes with tags
+4. ✅ **Diary** - Journal entries with mood tracking
+5. ✅ **Goals** - Goal tracking with Kanban board and progress charts
+6. ✅ **Vedic Astrology** - Birth chart with Whole Sign Houses, Dasha periods, 12 Houses
+7. ✅ **AI Chat (Ask Jayti)** - Gemini 1.5 Pro integration
+8. ✅ **Health Check** - `/health/` endpoint for deployment verification
 
 ## Login Credentials
 - **Username:** jayati
@@ -38,8 +39,9 @@ A personal, feature-rich website created as a birthday gift for Jayti. Built wit
 ## Key Files
 - `/app/jaytipargal/settings.py` - Main configuration
 - `/app/backend/.env` - Environment variables
-- `/app/core/views.py` - Dashboard & auth views
+- `/app/core/views.py` - Dashboard, birthday countdown & auth views
 - `/app/astro/views.py` - Vedic astrology calculations
+- `/app/templates/core/dashboard.html` - Dashboard with birthday widget
 
 ## Future Enhancements (Backlog)
 - P1: Note Folders
