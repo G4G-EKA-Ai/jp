@@ -115,11 +115,8 @@ body {
         rgba(255, 248, 249, 0) 100%
     );
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
 }
-
-/* --------------------------------------------
-   4. PREMIUM CARD STYLING - Dense Layout
    -------------------------------------------- */
 .card {
     border: none;
