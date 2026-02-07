@@ -149,10 +149,11 @@ def get_database_config():
         
         return config
     else:
-        # Development: Use SQLite
+        # Emergent/Development: Use SQLite (file-based, no external DB needed)
+        db_path = os.environ.get('SQLITE_PATH', str(BASE_DIR / 'db.sqlite3'))
         return {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': db_path,
         }
 
 DATABASES = {
