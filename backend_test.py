@@ -33,17 +33,23 @@ class JaytiBackendTester:
         
         try:
             # Handle CSRF token for POST requests
-            if method == 'POST' and self.csrf_token:
+            headers = {}
+            if method == 'POST':
                 if data is None:
                     data = {}
-                if isinstance(data, dict):
+                if isinstance(data, dict) and self.csrf_token:
                     data['csrfmiddlewaretoken'] = self.csrf_token
+                
+                # Add CSRF header as well
+                if self.csrf_token:
+                    headers['X-CSRFToken'] = self.csrf_token
+                    headers['Referer'] = self.base_url
             
             # Make request
             if method == 'GET':
                 response = self.session.get(url, allow_redirects=follow_redirects)
             elif method == 'POST':
-                response = self.session.post(url, data=data, allow_redirects=follow_redirects)
+                response = self.session.post(url, data=data, headers=headers, allow_redirects=follow_redirects)
             
             success = response.status_code == expected_status
             
