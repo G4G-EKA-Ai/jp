@@ -76,6 +76,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.preview.emergentagent.com',
     'https://*.emergentagent.com',
     'https://*.emergent.host',
+    'https://*.emergentcf.cloud',
+    'https://*.deploy.emergentcf.cloud',
     'https://jaytibirthday.in',
     'https://www.jaytibirthday.in',
     'https://*.railway.app',
