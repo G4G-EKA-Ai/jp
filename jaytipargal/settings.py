@@ -17,10 +17,10 @@ load_dotenv(BASE_DIR / 'backend' / '.env')
 load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'jayti-pargal-2026-secure-key-wV7xK9mP2nQ5rT8uX4yZ6bC1dE3fG5hJ7kL9mN2pQ4sT6vW8xYz')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-only-insecure-key-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # Allowed hosts - handles Railway's dynamic hostnames
 # Railway sets its own hostname dynamically, so we need to allow all Railway domains
