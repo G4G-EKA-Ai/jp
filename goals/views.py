@@ -68,7 +68,7 @@ def goal_create(request):
 
 def generate_ai_tasks(goal):
     """Generate tasks using Gemini AI based on goal details"""
-    if not gemini_model:
+    if not gemini_client:
         return None
     
     # Build the prompt for Gemini
@@ -111,7 +111,10 @@ Format as JSON-like structure:
 Be specific, practical, and motivational. Focus on measurable outcomes."""
 
     try:
-        response = gemini_model.generate_content(prompt)
+        response = gemini_client.models.generate_content(
+            model=settings.GEMINI_MODEL,
+            contents=prompt
+        )
         ai_content = response.text
         
         # Parse the AI response and create tasks
