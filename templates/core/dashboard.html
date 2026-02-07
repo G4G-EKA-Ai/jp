@@ -152,6 +152,51 @@
     <!-- Content Spacer for Short Pages -->
     <div class="content-spacer"></div>
     
+    <!-- Birthday Countdown Widget -->
+    {% if birthday_countdown %}
+    <div class="row mt-3 mb-3">
+        <div class="col-lg-6 mx-auto">
+            <div class="card border-0 shadow-sm {% if birthday_countdown.is_today %}birthday-celebration{% endif %}" 
+                 style="background: {% if birthday_countdown.is_today %}linear-gradient(135deg, #FFD700, #FFA500){% else %}linear-gradient(135deg, rgba(232,180,184,0.25), rgba(230,230,250,0.25)){% endif %}; border-radius: 16px;">
+                <div class="card-body p-4 text-center">
+                    {% if birthday_countdown.is_today %}
+                    <!-- Birthday Today! -->
+                    <div class="birthday-icons mb-2">
+                        <i class="fas fa-birthday-cake text-white" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h3 class="mb-2" style="color: #fff; font-weight: 700;">🎂 Happy Birthday Jayti! 🎂</h3>
+                    <p class="mb-0" style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
+                        Wishing you joy, love, and endless blessings on your special day!
+                    </p>
+                    <p class="mt-2 mb-0" style="color: rgba(255,255,255,0.8);">
+                        <i class="fas fa-gift me-2"></i>Turning {{ birthday_countdown.age_on_next_birthday }} today!
+                    </p>
+                    {% elif birthday_countdown.is_tomorrow %}
+                    <!-- Birthday Tomorrow -->
+                    <div class="mb-2">
+                        <i class="fas fa-hourglass-half text-blush" style="font-size: 2rem;"></i>
+                    </div>
+                    <h4 class="mb-2" style="color: var(--dusty-rose);">🎁 Birthday Tomorrow! 🎁</h4>
+                    <p class="mb-0 text-muted">Get ready for a special celebration!</p>
+                    {% else %}
+                    <!-- Countdown -->
+                    <div class="mb-2">
+                        <i class="fas fa-heart text-blush" style="font-size: 1.5rem;"></i>
+                    </div>
+                    <p class="text-mauve mb-1" style="font-size: 0.85rem;">Days until your birthday</p>
+                    <h2 class="display-4 mb-1" style="color: var(--dusty-rose); font-weight: 700;">
+                        {{ birthday_countdown.days_until }}
+                    </h2>
+                    <p class="text-muted mb-0" style="font-size: 0.8rem;">
+                        <i class="fas fa-calendar-alt me-1"></i>February 6 · Turning {{ birthday_countdown.age_on_next_birthday }}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
     <!-- Daily Inspiration (Fills Bottom Space) -->
     <div class="row mt-3">
         <div class="col-lg-8 mx-auto">
