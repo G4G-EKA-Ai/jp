@@ -30,3 +30,12 @@ def month_name(value):
         return calendar.month_name[int(value)]
     except (ValueError, TypeError, IndexError):
         return value
+
+
+@register.filter
+def format_minute(value):
+    """Format minute with leading zero"""
+    try:
+        return f"{int(value):02d}"
+    except (ValueError, TypeError):
+        return value
