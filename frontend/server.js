@@ -6,8 +6,8 @@
 const http = require('http');
 const httpProxy = require('http-proxy');
 
-const BACKEND_PORT = 8001;
-const FRONTEND_PORT = 3000;
+const BACKEND_PORT = process.env.BACKEND_PORT || 8001;
+const FRONTEND_PORT = process.env.PORT || 3000;
 
 const proxy = httpProxy.createProxyServer({
   target: `http://localhost:${BACKEND_PORT}`,
