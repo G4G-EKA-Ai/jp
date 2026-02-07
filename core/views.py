@@ -209,6 +209,9 @@ def dashboard(request):
     except:
         pass
     
+    # Get birthday countdown data
+    birthday_countdown = get_birthday_countdown()
+    
     context = {
         'recent_notes': recent_notes,
         'recent_diary': recent_diary,
@@ -220,6 +223,7 @@ def dashboard(request):
         'daily_thought': daily_content['thought'],
         'time_greeting': time_greeting,
         'display_name': display_name or 'Jayti',
+        'birthday_countdown': birthday_countdown,
     }
     
     return render(request, 'core/dashboard.html', context)
