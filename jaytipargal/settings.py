@@ -193,7 +193,7 @@ JAYTI_BIRTH_DETAILS = {
 }
 
 # Gemini API Configuration
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyC5F5GSfJeB1_4qN5J_X8L8Tzp9KQGgGqg')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-pro')
 
 # Google Service Account Credentials (for Gemini/Vertex AI)
