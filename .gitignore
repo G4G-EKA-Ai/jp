@@ -76,3 +76,7 @@ media/
 
 # Memory folder (agent notes)
 memory/
+-e 
+# Environment files
+*.env
+*.env.*
