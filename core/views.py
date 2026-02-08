@@ -172,41 +172,6 @@ def logout_view(request):
 
 
 @login_required
-def get_birthday_countdown():
-    """Calculate days until next birthday (February 6)"""
-    from datetime import datetime, date
-    
-    today = date.today()
-    current_year = today.year
-    
-    # Birthday is February 6
-    birthday_this_year = date(current_year, 2, 6)
-    
-    if today < birthday_this_year:
-        # Birthday is coming up this year
-        days_until = (birthday_this_year - today).days
-        next_birthday = birthday_this_year
-    elif today == birthday_this_year:
-        # Today is the birthday!
-        days_until = 0
-        next_birthday = birthday_this_year
-    else:
-        # Birthday has passed, calculate for next year
-        next_birthday = date(current_year + 1, 2, 6)
-        days_until = (next_birthday - today).days
-    
-    # Calculate age on next birthday
-    age_on_next_birthday = next_birthday.year - 1997
-    
-    return {
-        'days_until': days_until,
-        'is_today': days_until == 0,
-        'is_tomorrow': days_until == 1,
-        'next_birthday': next_birthday,
-        'age_on_next_birthday': age_on_next_birthday,
-    }
-
-
 def dashboard(request):
     """Main dashboard with navigation to all modules"""
     from notes.models import Note
