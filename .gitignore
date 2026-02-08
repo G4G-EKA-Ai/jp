@@ -67,22 +67,12 @@ test_reports/
 # Node
 node_modules/
 yarn-error.log
-frontend/yarn.lock
 
 # Static collected (generated)
 staticfiles/
 
 # Media uploads (user data)
 media/
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
+
+# Memory folder (agent notes)
+memory/
