@@ -93,8 +93,8 @@
 
                 <!-- Messages Area -->
                 <div class="chat-messages" id="chatMessages">
-                    {% if messages %}
-                        {% for message in messages %}
+                    {% if chat_messages %}
+                        {% for message in chat_messages %}
                         <div class="message {% if message.sender == 'user' %}message-user{% else %}message-ai{% endif %}">
                             {% if message.sender == 'ai' %}
                                 <i class="fas fa-robot me-2"></i>
