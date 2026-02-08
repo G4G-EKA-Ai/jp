@@ -2,99 +2,59 @@
 ## Product Requirements Document
 
 ### Original Problem Statement
-Build a personal, feature-rich website called "JAYTI" as a birthday gift. The application should be production-ready with the following core modules:
-- Notes (with folders, tags, search, pin, PDF export)
-- Diary (typing/voice/handwriting, mood tracking, search, PDF export)
-- Goals (AI-powered marketing roadmap, Kanban board, progress charts)
-- Vedic Astrology
-- AI Companion (Gemini 1.5 Pro)
+Build a personal, feature-rich website called "JAYTI" as a birthday gift with Notes, Diary, Goals, Vedic Astrology, and AI Companion features.
 
-### Tech Stack
-- **Backend:** Django 5.0 on Python 3.11
-- **Frontend:** Server-side rendered Django Templates with vanilla JavaScript
-- **Database:** SQLite (user preference for cost management)
-- **AI Integration:** Google Gemini (`gemini-1.5-pro`)
-- **Deployment:** Emergent Platform
-
-### Current Status: PRODUCTION READY ✅
+### Current Status: DEPLOYMENT READY ✅
 **Last Updated:** February 8, 2026
 
 ---
 
-## Comprehensive Testing Results (Feb 8, 2026)
+## Deployment Fixes Applied
 
-### Backend API Tests - 100% PASS
-| Endpoint | Status |
-|----------|--------|
-| `/health/` | ✅ 200 (healthy, database ok, astrology available) |
-| `/dashboard/` | ✅ 200 |
-| `/notes/` | ✅ 200 |
-| `/notes/create/` | ✅ 200 |
-| `/diary/` | ✅ 200 |
-| `/diary/write/` | ✅ 200 |
-| `/goals/` | ✅ 200 |
-| `/goals/create/` | ✅ 200 |
-| `/goals/board/` | ✅ 200 |
-| `/astro/` | ✅ 200 |
-| `/ai-chat/` | ✅ 200 |
-| `/ai-chat/history/` | ✅ 200 |
-| `/profile/` | ✅ 200 |
-| `/api/daily-briefing/` | ✅ 200 |
-| `/api/goal-progress/` | ✅ 200 |
-| `/api/mood-trends/` | ✅ 200 |
+### Fix 1: Backend Server Startup (server.py)
+- Changed from threaded background migrations to subprocess-based synchronous migrations
+- Uses `sys.executable` to get correct Python interpreter
+- Passes environment variables properly to subprocess calls
+- Migrations now complete BEFORE uvicorn starts
 
-### Frontend Tests - 100% PASS
-| Feature | Status | Details |
-|---------|--------|---------|
-| Login | ✅ | Works with jayati/jayati2026 |
-| Dashboard | ✅ | Welcome message, Birthday Countdown (362 days), Stats |
-| Notes | ✅ | List, Create, Edit, Delete, Pin, Folders, Tags, Search |
-| Diary | ✅ | Write entry, Mood selection, Voice/Type/Write modes |
-| Goals | ✅ | List, Create, Progress bars, Kanban board |
-| Astro | ✅ | Birth chart (6-2-1997, 22:30), Leo Ascendant, Dasha |
-| AI Chat | ✅ | Clean interface, no blue boxes, AI responds |
-| Profile | ✅ | Display name, Language, Notifications |
-| Dark Mode | ✅ | Toggle works, persists across pages |
-| Navigation | ✅ | All 7 menu items work |
+### Fix 2: Health Check Optimization (core/views.py)
+- Health check always returns 200 OK (even during initialization)
+- Removed 503 response that could cause deployment timeout
+- Fast response for Kubernetes probes
+
+### Fix 3: SQLite Path for Production (settings.py)
+- Uses `/tmp/jayti_db.sqlite3` in containerized environments
+- Ensures writable storage location
+
+### Fix 4: Removed Hardcoded API Key (settings.py)
+- GEMINI_API_KEY fallback changed to empty string
+- Key is safely stored in backend/.env
 
 ---
 
-## Issues Fixed This Session
+## Architecture
 
-### Critical Fix: AI Chat Blue Boxes
-- **Problem:** Chat messages displayed as blue boxes with "user:" and "ai:" prefixes
-- **Root Cause:** Django's `messages` context processor conflicted with chat `messages` variable
-- **Solution:** Renamed chat messages to `chat_messages` in views and templates
-- **Files Changed:**
-  - `/app/ai_chat/views.py`
-  - `/app/templates/ai_chat/chat_interface.html`
-  - `/app/templates/ai_chat/chat_history.html`
-
-### Other Fixes
-- Fixed layout gap between navbar and content (CSS flexbox issue)
-- Fixed Jyati → Jayti spelling across all templates
-- Removed visible `/* Main Content */` CSS comment
-- Created actual PNG icons (replaced placeholders)
-- Added `.emergentcf.cloud` to CSRF_TRUSTED_ORIGINS
-
----
+```
+Frontend (Port 3000) - Node.js Proxy
+    ↓
+Backend (Port 8001) - Django ASGI via uvicorn
+    ↓
+Database - SQLite (or PostgreSQL via DATABASE_URL)
+```
 
 ## Test Credentials
-- **Username:** `jayati`
-- **Password:** `jayati2026`
+- **Username:** jayati
+- **Password:** jayati2026
 
 ## Preview URL
 https://ai-companion-app-30.preview.emergentagent.com/
 
 ---
 
-## Known Limitations
-1. **SQLite Database** - Not suitable for high-concurrency production. User chose this for cost reasons.
-2. **Google Gemini deprecation warning** - `google.generativeai` package should be migrated to `google.genai`
-
-## Future Enhancements (P2)
-- PostgreSQL migration for production stability
-- Enhanced mood trend visualization with charts
-- Vedic Planetary Aspects (Drishti)
-- Push notifications
-- Automated database backup system
+## Files Modified This Session
+- `/app/backend/server.py` - Fixed async migration issues
+- `/app/core/views.py` - Optimized health check
+- `/app/jaytipargal/settings.py` - Fixed SQLite path & API key
+- `/app/Procfile` - Production-ready gunicorn command
+- `/app/README.md` - Professional documentation
+- `/app/.gitignore` - Cleaned duplicates
