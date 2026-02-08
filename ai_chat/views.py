@@ -271,13 +271,13 @@ def chat_interface(request):
         user=request.user,
     )
     
-    messages = conversation.messages.all()[:50]  # Last 50 messages
+    chat_messages = conversation.messages.all()[:50]  # Last 50 messages
     
     # Check if Gemini is available
     gemini_available = gemini_client is not None
     
     context = {
-        'messages': messages,
+        'chat_messages': chat_messages,
         'conversation': conversation,
         'gemini_available': gemini_available,
     }
