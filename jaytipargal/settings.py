@@ -117,7 +117,9 @@ def get_database_config():
         return config
     else:
         # Emergent/Development: Use SQLite (file-based, no external DB needed)
-        db_path = os.environ.get('SQLITE_PATH', str(BASE_DIR / 'db.sqlite3'))
+        # Use /tmp for writable storage in containerized environments
+        default_db_path = '/tmp/jayti_db.sqlite3' if os.path.exists('/tmp') else str(BASE_DIR / 'db.sqlite3')
+        db_path = os.environ.get('SQLITE_PATH', default_db_path)
         return {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': db_path,
