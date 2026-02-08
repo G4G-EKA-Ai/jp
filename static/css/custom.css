@@ -50,11 +50,17 @@ body {
 }
 
 /* Main Dashboard Container - Full Height, No Dead Zones */
-.dashboard-container,
-.container-fluid {
+.dashboard-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+/* Reset container-fluid to normal behavior for navbar */
+.navbar .container-fluid {
+    min-height: auto;
+    display: flex;
+    flex-direction: row;
 }
 
 /* Compressed Bootstrap Spacing Overrides */
