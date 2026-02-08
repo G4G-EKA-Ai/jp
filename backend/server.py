@@ -11,31 +11,36 @@ sys.path.insert(0, '/app')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'jaytipargal.settings')
 
+# Get the Python executable from the current environment
+python_exec = sys.executable
+
 # Run migrations using subprocess BEFORE Django setup (avoids async issues)
 print("[JAYTI] Running database migrations...")
 try:
     result = subprocess.run(
-        ['python', 'manage.py', 'migrate', '--noinput'],
+        [python_exec, 'manage.py', 'migrate', '--noinput'],
         cwd='/app',
         capture_output=True,
         text=True,
-        timeout=60
+        timeout=60,
+        env={**os.environ, 'DJANGO_SETTINGS_MODULE': 'jaytipargal.settings'}
     )
     if result.returncode == 0:
         print("[JAYTI] Database migrations complete")
     else:
-        print(f"[JAYTI] Migration warning: {result.stderr}")
+        print(f"[JAYTI] Migration warning: {result.stderr[:200] if result.stderr else 'unknown'}")
 except Exception as e:
     print(f"[JAYTI] Migration note: {e}")
 
 print("[JAYTI] Collecting static files...")
 try:
     result = subprocess.run(
-        ['python', 'manage.py', 'collectstatic', '--noinput'],
+        [python_exec, 'manage.py', 'collectstatic', '--noinput'],
         cwd='/app',
         capture_output=True,
         text=True,
-        timeout=60
+        timeout=60,
+        env={**os.environ, 'DJANGO_SETTINGS_MODULE': 'jaytipargal.settings'}
     )
     print("[JAYTI] Static files collected")
 except Exception as e:
@@ -44,11 +49,12 @@ except Exception as e:
 print("[JAYTI] Creating initial user...")
 try:
     result = subprocess.run(
-        ['python', 'manage.py', 'create_initial_user'],
+        [python_exec, 'manage.py', 'create_initial_user'],
         cwd='/app',
         capture_output=True,
         text=True,
-        timeout=30
+        timeout=30,
+        env={**os.environ, 'DJANGO_SETTINGS_MODULE': 'jaytipargal.settings'}
     )
     print("[JAYTI] Initial user ready")
 except Exception as e:
