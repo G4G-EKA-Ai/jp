@@ -4,7 +4,7 @@
 A personal, feature-rich website created as a birthday gift for Jayti. Built with Django 4.2 + Python 3.11, featuring Vedic Astrology, AI Chat, Notes, Diary, and Goals management.
 
 ## Current Status: ✅ DEPLOYED & RUNNING
-- **Preview URL:** https://personal-dashboard-15.preview.emergentagent.com/
+- **Preview URL:** https://ai-companion-app-30.preview.emergentagent.com/
 - **Last Updated:** February 8, 2026
 - **Database:** SQLite (local file)
 
