@@ -331,10 +331,10 @@ def send_message(request):
 def chat_history(request):
     """View chat history"""
     conversation = AIConversation.objects.filter(user=request.user).first()
-    messages = conversation.messages.all() if conversation else []
+    chat_messages = conversation.messages.all() if conversation else []
     
     context = {
-        'messages': messages,
+        'chat_messages': chat_messages,
     }
     return render(request, 'ai_chat/chat_history.html', context)
 
