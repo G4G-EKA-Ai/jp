@@ -47,7 +47,7 @@ Database - SQLite (or PostgreSQL via DATABASE_URL)
 - **Password:** jayati2026
 
 ## Preview URL
-https://jayti-birthday-1.preview.emergentagent.com/
+https://jayti-birthday-2.preview.emergentagent.com/
 
 ---
 
