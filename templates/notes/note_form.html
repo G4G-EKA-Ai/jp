@@ -40,6 +40,21 @@
                                    placeholder="personal, work, ideas...">
                         </div>
                         
+                        {% if folders %}
+                        <div class="mb-3">
+                            <label class="form-label">Folder</label>
+                            <select name="folder" class="form-control">
+                                <option value="">-- No Folder --</option>
+                                {% for folder in folders %}
+                                <option value="{{ folder.id }}" 
+                                        {% if note.folder.id == folder.id %}selected{% endif %}>
+                                    {{ folder.icon|default:"📁" }} {{ folder.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+                        
                         <div class="d-flex justify-content-between">
                             <a href="{% url 'note_list' %}" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Back

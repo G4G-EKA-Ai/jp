@@ -1,53 +1,57 @@
-# JAYTI - Personal Life Companion Website
+# JAYTI Birthday Website - PRD
 
 ## Project Overview
-A personal, feature-rich website created as a birthday gift for Jayti. Built with Django 4.2 + Python 3.11, featuring Vedic Astrology, AI Chat, Notes, Diary, and Goals management.
+Personal life companion website for Jayti Pargal, built with Django. Deployed on Emergent platform via Django ASGI (uvicorn) on port 8001 with Node.js proxy on port 3000.
 
-## Current Status: ✅ DEPLOYED & RUNNING
-- **Preview URL:** https://ai-companion-app-30.preview.emergentagent.com/
-- **Last Updated:** February 8, 2026
-- **Database:** SQLite (local file)
+## Architecture
+- **Backend**: Django 4.2 ASGI via uvicorn (port 8001)
+- **Frontend**: Django Templates proxied via Node.js (port 3000)
+- **Database**: SQLite (file-based, no external DB dependency)
+- **AI**: Google Gemini 1.5 Pro (chat + goal generation)
+- **Astrology**: Swiss Ephemeris (pyswisseph)
+- **Static Files**: WhiteNoise
 
-## Core Features (Implemented)
-1. ✅ **Dashboard** - Main hub with Karma, Dharma, Doubt, Memory, Thoughts cards
-2. ✅ **Birthday Countdown Widget** - Shows days until Feb 6, with special celebration on birthday
-3. ✅ **Notes** - Create, edit, pin notes with tags
-4. ✅ **Diary** - Journal entries with mood tracking
-5. ✅ **Goals** - Goal tracking with Kanban board and progress charts
-6. ✅ **Vedic Astrology** - Birth chart with Whole Sign Houses, Dasha periods, 12 Houses
-7. ✅ **AI Chat (Ask Jayti)** - Gemini 1.5 Pro integration
-8. ✅ **Health Check** - `/health/` endpoint for deployment verification
+## What's Been Implemented (All verified working - Feb 7, 2026)
+1. Login Page - Daily thoughts, flower slideshow, live clock, birthday overlay (Feb 6)
+2. Dashboard - Navigation hub with all 6 sections
+3. Notes - CRUD with tags, search, pin support
+4. Diary - Type/Voice/Handwriting input, mood tracking, calendar, streaks, daily prompts
+5. Goals - AI-powered task generation, Kanban board, milestones, department breakdown
+6. Astro - Vedic birth chart, 12 houses analysis, Vimshottari Dasha, 90-day predictions
+7. AI Chat - Gemini-powered Mentor Mode with context awareness (goals + mood)
+8. Profile - Display name, password change, profile picture upload
+9. Health Check - /health/ endpoint (DB, static, astro status)
 
-## Login Credentials
-- **Username:** jayati
-- **Password:** jayati2026
+## Deployment Fixes Applied (Feb 7, 2026)
+- requirements.txt cleaned: 132 packages -> 11 actual dependencies
+- frontend/.env created with REACT_APP_BACKEND_URL
+- backend/.env: DEBUG=False for production
+- frontend/server.js: ports read from environment variables
+- settings.py: removed hardcoded SECRET_KEY fallback, DEBUG defaults to False
+- server.py: background thread for migrations/setup on startup
+- Database: SQLite (no PostgreSQL dependency for Emergent)
 
-## Environment Configuration
-- **GEMINI_API_KEY:** Configured
-- **Database:** SQLite (db.sqlite3)
-- **Static Files:** WhiteNoise for serving
+## Bugs Fixed Previously
+- Gemini model: gemini-pro -> gemini-1.5-pro
+- google-generativeai SDK -> google-genai
+- Birthday dismiss: removed @login_required
+- @csrf_exempt removed from AI chat
+- Astro predictions: KeyError 'house' fixed
+- Birth chart: missing template filters added
+- DiaryPrompt migration created
+- initial_data fixture loaded
 
-## Tech Stack
-- Django 4.2
-- Python 3.11
-- SQLite Database
-- Gemini 1.5 Pro (AI)
-- Swiss Ephemeris (Astrology)
-- Chart.js (Data visualization)
-- WhiteNoise (Static files)
+## Credentials
+- Username: jayati | Password: jayati2026
 
-## Key Files
-- `/app/jaytipargal/settings.py` - Main configuration
-- `/app/backend/.env` - Environment variables
-- `/app/core/views.py` - Dashboard, birthday countdown & auth views
-- `/app/astro/views.py` - Vedic astrology calculations
-- `/app/templates/core/dashboard.html` - Dashboard with birthday widget
-
-## Future Enhancements (Backlog)
-- P1: Note Folders
-- P1: PDF Export for Notes/Diary
-- P1: Dark Mode toggle
-- P1: Full PWA with offline support
-- P2: Push Notifications
-- P2: Daily Briefing & Weekly Summary
-- P2: PostgreSQL migration for production
+## Deployment Checklist
+- [x] Django ASGI on port 8001
+- [x] Node.js proxy on port 3000
+- [x] SQLite database (no external DB needed)
+- [x] Static files via WhiteNoise
+- [x] Health check at /health/
+- [x] CSRF_TRUSTED_ORIGINS includes *.preview.emergentagent.com
+- [x] ALLOWED_HOSTS includes Emergent domains
+- [x] Migrations run on startup
+- [x] Initial user created automatically
+- [x] Fixture data loaded

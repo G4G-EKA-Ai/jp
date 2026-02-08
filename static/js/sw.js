@@ -1,184 +1,181 @@
-/* ============================================
-   SERVICE WORKER - TRUE OFFLINE MODE (PWA)
-   Cache-First Strategy | Offline Write Support
-   ============================================ */
+const CACHE_NAME = 'jayti-v2';
+const STATIC_CACHE = 'jayti-static-v2';
+const DYNAMIC_CACHE = 'jayti-dynamic-v2';
 
-const CACHE_NAME = 'jaytipargal-v1';
-const APP_SHELL_URLS = [
-    '/',
-    '/dashboard/',
-    '/diary/',
-    '/diary/write/',
-    '/goals/',
-    '/notes/',
-    '/astro/',
-    '/static/css/custom.css',
-    '/static/js/offline-sync.js',
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-    'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;600&display=swap'
+const STATIC_ASSETS = [
+  '/',
+  '/dashboard/',
+  '/static/css/custom.css',
+  '/static/css/dark-mode.css',
+  '/static/js/dark-mode.js',
+  '/static/manifest.json',
 ];
 
-// Install Event - Cache App Shell
-self.addEventListener('install', (event) => {
-    console.log('[SW] Installing...');
-    
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('[SW] Caching app shell');
-                return cache.addAll(APP_SHELL_URLS);
-            })
-            .then(() => {
-                console.log('[SW] App shell cached successfully');
-                return self.skipWaiting();
-            })
-            .catch((error) => {
-                console.error('[SW] Cache failed:', error);
-            })
-    );
+const CACHE_PAGES = [
+  '/diary/write/',
+  '/diary/overview/',
+  '/goals/',
+  '/notes/',
+  '/astro/',
+  '/ai-chat/',
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    Promise.all([
+      caches.open(STATIC_CACHE).then(cache => cache.addAll(STATIC_ASSETS)),
+      caches.open(DYNAMIC_CACHE)
+    ])
+  );
+  self.skipWaiting();
 });
 
-// Activate Event - Clean old caches
-self.addEventListener('activate', (event) => {
-    console.log('[SW] Activating...');
-    
-    event.waitUntil(
-        caches.keys()
-            .then((cacheNames) => {
-                return Promise.all(
-                    cacheNames
-                        .filter((name) => name !== CACHE_NAME)
-                        .map((name) => caches.delete(name))
-                );
-            })
-            .then(() => {
-                console.log('[SW] Activated successfully');
-                return self.clients.claim();
-            })
-    );
-});
-
-// Fetch Event - Cache-First Strategy
-self.addEventListener('fetch', (event) => {
-    const { request } = event;
-    const url = new URL(request.url);
-    
-    // Skip non-GET requests (POST, PUT, DELETE go to network)
-    if (request.method !== 'GET') {
-        return;
-    }
-    
-    // Strategy: Cache-First for App Shell, Network-First for API
-    if (isAppShell(url.pathname)) {
-        event.respondWith(cacheFirst(request));
-    } else if (isAPIRequest(url.pathname)) {
-        event.respondWith(networkFirst(request));
-    } else {
-        // Default: Cache with network fallback
-        event.respondWith(cacheWithNetworkFallback(request));
-    }
-});
-
-// Helper: Check if request is for app shell
-function isAppShell(pathname) {
-    const appPaths = ['/', '/dashboard/', '/diary/', '/goals/', '/notes/', '/astro/', '/static/'];
-    return appPaths.some(path => pathname.startsWith(path));
-}
-
-// Helper: Check if request is for API
-function isAPIRequest(pathname) {
-    return pathname.startsWith('/api/') || pathname.includes('/send_message/');
-}
-
-// Cache-First Strategy
-async function cacheFirst(request) {
-    const cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(request);
-    
-    if (cached) {
-        console.log('[SW] Serving from cache:', request.url);
-        return cached;
-    }
-    
-    try {
-        const networkResponse = await fetch(request);
-        cache.put(request, networkResponse.clone());
-        return networkResponse;
-    } catch (error) {
-        console.error('[SW] Network failed, no cache:', request.url);
-        throw error;
-    }
-}
-
-// Network-First Strategy (for API calls)
-async function networkFirst(request) {
-    const cache = await caches.open(CACHE_NAME);
-    
-    try {
-        const networkResponse = await fetch(request);
-        cache.put(request, networkResponse.clone());
-        return networkResponse;
-    } catch (error) {
-        console.log('[SW] Network failed, trying cache:', request.url);
-        const cached = await cache.match(request);
-        
-        if (cached) {
-            return cached;
-        }
-        
-        // Return offline response for API
-        return new Response(
-            JSON.stringify({ 
-                offline: true, 
-                message: 'You are offline. Your data will sync when connection returns.' 
-            }),
-            { 
-                headers: { 'Content-Type': 'application/json' },
-                status: 503 
-            }
-        );
-    }
-}
-
-// Cache with Network Fallback
-async function cacheWithNetworkFallback(request) {
-    const cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(request);
-    
-    const networkFetch = fetch(request)
-        .then((response) => {
-            cache.put(request, response.clone());
-            return response;
-        })
-        .catch(() => cached);
-    
-    return cached || networkFetch;
-}
-
-// Background Sync for Offline Writes
-self.addEventListener('sync', (event) => {
-    if (event.tag === 'sync-diary-entries') {
-        console.log('[SW] Background sync triggered');
-        event.waitUntil(syncDiaryEntries());
-    }
-});
-
-// Sync diary entries from IndexedDB to server
-async function syncDiaryEntries() {
-    const clients = await self.clients.matchAll();
-    
-    clients.forEach((client) => {
-        client.postMessage({
-            type: 'SYNC_DIARY_ENTRIES'
+self.addEventListener('fetch', event => {
+  const { request } = event;
+  const url = new URL(request.url);
+  
+  // Cache-first for static assets
+  if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
+    event.respondWith(
+      caches.match(request).then(response => {
+        return response || fetch(request).then(fetchResponse => {
+          return caches.open(STATIC_CACHE).then(cache => {
+            cache.put(request, fetchResponse.clone());
+            return fetchResponse;
+          });
         });
-    });
+      })
+    );
+    return;
+  }
+  
+  // Network-first for API calls and pages
+  event.respondWith(
+    fetch(request)
+      .then(response => {
+        if (response && response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+          });
+        }
+        return response;
+      })
+      .catch(() => {
+        return caches.match(request).then(response => {
+          if (response) return response;
+          if (request.destination === 'document') {
+            return caches.match('/dashboard/');
+          }
+        });
+      })
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  return self.clients.claim();
+});
+
+// Handle background sync for offline diary/notes
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-diary') {
+    event.waitUntil(syncDiaryEntries());
+  }
+  if (event.tag === 'sync-notes') {
+    event.waitUntil(syncNotes());
+  }
+});
+
+async function syncDiaryEntries() {
+  const entries = await getFromIndexedDB('pending-diary');
+  for (const entry of entries) {
+    try {
+      await fetch('/diary/save/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+      await removeFromIndexedDB('pending-diary', entry.id);
+    } catch (e) {
+      console.log('Sync failed, will retry');
+    }
+  }
 }
 
-// Listen for messages from main thread
-self.addEventListener('message', (event) => {
-    if (event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
+async function syncNotes() {
+  const notes = await getFromIndexedDB('pending-notes');
+  for (const note of notes) {
+    try {
+      await fetch('/notes/save/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(note)
+      });
+      await removeFromIndexedDB('pending-notes', note.id);
+    } catch (e) {
+      console.log('Sync failed, will retry');
     }
+  }
+}
+
+function getFromIndexedDB(storeName) {
+  return new Promise((resolve) => {
+    const request = indexedDB.open('JaytiDB', 1);
+    request.onsuccess = () => {
+      const db = request.result;
+      const tx = db.transaction(storeName, 'readonly');
+      const store = tx.objectStore(storeName);
+      const getAll = store.getAll();
+      getAll.onsuccess = () => resolve(getAll.result || []);
+    };
+    request.onerror = () => resolve([]);
+  });
+}
+
+function removeFromIndexedDB(storeName, id) {
+  return new Promise((resolve) => {
+    const request = indexedDB.open('JaytiDB', 1);
+    request.onsuccess = () => {
+      const db = request.result;
+      const tx = db.transaction(storeName, 'readwrite');
+      const store = tx.objectStore(storeName);
+      store.delete(id);
+      tx.oncomplete = () => resolve();
+    };
+  });
+}
+
+self.addEventListener('push', event => {
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || 'Jayti Reminder';
+  const options = {
+    body: data.body || 'Your diary is waiting for you.',
+    icon: '/static/icons/icon-192x192.png',
+    badge: '/static/icons/badge-72x72.png',
+    vibrate: [200, 100, 200],
+    data: {
+      url: data.url || '/diary/write/'
+    }
+  };
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+  );
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow(event.notification.data.url)
+  );
 });

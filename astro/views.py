@@ -129,7 +129,7 @@ PLANET_INFO = {
     'mercury': {'symbol': '☿', 'represents': 'Intellect, Communication', 'element': 'Earth'},
     'jupiter': {'symbol': '♃', 'represents': 'Wisdom, Prosperity, Growth', 'element': 'Ether'},
     'venus': {'symbol': '♀', 'represents': 'Love, Beauty, Relationships', 'element': 'Water'},
-    'saturn': {'symbol': '♄', 'represents': 'Discipline, Karma, Patience', 'element': 'Air'},
+    'saturn': {'symbol': '♄', 'represents': 'Discipline, Responsibility, Patience', 'element': 'Air'},
     'rahu': {'symbol': '☊', 'represents': 'Ambition, Illusion, Foreign', 'element': 'Air'},
     'ketu': {'symbol': '☋', 'represents': 'Spirituality, Detachment', 'element': 'Fire'},
 }
@@ -165,11 +165,35 @@ def get_nakshatra_from_degree(degree):
 
 
 def calculate_houses(julian_day, latitude, longitude):
-    """Calculate house cusps using Placidus system"""
+    """Calculate house cusps using Vedic Whole Sign Houses (Rashi-based)
+    
+    In Whole Sign Houses, each house is exactly 30° (one sign).
+    House 1 starts at 0° of the Ascendant's sign.
+    This is the traditional Vedic astrology method.
+    """
     if not SWISSEPH_AVAILABLE:
         return [0] * 12
-    houses = swe.houses_ex(julian_day, latitude, longitude, b'P')
-    return houses[0]  # Array of 12 house cusps
+    
+    # Get Ascendant (Lagna) - first house cusp in tropical
+    houses = swe.houses_ex(julian_day, latitude, longitude, b'W')  # Whole sign
+    ascendant_tropical = houses[0][0]  # Ascendant degree
+    
+    # Apply Ayanamsa to get Vedic position
+    ayanamsa = swe.get_ayanamsa_ut(julian_day)
+    ascendant_vedic = (ascendant_tropical - ayanamsa) % 360
+    
+    # Find the start of the Ascendant's sign (0° of that sign)
+    # Each sign is 30°, so sign_start = floor(degree / 30) * 30
+    ascendant_sign_start = (ascendant_vedic // 30) * 30
+    
+    # Create 12 house cusps - each house is exactly 30° (one sign)
+    # House 1 starts at 0° of Ascendant's sign
+    vedic_cusps = []
+    for house_num in range(12):
+        cusp = (ascendant_sign_start + (house_num * 30)) % 360
+        vedic_cusps.append(cusp)
+    
+    return vedic_cusps
 
 
 def calculate_planet_positions(julian_day):
@@ -219,34 +243,38 @@ def calculate_planet_positions(julian_day):
 
 
 def assign_planets_to_houses(planet_positions, house_cusps):
-    """Assign planets to houses based on house cusps"""
+    """Assign planets to houses using Vedic Whole Sign Houses (Rashi-based)
+    
+    In Whole Sign Houses:
+    - Each house is exactly 30° (one sign)
+    - House 1 = Ascendant's sign (all 30° of that sign)
+    - A planet's house is determined by which sign it's in, not exact degree
+    
+    Example: If Ascendant is Virgo (150°-180°):
+    - House 1 = Virgo (150°-180°)
+    - House 2 = Libra (180°-210°)
+    - Mars at 161.22° (Virgo) → House 1
+    """
     if not SWISSEPH_AVAILABLE:
         return {}
-    ayanamsa = swe.get_ayanamsa_ut(swe.julday(1997, 2, 6, 17.5))
-    
-    # Convert house cusps to Vedic
-    vedic_cusps = [(cusp - ayanamsa) % 360 for cusp in house_cusps]
     
     planet_houses = {}
     
     for planet_name, data in planet_positions.items():
         planet_degree = data['degree']
         
-        # Find which house the planet is in
-        for house_num in range(12):
-            cusp_start = vedic_cusps[house_num]
-            cusp_end = vedic_cusps[(house_num + 1) % 12]
-            
-            if cusp_start <= cusp_end:
-                # Normal case
-                if cusp_start <= planet_degree < cusp_end:
-                    planet_houses[planet_name] = house_num + 1
-                    break
-            else:
-                # House crosses 0°
-                if planet_degree >= cusp_start or planet_degree < cusp_end:
-                    planet_houses[planet_name] = house_num + 1
-                    break
+        # Find which sign the planet is in (0-11)
+        # Each sign is 30°, so sign = floor(degree / 30)
+        planet_sign = int(planet_degree // 30)
+        
+        # Find which sign is House 1
+        # House 1 cusp is the start of the Ascendant's sign
+        house_1_sign = int(house_cusps[0] // 30)
+        
+        # Calculate house number
+        # House = (planet_sign - house_1_sign) mod 12 + 1
+        house_num = ((planet_sign - house_1_sign) % 12) + 1
+        planet_houses[planet_name] = house_num
     
     return planet_houses
 
@@ -418,7 +446,7 @@ def get_dasha_interpretation(lord):
             'challenges': 'Over-optimism, weight gain, excesses, philosophical conflicts',
         },
         'Saturn': {
-            'theme': 'Discipline, Karma, Structure',
+            'theme': 'Discipline, Responsibility, Structure',
             'focus': 'Hard work, responsibility, long-term planning, maturity, service',
             'advice': 'Embrace discipline and patience. Do the hard work. Build lasting foundations.',
             'challenges': 'Delays, restrictions, health issues, heavy responsibilities',
@@ -430,7 +458,7 @@ def get_dasha_interpretation(lord):
             'challenges': 'Nervousness, overthinking, communication misunderstandings',
         },
         'Ketu': {
-            'theme': 'Spirituality, Detachment, Past Karma',
+            'theme': 'Spirituality, Detachment, Past Lessons',
             'focus': 'Letting go, spiritual growth, introspection, liberation from attachments',
             'advice': 'Practice detachment from outcomes. Focus on spiritual growth. Release the past.',
             'challenges': 'Confusion, losses, isolation, sudden separations',

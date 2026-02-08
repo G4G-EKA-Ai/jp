@@ -1,248 +1,355 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Dashboard - jayti{% endblock %}
-
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/custom.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'css/dark-mode.css' %}">
+<style>
+.daily-briefing-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.astro-insight-card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  position: relative;
+  min-height: 300px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: #D4A5A5;
+}
+
+.stat-label {
+  color: #666;
+  margin-top: 10px;
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-4 dashboard-container">
-    <!-- Vivek's Message (Birthday Only) -->
-    {% if show_vivek_message %}
-    <div class="row mb-3 animate-fade-in" id="vivekGreeting">
-        <div class="col-lg-10 mx-auto">
-            <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, rgba(232,180,184,0.12), rgba(230,230,250,0.12));">
-                <div class="card-body p-4 position-relative">
-                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3" onclick="dismissVivekGreeting()" aria-label="Close"></button>
-                    <div class="text-center">
-                        <i class="fas fa-heart text-blush mb-2" style="font-size: 2rem;"></i>
-                        <h2 class="font-script mb-3" style="font-size: 1.75rem; color: var(--dusty-rose);">My Prayer for You</h2>
-                        <div class="text-start mx-auto" style="max-width: 600px; line-height: 1.8; font-size: 0.95rem;">
-                            <p class="lead">Dear {{ display_name|default:"Jayti" }},</p>
-                            <p>
-                                As you begin this day, I want you to remember: you are capable of extraordinary things. 
-                                The strength you carry, even when you feel weary, is a testament to your resilience.
-                            </p>
-                            <p>
-                                May today bring you moments of clarity, peace, and small victories. 
-                                When challenges arise, know that you have the tools here to navigate them.
-                            </p>
-                            <p class="font-script mt-3" style="font-size: 1.25rem; color: var(--dusty-rose);">
-                                With hope for your flourishing,<br>
-                                Vivek
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="container mt-4">
+  <h1>Welcome back, {{ display_name }}! <i class="fas fa-hand-wave"></i></h1>
+  
+  <!-- Birthday Countdown Widget -->
+  {% if birthday_countdown %}
+  <div class="birthday-countdown-card" role="region" aria-label="Birthday countdown" 
+       style="{% if birthday_countdown.is_today %}background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);{% else %}background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);{% endif %}
+              color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; 
+              box-shadow: 0 10px 30px rgba(0,0,0,0.15); text-align: center;
+              animation: {% if birthday_countdown.is_today %}pulse 2s infinite{% else %}none{% endif %};"
+       {% if birthday_countdown.is_today %}class="celebration-active"{% endif %}>
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h3 style="margin-bottom: 10px;">
+          {% if birthday_countdown.is_today %}
+            <i class="fas fa-birthday-cake"></i> Happy Birthday Jayti! <i class="fas fa-gift"></i>
+          {% elif birthday_countdown.is_tomorrow %}
+            <i class="fas fa-clock"></i> Birthday Tomorrow!
+          {% else %}
+            <i class="fas fa-calendar-heart"></i> Birthday Countdown
+          {% endif %}
+        </h3>
+        <p style="font-size: 1.1em; margin-bottom: 0;">
+          {% if birthday_countdown.is_today %}
+            <strong>Turning {{ birthday_countdown.age_on_next_birthday }} today!</strong> 
+            Wishing you a year filled with joy, success, and beautiful moments! 
+            <i class="fas fa-heart" style="color: #ff6b6b;"></i>
+          {% elif birthday_countdown.is_tomorrow %}
+            Only <strong>1 day</strong> left until your special day! 
+            You'll be turning {{ birthday_countdown.age_on_next_birthday }}! 
+            <i class="fas fa-star" style="color: #FFD700;"></i>
+          {% else %}
+            <strong>{{ birthday_countdown.days_until }} days</strong> until your birthday
+            (February 6{{ birthday_countdown.next_birthday|date:" Y" }})! 
+            You'll be turning {{ birthday_countdown.age_on_next_birthday }}!
+          {% endif %}
+        </p>
+      </div>
+      <div class="col-md-4">
+        <div class="countdown-display" style="font-size: 3em; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
+          {% if birthday_countdown.is_today %}
+            <i class="fas fa-birthday-cake"></i>
+          {% else %}
+            {{ birthday_countdown.days_until }}
+            <span style="font-size: 0.4em; display: block;">days</span>
+          {% endif %}
         </div>
+      </div>
+    </div>
+    
+    {% if birthday_countdown.is_today %}
+    <div class="celebration-message mt-3" style="font-size: 1.2em; font-style: italic;">
+      "May this year bring you closer to your dreams and fill your life with happiness!"
+      <br><small style="opacity: 0.9;">- With love, from your Personal Dashboard</small>
     </div>
     {% endif %}
-
-    <!-- Welcome Section -->
-    <div class="row mb-3">
-        <div class="col-lg-8 mx-auto text-center animate-fade-in">
-            <h1 class="display-6 mb-2">Welcome, {{ display_name|default:"Jayti" }}</h1>
-            <p class="text-mauve mb-1" style="font-size: 0.95rem;">
-                Your personal sanctuary for growth and healing.
-            </p>
-            {% if time_greeting %}
-            <p class="text-muted" style="font-size: 0.85rem;">
-                <i class="fas fa-sun me-1 text-blush"></i>{{ time_greeting.message }}
-            </p>
-            {% endif %}
+  </div>
+  
+  <style>
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+      50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3); }
+    }
+    .birthday-countdown-card.celebration-active {
+      border: 3px solid #FFD700;
+    }
+  </style>
+  {% endif %}
+  
+  <!-- Daily Briefing Card -->
+  <div class="daily-briefing-card" id="daily-briefing" role="region" aria-label="Daily briefing">
+    <h2><i class="fas fa-sun"></i> Your Daily Briefing</h2>
+    <div id="briefing-content" aria-live="polite">
+      <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Daily Astro Insight -->
+  <div class="astro-insight-card" id="astro-insight" role="region" aria-label="Astrological insight">
+    <h3><i class="fas fa-star"></i> Today's Cosmic Insight</h3>
+    <div id="astro-content" aria-live="polite">
+      <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Quick Stats -->
+  <div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card">
+        <div class="stat-number" aria-label="{{ recent_notes }} notes">{{ recent_notes }}</div>
+        <div class="stat-label">Notes</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card">
+        <div class="stat-number" aria-label="{{ recent_diary }} diary entries">{{ recent_diary }}</div>
+        <div class="stat-label">Diary Entries</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card">
+        <div class="stat-number" aria-label="{{ active_goals }} active goals">{{ active_goals }}</div>
+        <div class="stat-label">Active Goals</div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card">
+        <div class="stat-number" aria-label="{{ pending_tasks }} pending tasks">{{ pending_tasks }}</div>
+        <div class="stat-label">Pending Tasks</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Charts Row -->
+  <div class="row">
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h4><i class="fas fa-chart-line"></i> Mood Trends (Last 30 Days)</h4>
         </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="moodChart" role="img" aria-label="Mood trends chart"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
     
-    <!-- Five Pillars -->
-    <div class="row g-3">
-        <!-- Karma - Goals -->
-        <div class="col-md-4">
-            <a href="{% url 'goal_list' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3">
-                    <div class="pillar-icon pillar-karma mx-auto">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h5 class="mb-1">Karma</h5>
-                    <p class="text-mauve mb-1" style="font-size: 0.8rem;">Action & Duty</p>
-                    <p class="text-muted small mb-2" style="font-size: 0.75rem;">Transform intention into structured execution</p>
-                    <div class="mt-auto">
-                        <span class="badge bg-primary" style="font-size: 0.7rem;">{{ active_goals }} Active</span>
-                        <span class="badge bg-secondary" style="font-size: 0.7rem;">{{ pending_tasks }} Tasks</span>
-                    </div>
-                </div>
-            </a>
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h4><i class="fas fa-bullseye"></i> Goal Progress</h4>
         </div>
-        
-        <!-- Dharma - Astro -->
-        <div class="col-md-4">
-            <a href="{% url 'astro_dashboard' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3">
-                    <div class="pillar-icon pillar-dharma mx-auto">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h5 class="mb-1">Dharma</h5>
-                    <p class="text-mauve mb-1" style="font-size: 0.8rem;">Righteous Path</p>
-                    <p class="text-muted small mb-2" style="font-size: 0.75rem;">Cosmic guidance for decision timing</p>
-                    <div class="mt-auto">
-                        <span class="badge bg-info" style="font-size: 0.7rem;">Birth Chart</span>
-                        <span class="badge bg-secondary" style="font-size: 0.7rem;">90-Day Guide</span>
-                    </div>
-                </div>
-            </a>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="goalChart" role="img" aria-label="Goal progress chart"></canvas>
+          </div>
         </div>
-        
-        <!-- Doubt - AI -->
-        <div class="col-md-4">
-            <a href="{% url 'ai_chat' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3">
-                    <div class="pillar-icon pillar-doubt mx-auto">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h5 class="mb-1">Doubt</h5>
-                    <p class="text-mauve mb-1" style="font-size: 0.8rem;">Inquiry & Question</p>
-                    <p class="text-muted small mb-2" style="font-size: 0.75rem;">Resolve uncertainty through dialogue</p>
-                    <div class="mt-auto">
-                        <span class="badge bg-success" style="font-size: 0.7rem;">Ask Jayti</span>
-                        <span class="badge bg-secondary" style="font-size: 0.7rem;">Private</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
-        <!-- Memory - Notes -->
-        <div class="col-md-6">
-            <a href="{% url 'note_list' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3">
-                    <div class="pillar-icon pillar-memory mx-auto">
-                        <i class="fas fa-sticky-note"></i>
-                    </div>
-                    <h5 class="mb-1">Memory</h5>
-                    <p class="text-mauve mb-1" style="font-size: 0.8rem;">Retention</p>
-                    <p class="text-muted small mb-2" style="font-size: 0.75rem;">Externalize cognitive load for mental clarity</p>
-                    <div class="mt-auto">
-                        <span class="badge bg-warning text-dark" style="font-size: 0.7rem;">{{ recent_notes }} Notes</span>
-                        <span class="badge bg-secondary" style="font-size: 0.7rem;">Organized</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
-        <!-- Thoughts - Diary -->
-        <div class="col-md-6">
-            <a href="{% url 'diary_overview' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3">
-                    <div class="pillar-icon pillar-thoughts mx-auto">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h5 class="mb-1">Thoughts</h5>
-                    <p class="text-mauve mb-1" style="font-size: 0.8rem;">Reflection</p>
-                    <p class="text-muted small mb-2" style="font-size: 0.75rem;">Process emotional experience through narrative</p>
-                    <div class="mt-auto">
-                        <span class="badge bg-danger" style="font-size: 0.7rem;">{{ recent_diary }} Entries</span>
-                        <span class="badge bg-secondary" style="font-size: 0.7rem;">Private</span>
-                    </div>
-                </div>
-            </a>
-        </div>
+      </div>
     </div>
-    
-    <!-- Content Spacer for Short Pages -->
-    <div class="content-spacer"></div>
-    
-    <!-- Birthday Countdown Widget -->
-    {% if birthday_countdown %}
-    <div class="row mt-3 mb-3">
-        <div class="col-lg-6 mx-auto">
-            <div class="card border-0 shadow-sm {% if birthday_countdown.is_today %}birthday-celebration{% endif %}" 
-                 style="background: {% if birthday_countdown.is_today %}linear-gradient(135deg, #FFD700, #FFA500){% else %}linear-gradient(135deg, rgba(232,180,184,0.25), rgba(230,230,250,0.25)){% endif %}; border-radius: 16px;">
-                <div class="card-body p-4 text-center">
-                    {% if birthday_countdown.is_today %}
-                    <!-- Birthday Today! -->
-                    <div class="birthday-icons mb-2">
-                        <i class="fas fa-birthday-cake text-white" style="font-size: 2.5rem;"></i>
-                    </div>
-                    <h3 class="mb-2" style="color: #fff; font-weight: 700;">🎂 Happy Birthday Jayti! 🎂</h3>
-                    <p class="mb-0" style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
-                        Wishing you joy, love, and endless blessings on your special day!
-                    </p>
-                    <p class="mt-2 mb-0" style="color: rgba(255,255,255,0.8);">
-                        <i class="fas fa-gift me-2"></i>Turning {{ birthday_countdown.age_on_next_birthday }} today!
-                    </p>
-                    {% elif birthday_countdown.is_tomorrow %}
-                    <!-- Birthday Tomorrow -->
-                    <div class="mb-2">
-                        <i class="fas fa-hourglass-half text-blush" style="font-size: 2rem;"></i>
-                    </div>
-                    <h4 class="mb-2" style="color: var(--dusty-rose);">🎁 Birthday Tomorrow! 🎁</h4>
-                    <p class="mb-0 text-muted">Get ready for a special celebration!</p>
-                    {% else %}
-                    <!-- Countdown -->
-                    <div class="mb-2">
-                        <i class="fas fa-heart text-blush" style="font-size: 1.5rem;"></i>
-                    </div>
-                    <p class="text-mauve mb-1" style="font-size: 0.85rem;">Days until your birthday</p>
-                    <h2 class="display-4 mb-1" style="color: var(--dusty-rose); font-weight: 700;">
-                        {{ birthday_countdown.days_until }}
-                    </h2>
-                    <p class="text-muted mb-0" style="font-size: 0.8rem;">
-                        <i class="fas fa-calendar-alt me-1"></i>February 6 · Turning {{ birthday_countdown.age_on_next_birthday }}
-                    </p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+  </div>
+  
+  <!-- Quick Actions -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h3>Quick Actions</h3>
     </div>
-    {% endif %}
-    
-    <!-- Daily Inspiration (Fills Bottom Space) -->
-    <div class="row mt-3">
-        <div class="col-lg-8 mx-auto">
-            <div class="daily-thought-card">
-                <blockquote class="blockquote mb-0">
-                    {% if daily_thought %}
-                    <p class="font-display mb-2" style="font-size: 1.1rem; color: var(--warm-charcoal); line-height: 1.5;">
-                        {{ daily_thought.content }}
-                    </p>
-                    <footer class="blockquote-footer" style="font-size: 0.8rem;">
-                        {{ daily_thought.author|default:"Unknown" }}
-                    </footer>
-                    {% else %}
-                    <p class="font-display mb-2" style="font-size: 1.1rem; color: var(--warm-charcoal);">
-                        The lotus blooms most beautifully from the deepest and thickest mud.
-                    </p>
-                    <footer class="blockquote-footer" style="font-size: 0.8rem;">
-                        Buddhist Proverb
-                    </footer>
-                    {% endif %}
-                </blockquote>
-            </div>
-        </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <a href="{% url 'diary_write' %}" class="btn btn-primary btn-block btn-lg w-100" style="min-height: 44px;">
+        <i class="fas fa-book"></i> Write Diary
+      </a>
     </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <a href="{% url 'note_create' %}" class="btn btn-success btn-block btn-lg w-100" style="min-height: 44px;">
+        <i class="fas fa-sticky-note"></i> New Note
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <a href="{% url 'goal_list' %}" class="btn btn-info btn-block btn-lg w-100" style="min-height: 44px;">
+        <i class="fas fa-bullseye"></i> View Goals
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <a href="{% url 'ai_chat' %}" class="btn btn-warning btn-block btn-lg w-100" style="min-height: 44px;">
+        <i class="fas fa-robot"></i> Ask Jyati
+      </a>
+    </div>
+  </div>
+  
+  <!-- Weekly Summary (Show on Sundays) -->
+  {% if show_weekly_summary %}
+  <div class="card mt-4" style="border-left: 5px solid #D4A5A5;" role="region" aria-label="Weekly summary">
+    <div class="card-body">
+      <h3><i class="fas fa-calendar-week"></i> Your Weekly Summary</h3>
+      <div id="weekly-summary-content" aria-live="polite">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 </div>
-
-<!-- Page Fill Element (Floral Gradient at Bottom) -->
-<div class="page-fill-element"></div>
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="{% static 'js/dark-mode.js' %}"></script>
+<script src="{% static 'js/pwa-register.js' %}"></script>
+
 <script>
-    function dismissVivekGreeting() {
-        const greeting = document.getElementById('vivekGreeting');
-        if (greeting) {
-            greeting.style.opacity = '0';
-            greeting.style.transition = 'opacity 0.3s ease';
-            setTimeout(() => {
-                greeting.style.display = 'none';
-            }, 300);
-        }
+// Load daily briefing
+fetch('/api/daily-briefing/')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('briefing-content').innerHTML = 
+        '<p style="white-space: pre-wrap; line-height: 1.8;">' + data.briefing + '</p>';
     }
-    
-    // Auto-dismiss after 2 minutes
-    setTimeout(() => {
-        dismissVivekGreeting();
-    }, 120000);
+  })
+  .catch(error => console.error('Error loading briefing:', error));
+
+// Load astro insight
+fetch('/api/daily-astro/')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success && data.insight.has_chart) {
+      document.getElementById('astro-content').innerHTML = 
+        '<p>' + data.insight.insight + '</p>';
+    } else {
+      document.getElementById('astro-insight').style.display = 'none';
+    }
+  })
+  .catch(error => console.error('Error loading astro:', error));
+
+// Load mood chart
+fetch('/api/mood-trends/?period=month')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success && data.chart_data.labels.length > 0) {
+      const ctx = document.getElementById('moodChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.chart_data.labels,
+          datasets: [{
+            label: 'Mood',
+            data: data.chart_data.data,
+            borderColor: '#FF69B4',
+            backgroundColor: 'rgba(255, 105, 180, 0.1)',
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 5,
+              ticks: {
+                stepSize: 1
+              }
+            }
+          }
+        }
+      });
+    }
+  })
+  .catch(error => console.error('Error loading mood chart:', error));
+
+// Load goal progress chart
+fetch('/api/goal-progress/')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success && data.charts.goals.labels.length > 0) {
+      const ctx = document.getElementById('goalChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: data.charts.goals.labels,
+          datasets: [{
+            data: data.charts.goals.data,
+            backgroundColor: data.charts.goals.colors
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+  })
+  .catch(error => console.error('Error loading goal chart:', error));
+
+// Load weekly summary (if Sunday)
+{% if show_weekly_summary %}
+fetch('/api/weekly-summary/')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('weekly-summary-content').innerHTML = 
+        '<p style="white-space: pre-wrap; line-height: 1.8;">' + data.summary + '</p>';
+    }
+  })
+  .catch(error => console.error('Error loading weekly summary:', error));
+{% endif %}
 </script>
 {% endblock %}

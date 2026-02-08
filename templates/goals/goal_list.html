@@ -20,48 +20,32 @@
         </div>
     </div>
 
-    <!-- Progress Overview Charts -->
+    <!-- Stats -->
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm" data-testid="goals-overview-chart">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-3">Goals Overview</h6>
-                    <div style="height: 180px; position: relative;">
-                        <canvas id="goalsOverviewChart"></canvas>
-                    </div>
-                    <div class="mt-2">
-                        <span class="badge bg-primary me-1">{{ total_active }} Active</span>
-                        <span class="badge bg-success">{{ total_completed }} Done</span>
-                    </div>
+            <div class="card text-center h-100 p-3">
+                <div class="card-body">
+                    <i class="fas fa-bullseye text-primary mb-2" style="font-size: 2rem;"></i>
+                    <h3 class="mb-1">{{ total_active }}</h3>
+                    <p class="text-muted mb-0">Active Goals</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm" data-testid="tasks-progress-chart">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-3">Tasks Progress</h6>
-                    <div style="height: 180px; position: relative;">
-                        <canvas id="tasksProgressChart"></canvas>
-                    </div>
-                    <div class="mt-2">
-                        <span class="badge bg-success me-1">{{ tasks_done }} Done</span>
-                        <span class="badge bg-warning text-dark me-1">{{ tasks_in_progress }} In Progress</span>
-                        <span class="badge bg-secondary">{{ tasks_pending }} Pending</span>
-                    </div>
+            <div class="card text-center h-100 p-3">
+                <div class="card-body">
+                    <i class="fas fa-check-circle text-success mb-2" style="font-size: 2rem;"></i>
+                    <h3 class="mb-1">{{ total_completed }}</h3>
+                    <p class="text-muted mb-0">Completed</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm" data-testid="completion-rate-chart">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-3">Overall Completion</h6>
-                    <div style="height: 180px; position: relative;">
-                        <canvas id="completionRateChart"></canvas>
-                    </div>
-                    <div class="mt-2">
-                        <h4 class="mb-0" style="color: var(--dusty-rose);">{{ overall_completion }}%</h4>
-                        <small class="text-muted">Average Progress</small>
-                    </div>
+            <div class="card text-center h-100 p-3">
+                <div class="card-body">
+                    <i class="fas fa-tasks text-info mb-2" style="font-size: 2rem;"></i>
+                    <a href="{% url 'goal_board' %}" class="btn btn-outline-primary btn-sm">View Board</a>
+                    <p class="text-muted mb-0 mt-2 small">Task Overview</p>
                 </div>
             </div>
         </div>
@@ -153,96 +137,4 @@
     </div>
     {% endif %}
 </div>
-
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Color palette matching the design
-    const colors = {
-        primary: '#E8B4B8',
-        success: '#90EE90',
-        warning: '#FFD700',
-        secondary: '#D3D3D3',
-        dustyRose: '#C99AA1',
-        cream: '#FFF8F9'
-    };
-
-    // Goals Overview Doughnut Chart
-    const goalsCtx = document.getElementById('goalsOverviewChart');
-    if (goalsCtx) {
-        new Chart(goalsCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Active', 'Completed'],
-                datasets: [{
-                    data: [{{ total_active }}, {{ total_completed }}],
-                    backgroundColor: [colors.primary, colors.success],
-                    borderWidth: 0,
-                    cutout: '70%'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                }
-            }
-        });
-    }
-
-    // Tasks Progress Doughnut Chart
-    const tasksCtx = document.getElementById('tasksProgressChart');
-    if (tasksCtx) {
-        new Chart(tasksCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Done', 'In Progress', 'Pending'],
-                datasets: [{
-                    data: [{{ tasks_done }}, {{ tasks_in_progress }}, {{ tasks_pending }}],
-                    backgroundColor: [colors.success, colors.warning, colors.secondary],
-                    borderWidth: 0,
-                    cutout: '70%'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                }
-            }
-        });
-    }
-
-    // Completion Rate Gauge Chart
-    const completionCtx = document.getElementById('completionRateChart');
-    if (completionCtx) {
-        const completion = {{ overall_completion }};
-        new Chart(completionCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Completed', 'Remaining'],
-                datasets: [{
-                    data: [completion, 100 - completion],
-                    backgroundColor: [colors.dustyRose, colors.cream],
-                    borderWidth: 0,
-                    cutout: '75%',
-                    circumference: 270,
-                    rotation: 225
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: false }
-                }
-            }
-        });
-    }
-});
-</script>
 {% endblock %}

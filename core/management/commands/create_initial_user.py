@@ -1,55 +1,20 @@
-"""
-Management command to create the initial user for Jayti.
-
-This command creates the default user with:
-- Username: jayati
-- Password: jayati2026
-
-Usage:
-    python manage.py create_initial_user
-"""
-
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
-from core.models import UserProfile
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class Command(BaseCommand):
-    help = 'Creates the initial user for Jayti with default credentials'
+    help = 'Creates initial user jayati with password jayati2026'
 
-    def handle(self, *args, **kwargs):
-        username = 'jayati'
-        password = 'jayati2026'
-        
-        # Check if user already exists
-        if User.objects.filter(username=username).exists():
-            self.stdout.write(
-                self.style.WARNING(f'User "{username}" already exists. Skipping creation.')
-            )
+    def handle(self, *args, **options):
+        if User.objects.filter(username='jayati').exists():
+            self.stdout.write(self.style.WARNING('User "jayati" already exists'))
             return
-        
-        # Create the superuser
-        user = User.objects.create_superuser(
-            username=username,
-            password=password,
+
+        user = User.objects.create_user(
+            username='jayati',
+            password='jayati2026',
             first_name='Jayti',
-            last_name='Pargal',
-            email='jayti@jaytipargal.in'
+            last_name='Pargal'
         )
-        
-        # Create user profile
-        UserProfile.objects.get_or_create(
-            user=user,
-            defaults={
-                'display_name': 'Jayti',
-                'preferred_language': 'en',
-                'timezone': 'Asia/Kolkata'
-            }
-        )
-        
-        self.stdout.write(
-            self.style.SUCCESS(f'Successfully created user "{username}" with password "{password}"')
-        )
-        self.stdout.write(
-            self.style.SUCCESS('Jayti can change her password after first login from Profile settings.')
-        )
+        self.stdout.write(self.style.SUCCESS(f'Successfully created user: {user.username}'))

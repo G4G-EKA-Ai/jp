@@ -22,62 +22,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-only-insecure-key-change-in-produ
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# Allowed hosts - handles Railway's dynamic hostnames
-# Railway sets its own hostname dynamically, so we need to allow all Railway domains
-_default_hosts = 'localhost,127.0.0.1,0.0.0.0'
-ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', _default_hosts)
-ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_ENV.split(',') if h.strip()]
-
-# Emergent platform domains (including deployment cloud)
-emergent_domains = [
-    '.preview.emergentagent.com', 
-    '.emergentagent.com', 
-    '.emergent.host',
-    '.emergentcf.cloud',  # Emergent deployment cloud
-    '.deploy.emergentcf.cloud',  # Emergent deployment subdomain
-]
-for domain in emergent_domains:
-    if domain not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(domain)
-
-# Custom domain for production
-custom_domains = ['jaytibirthday.in', 'www.jaytibirthday.in']
-for domain in custom_domains:
-    if domain not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(domain)
-
-# Railway deployment: Add Railway domain patterns
-# Railway domains follow pattern: *.up.railway.app
-railway_domains = ['.up.railway.app', '*.up.railway.app']
-for domain in railway_domains:
-    if domain not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(domain)
-
-# Also add any RAILWAY_STATIC_URL domain if present
-railway_static_url = os.environ.get('RAILWAY_STATIC_URL', '')
-if railway_static_url:
-    from urllib.parse import urlparse
-    parsed = urlparse(railway_static_url)
-    if parsed.hostname and parsed.hostname not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(parsed.hostname)
-
-# Additional Railway environment variables
-railway_public_domain = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
-if railway_public_domain and railway_public_domain not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append(railway_public_domain)
-
-# If running on Railway without explicit ALLOWED_HOSTS, allow all (for debugging)
-# In production, you should set explicit ALLOWED_HOSTS
-if os.environ.get('RAILWAY_ENVIRONMENT') and not os.environ.get('ALLOWED_HOSTS'):
-    ALLOWED_HOSTS.append('*')
+# Allowed hosts - Accept all for K8s internal health checks
+ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted Origins for Emergent platform
 CSRF_TRUSTED_ORIGINS = [
-    'https://ai-companion-app-30.preview.emergentagent.com',
-    'https://*.emergentagent.com',
-    'https://*.emergent.host',
-    'https://*.emergentcf.cloud',
-    'https://*.deploy.emergentcf.cloud',
+    'https://*.preview.emergentagent.com',
     'https://jaytibirthday.in',
     'https://www.jaytibirthday.in',
     'https://*.railway.app',
@@ -242,7 +192,7 @@ JAYTI_BIRTH_DETAILS = {
 }
 
 # Gemini API Configuration
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyC5F5GSfJeB1_4qN5J_X8L8Tzp9KQGgGqg')
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-pro')
 
 # Google Service Account Credentials (for Gemini/Vertex AI)
@@ -362,3 +312,18 @@ if RAILWAY_DEBUG:
     # More verbose logging in debug mode
     LOGGING['loggers']['django']['level'] = 'DEBUG'
     LOGGING['handlers']['console']['level'] = 'DEBUG'
+
+# VAPID keys for web push notifications
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY', '')
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY', '')
+VAPID_ADMIN_EMAIL = os.environ.get('VAPID_ADMIN_EMAIL', 'admin@jaytibirthday.in')
+
+# SSL/HTTPS settings for production
+if not DEBUG:
+    # Disable SSL redirect for Emergent internal health checks
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'

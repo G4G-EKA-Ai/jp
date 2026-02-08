@@ -172,6 +172,41 @@ def logout_view(request):
 
 
 @login_required
+def get_birthday_countdown():
+    """Calculate days until next birthday (February 6)"""
+    from datetime import datetime, date
+    
+    today = date.today()
+    current_year = today.year
+    
+    # Birthday is February 6
+    birthday_this_year = date(current_year, 2, 6)
+    
+    if today < birthday_this_year:
+        # Birthday is coming up this year
+        days_until = (birthday_this_year - today).days
+        next_birthday = birthday_this_year
+    elif today == birthday_this_year:
+        # Today is the birthday!
+        days_until = 0
+        next_birthday = birthday_this_year
+    else:
+        # Birthday has passed, calculate for next year
+        next_birthday = date(current_year + 1, 2, 6)
+        days_until = (next_birthday - today).days
+    
+    # Calculate age on next birthday
+    age_on_next_birthday = next_birthday.year - 1997
+    
+    return {
+        'days_until': days_until,
+        'is_today': days_until == 0,
+        'is_tomorrow': days_until == 1,
+        'next_birthday': next_birthday,
+        'age_on_next_birthday': age_on_next_birthday,
+    }
+
+
 def dashboard(request):
     """Main dashboard with navigation to all modules"""
     from notes.models import Note
@@ -185,29 +220,14 @@ def dashboard(request):
     pending_tasks = Task.objects.filter(goal__user=request.user, status='pending').count()
     
     # Check if today is February 6 (Jayti's Birthday) in Indian Standard Time (IST)
-    # Using IST ensures the birthday message appears at midnight India time, not UTC
     now_utc = timezone.now()
     ist_tz = pytz.timezone('Asia/Kolkata')
     today_ist = now_utc.astimezone(ist_tz)
     
     is_birthday = (today_ist.month == 2 and today_ist.day == 6)
     jayti_age = today_ist.year - 1997
-    
-    # Only show the message on her birthday (Feb 6) each year
-    # This makes it special rather than a daily interruption
     show_vivek_message = is_birthday
-    
-    # Get daily content and time greeting
-    daily_content = get_daily_content()
-    time_greeting = get_time_greeting()
-    
-    # Get display name from profile if available
-    display_name = None
-    try:
-        if hasattr(request.user, 'profile') and request.user.profile.display_name:
-            display_name = request.user.profile.display_name
-    except:
-        pass
+    show_weekly_summary = (today_ist.weekday() == 6)
     
     # Get birthday countdown data
     birthday_countdown = get_birthday_countdown()
@@ -220,9 +240,7 @@ def dashboard(request):
         'show_vivek_message': show_vivek_message,
         'is_birthday': is_birthday,
         'jayti_age': jayti_age,
-        'daily_thought': daily_content['thought'],
-        'time_greeting': time_greeting,
-        'display_name': display_name or 'Jayti',
+        'show_weekly_summary': show_weekly_summary,
         'birthday_countdown': birthday_countdown,
     }
     
