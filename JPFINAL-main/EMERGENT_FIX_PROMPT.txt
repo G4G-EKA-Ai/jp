@@ -1,0 +1,72 @@
+URGENT: Update deployment to fix ALLOWED_HOSTS issue
+
+CONTEXT:
+The current deployment is failing with "DisallowedHost" errors because it's using an old repository. The fix is already in the new repository: https://github.com/ekaaiurgaa-glitch/JPFINAL
+
+ISSUE:
+Django is rejecting K8s internal IPs (10.116.83.105, etc.) causing health check failures.
+
+FIX APPLIED IN NEW REPO:
+- settings.py has ALLOWED_HOSTS = ['*']
+- .env.production has ALLOWED_HOSTS=*
+
+TASK:
+Update the /app directory to use the JPFINAL repository with the fixed ALLOWED_HOSTS configuration.
+
+EXECUTE THESE COMMANDS IN ORDER:
+
+1. Backup current deployment:
+```bash
+cp -r /app /tmp/app_backup_$(date +%Y%m%d_%H%M%S)
+```
+
+2. Navigate to app directory:
+```bash
+cd /app
+```
+
+3. Update git remote to new repo:
+```bash
+git remote set-url origin https://github.com/ekaaiurgaa-glitch/JPFINAL.git
+```
+
+4. Fetch and reset to latest code:
+```bash
+git fetch origin
+git reset --hard origin/main
+```
+
+5. Install dependencies (no cache):
+```bash
+pip install --no-cache-dir -r backend/requirements.txt
+```
+
+6. Run migrations:
+```bash
+python manage.py migrate
+```
+
+7. Collect static files:
+```bash
+python manage.py collectstatic --noinput
+```
+
+8. Set environment variable:
+```bash
+export ALLOWED_HOSTS="*"
+```
+
+9. Restart Django service:
+```bash
+pkill -f "python manage.py runserver"
+python manage.py runserver 0.0.0.0:8000 &
+```
+
+VERIFICATION:
+After deployment, check:
+- No more "DisallowedHost" errors in logs
+- Health checks pass
+- Deployment becomes ready
+
+EXPECTED RESULT:
+Django will accept requests from all hosts including K8s internal IPs, health checks will pass, and deployment will succeed.

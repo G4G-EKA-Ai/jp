@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Astro - JaytiPargal.in{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 style="color: var(--dusty-rose);"><i class="fas fa-star me-2"></i>Your Astrology</h2>
+            <p class="text-muted">Vedic birth chart and cosmic guidance based on your birth details.</p>
+        </div>
+    </div>
+
+    {% if swisseph_unavailable %}
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <strong>Astrology features temporarily unavailable.</strong> Please try again later.
+    </div>
+    {% endif %}
+
+    <!-- Birth Info Card -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i>Birth Details</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><strong><i class="fas fa-birthday-cake me-2 text-primary"></i>Date:</strong> {{ birth_data.day }}-{{ birth_data.month }}-{{ birth_data.year }}</li>
+                        <li class="mb-2"><strong><i class="fas fa-clock me-2 text-primary"></i>Time:</strong> {{ birth_data.hour }}:{{ birth_data.minute|default:'00' }}</li>
+                        <li class="mb-2"><strong><i class="fas fa-map-marker-alt me-2 text-primary"></i>Place:</strong> {{ birth_data.location }}</li>
+                        <li><strong><i class="fas fa-globe me-2 text-primary"></i>Coordinates:</strong> {{ birth_data.latitude }}, {{ birth_data.longitude }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-sun me-2"></i>Ascendant</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2 style="font-size: 3rem;">{{ rashi_info.symbol }}</h2>
+                    <h4 class="mb-1">{{ ascendant|title }}</h4>
+                    <p class="text-muted mb-2">{{ rashi_info.quality }} {{ rashi_info.element }}</p>
+                    <p class="small text-muted">Lord: {{ rashi_info.lord|title }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Cards -->
+    <div class="row mb-4">
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{% url 'birth_chart' %}" class="text-decoration-none">
+                <div class="card h-100 text-center p-3 hover-card">
+                    <div class="card-body">
+                        <i class="fas fa-chart-pie text-primary mb-3" style="font-size: 2.5rem;"></i>
+                        <h5>Birth Chart</h5>
+                        <p class="text-muted small mb-0">View your complete Kundli with planetary positions</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{% url 'house_details' %}" class="text-decoration-none">
+                <div class="card h-100 text-center p-3 hover-card">
+                    <div class="card-body">
+                        <i class="fas fa-home text-success mb-3" style="font-size: 2.5rem;"></i>
+                        <h5>12 Houses</h5>
+                        <p class="text-muted small mb-0">Detailed analysis of each house in your chart</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{% url 'dasha_periods' %}" class="text-decoration-none">
+                <div class="card h-100 text-center p-3 hover-card">
+                    <div class="card-body">
+                        <i class="fas fa-hourglass-half text-warning mb-3" style="font-size: 2.5rem;"></i>
+                        <h5>Dasha Periods</h5>
+                        <p class="text-muted small mb-0">Vimshottari Dasha timeline and predictions</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{% url 'predictions' %}" class="text-decoration-none">
+                <div class="card h-100 text-center p-3 hover-card">
+                    <div class="card-body">
+                        <i class="fas fa-compass text-info mb-3" style="font-size: 2.5rem;"></i>
+                        <h5>Guidance</h5>
+                        <p class="text-muted small mb-0">90-day cosmic guidance and predictions</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Current Dasha -->
+    {% if current_dasha %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Current Mahadasha</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 style="color: var(--dusty-rose);">{{ current_dasha.lord }} Mahadasha</h4>
+                            <p class="text-muted">
+                                <i class="far fa-calendar-alt me-2"></i>
+                                {{ current_dasha.start_date|date:"M d, Y" }} - {{ current_dasha.end_date|date:"M d, Y" }}
+                            </p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <a href="{% url 'dasha_periods' %}" class="btn btn-primary">
+                                <i class="fas fa-eye me-2"></i>View Full Timeline
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

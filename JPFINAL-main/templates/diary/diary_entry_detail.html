@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Diary Entry - {{ entry.entry_date|date:"F d, Y" }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'diary_overview' %}">Diary</a></li>
+                    <li class="breadcrumb-item active">{{ entry.entry_date|date:"M d, Y" }}</li>
+                </ol>
+            </nav>
+
+            <!-- Entry Card -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-1" style="color: var(--dusty-rose);">
+                                <i class="far fa-calendar-alt me-2"></i>{{ entry.entry_date|date:"l, F d, Y" }}
+                            </h3>
+                            <div class="d-flex gap-2 mt-2">
+                                {% if entry.input_method == 'voice' %}
+                                    <span class="badge bg-info"><i class="fas fa-microphone me-1"></i>Voice Entry</span>
+                                {% elif entry.input_method == 'stylus' %}
+                                    <span class="badge bg-secondary"><i class="fas fa-pen me-1"></i>Handwritten</span>
+                                {% else %}
+                                    <span class="badge bg-light text-dark"><i class="fas fa-keyboard me-1"></i>Typed</span>
+                                {% endif %}
+                                
+                                {% if entry.mood %}
+                                <span class="badge bg-light text-dark">
+                                    Mood: {% if entry.mood == 1 %}Struggling{% elif entry.mood == 2 %}Difficult{% elif entry.mood == 3 %}Neutral{% elif entry.mood == 4 %}Good{% else %}Great{% endif %}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            {% if is_editable %}
+                            <a href="{% url 'diary_write' entry.entry_date|date:'Y-m-d' %}" class="btn btn-primary">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </a>
+                            {% else %}
+                            <span class="badge bg-light text-muted">
+                                <i class="fas fa-lock me-1"></i>Locked
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    {% if entry.prompt_used %}
+                    <div class="alert alert-light border mb-4">
+                        <small class="text-muted"><i class="fas fa-lightbulb me-2"></i>Prompt:</small>
+                        <p class="fst-italic mb-0 mt-1">{{ entry.prompt_used }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if entry.content %}
+                    <div class="diary-content" style="font-size: 1.1rem; line-height: 1.9; white-space: pre-wrap;">
+                        {{ entry.content }}
+                    </div>
+                    {% endif %}
+
+                    {% if entry.voice_transcript %}
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="text-muted mb-2"><i class="fas fa-microphone me-2"></i>Voice Transcript</h6>
+                        <p class="mb-0" style="white-space: pre-wrap;">{{ entry.voice_transcript }}</p>
+                        {% if entry.voice_duration %}
+                        <small class="text-muted">Duration: {{ entry.voice_duration }} seconds</small>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if entry.handwriting_strokes %}
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="text-muted mb-2"><i class="fas fa-pen me-2"></i>Handwritten Entry</h6>
+                        <p class="text-muted small">Handwritten content saved</p>
+                        {% if entry.handwriting_ocr_text %}
+                        <hr>
+                        <p class="mb-0" style="white-space: pre-wrap;"><strong>OCR Text:</strong> {{ entry.handwriting_ocr_text }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if entry.mood_note %}
+                    <div class="mt-4 p-3 alert alert-secondary">
+                        <h6 class="mb-1"><i class="fas fa-heart me-2"></i>Mood Note</h6>
+                        <p class="mb-0">{{ entry.mood_note }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'diary_overview' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Diary
+                        </a>
+                        <div>
+                            {% if not is_editable %}
+                            <small class="text-muted me-3">
+                                <i class="fas fa-info-circle me-1"></i>Past entries are read-only
+                            </small>
+                            {% endif %}
+                            <a href="{% url 'diary_calendar' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-calendar me-2"></i>Calendar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

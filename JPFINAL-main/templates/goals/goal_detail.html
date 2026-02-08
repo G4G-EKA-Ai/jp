@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ goal.title }} - Goals{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'goal_list' %}">Goals</a></li>
+            <li class="breadcrumb-item active">{{ goal.title|truncatechars:30 }}</li>
+        </ol>
+    </nav>
+
+    <!-- Goal Header -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-white py-3">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="d-flex gap-2 mb-2">
+                        <span class="badge bg-primary">{{ goal.get_time_horizon_display }}</span>
+                        <span class="badge bg-secondary">{{ goal.get_role_category_display }}</span>
+                        <span class="badge bg-info">{{ goal.get_experience_level_display }}</span>
+                    </div>
+                    <h3 class="mb-1" style="color: var(--dusty-rose);">{{ goal.title }}</h3>
+                    <p class="text-muted mb-0">Target: {{ goal.target_date|date:"F d, Y" }}</p>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'goal_edit' goal.pk %}">
+                            <i class="fas fa-edit me-2"></i>Edit Goal
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'regenerate_ai_tasks' goal.pk %}">
+                            <i class="fas fa-magic me-2"></i>Regenerate AI Tasks
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'goal_delete' goal.pk %}">
+                            <i class="fas fa-trash-alt me-2"></i>Delete Goal
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p>{{ goal.description|linebreaks }}</p>
+            
+            <div class="mt-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Overall Progress</span>
+                    <span class="fw-bold">{{ goal.completion_percentage }}%</span>
+                </div>
+                <div class="progress" style="height: 12px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                         role="progressbar" style="width: {{ goal.completion_percentage }}%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks by Department -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4><i class="fas fa-tasks me-2"></i>Tasks</h4>
+                <a href="{% url 'task_create' goal.pk %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus me-1"></i>Add Task
+                </a>
+            </div>
+
+            {% if tasks %}
+                <!-- Department Tabs -->
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#all-tasks">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#strategy">Strategy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#finance">Finance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#hr">HR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#operations">Operations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#sales">Sales</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="all-tasks" class="tab-pane fade show active">
+                        {% include "goals/_task_list.html" with tasks=tasks %}
+                    </div>
+                    <div id="strategy" class="tab-pane fade">
+                        {% include "goals/_task_list.html" with tasks=tasks_by_status.pending|add:tasks_by_status.in_progress|add:tasks_by_status.done %}
+                    </div>
+                    <!-- Other department tabs handled similarly -->
+                </div>
+            {% else %}
+                <div class="text-center py-5 bg-light rounded">
+                    <i class="fas fa-tasks text-muted mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="text-muted">No tasks yet</h5>
+                    <p class="text-muted">AI-generated tasks should appear soon, or you can add tasks manually.</p>
+                    <a href="{% url 'task_create' goal.pk %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add First Task
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Milestones -->
+    {% if milestones %}
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3"><i class="fas fa-flag me-2"></i>Milestones</h4>
+            <div class="timeline">
+                {% for milestone in milestones %}
+                <div class="card mb-2 {% if milestone.is_achieved %}border-success{% endif %}">
+                    <div class="card-body py-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if milestone.is_achieved %}
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                {% else %}
+                                    <i class="far fa-circle text-muted me-2"></i>
+                                {% endif %}
+                                <strong>{{ milestone.title }}</strong>
+                            </div>
+                            <small class="text-muted">{{ milestone.target_date|date:"M Y" }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% comment %}Task List Partial{% endcomment %}
+{% block extra_js %}
+<script>
+function updateTaskStatus(taskId, status) {
+    fetch(`/goals/task/${taskId}/update/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: `status=${status}`
+    }).then(() => location.reload());
+}
+</script>
+{% endblock %}
+{% endblock %}

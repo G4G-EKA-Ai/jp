@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Task - {{ goal.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'goal_list' %}">Goals</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'goal_detail' goal.pk %}">{{ goal.title|truncatechars:20 }}</a></li>
+                    <li class="breadcrumb-item active">Add Task</li>
+                </ol>
+            </nav>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h4 class="mb-0" style="color: var(--dusty-rose);">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Task
+                    </h4>
+                    <p class="text-muted mb-0 small">Goal: {{ goal.title }}</p>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Task Title</label>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   placeholder="e.g., Complete Market Research Report" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" 
+                                      placeholder="Task details..."></textarea>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="department" class="form-label">Department</label>
+                                <select class="form-select" id="department" name="department" required>
+                                    <option value="strategy">Strategy</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="hr">HR</option>
+                                    <option value="operations">Operations</option>
+                                    <option value="sales">Sales</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="due_date" class="form-label">Due Date</label>
+                                <input type="date" class="form-control" id="due_date" name="due_date" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Task Frequency</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_weekly" name="is_weekly">
+                                <label class="form-check-label" for="is_weekly">Weekly recurring task</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_monthly" name="is_monthly">
+                                <label class="form-check-label" for="is_monthly">Monthly recurring task</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_quarterly" name="is_quarterly">
+                                <label class="form-check-label" for="is_quarterly">Quarterly recurring task</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_daily" name="is_daily">
+                                <label class="form-check-label" for="is_daily">Daily recurring task</label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% url 'goal_detail' goal.pk %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Add Task
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
