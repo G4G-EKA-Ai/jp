@@ -1,57 +1,70 @@
-# JAYTI Birthday Website - PRD
+# JAYTI - Personal Life Companion Website
+## Product Requirements Document
 
-## Project Overview
-Personal life companion website for Jayti Pargal, built with Django. Deployed on Emergent platform via Django ASGI (uvicorn) on port 8001 with Node.js proxy on port 3000.
+### Original Problem Statement
+Build a personal, feature-rich website called "JAYTI" as a birthday gift. The application should be production-ready with the following core modules:
+- Notes (with folders, tags, search, pin, PDF export)
+- Diary (typing/voice/handwriting, mood tracking, search, PDF export)
+- Goals (AI-powered marketing roadmap, Kanban board, progress charts)
+- Vedic Astrology
+- AI Companion (Gemini 1.5 Pro)
 
-## Architecture
-- **Backend**: Django 4.2 ASGI via uvicorn (port 8001)
-- **Frontend**: Django Templates proxied via Node.js (port 3000)
-- **Database**: SQLite (file-based, no external DB dependency)
-- **AI**: Google Gemini 1.5 Pro (chat + goal generation)
-- **Astrology**: Swiss Ephemeris (pyswisseph)
-- **Static Files**: WhiteNoise
+### Tech Stack
+- **Backend:** Django 5.0 on Python 3.11
+- **Frontend:** Server-side rendered Django Templates with vanilla JavaScript
+- **Database:** SQLite (user preference for cost management)
+- **AI Integration:** Google Gemini (`gemini-1.5-pro`)
+- **Deployment:** Emergent Platform
 
-## What's Been Implemented (All verified working - Feb 7, 2026)
-1. Login Page - Daily thoughts, flower slideshow, live clock, birthday overlay (Feb 6)
-2. Dashboard - Navigation hub with all 6 sections
-3. Notes - CRUD with tags, search, pin support
-4. Diary - Type/Voice/Handwriting input, mood tracking, calendar, streaks, daily prompts
-5. Goals - AI-powered task generation, Kanban board, milestones, department breakdown
-6. Astro - Vedic birth chart, 12 houses analysis, Vimshottari Dasha, 90-day predictions
-7. AI Chat - Gemini-powered Mentor Mode with context awareness (goals + mood)
-8. Profile - Display name, password change, profile picture upload
-9. Health Check - /health/ endpoint (DB, static, astro status)
+### Current Status: PRODUCTION READY ✅
 
-## Deployment Fixes Applied (Feb 7, 2026)
-- requirements.txt cleaned: 132 packages -> 11 actual dependencies
-- frontend/.env created with REACT_APP_BACKEND_URL
-- backend/.env: DEBUG=False for production
-- frontend/server.js: ports read from environment variables
-- settings.py: removed hardcoded SECRET_KEY fallback, DEBUG defaults to False
-- server.py: background thread for migrations/setup on startup
-- Database: SQLite (no PostgreSQL dependency for Emergent)
+### Implemented Features (as of Feb 8, 2026)
+1. ✅ **Login System** - Custom login page with daily inspiration quotes
+2. ✅ **Dashboard** - Welcome message, birthday countdown, daily briefing
+3. ✅ **Notes Module** - Create, edit, delete, pin, tag notes
+4. ✅ **Diary Module** - Daily entries with mood tracking
+5. ✅ **Goals Module** - Goal tracking with tasks, Kanban board
+6. ✅ **Astro Module** - Vedic astrology birth chart
+7. ✅ **AI Chat** - "Ask Jyati" powered by Gemini
+8. ✅ **Birthday Countdown Widget** - Shows days until February 6
+9. ✅ **Dark Mode Toggle** - UI preference
+10. ✅ **PWA Support** - Manifest.json and icons
 
-## Bugs Fixed Previously
-- Gemini model: gemini-pro -> gemini-1.5-pro
-- google-generativeai SDK -> google-genai
-- Birthday dismiss: removed @login_required
-- @csrf_exempt removed from AI chat
-- Astro predictions: KeyError 'house' fixed
-- Birth chart: missing template filters added
-- DiaryPrompt migration created
-- initial_data fixture loaded
+### Deployment Configuration
+- `ALLOWED_HOSTS = ['*']`
+- `CSRF_TRUSTED_ORIGINS` includes:
+  - `*.preview.emergentagent.com`
+  - `*.emergentcf.cloud`
+  - `jaytibirthday.in`
+  - `*.railway.app`
 
-## Credentials
-- Username: jayati | Password: jayati2026
+### Test Credentials
+- **Username:** `jayati`
+- **Password:** `jayati2026`
 
-## Deployment Checklist
-- [x] Django ASGI on port 8001
-- [x] Node.js proxy on port 3000
-- [x] SQLite database (no external DB needed)
-- [x] Static files via WhiteNoise
-- [x] Health check at /health/
-- [x] CSRF_TRUSTED_ORIGINS includes *.preview.emergentagent.com
-- [x] ALLOWED_HOSTS includes Emergent domains
-- [x] Migrations run on startup
-- [x] Initial user created automatically
-- [x] Fixture data loaded
+### API Endpoints Status
+| Endpoint | Status |
+|----------|--------|
+| `/health/` | ✅ 200 OK |
+| `/dashboard/` | ✅ 200 OK |
+| `/notes/` | ✅ 200 OK |
+| `/diary/` | ✅ 200 OK |
+| `/goals/` | ✅ 200 OK |
+| `/astro/` | ✅ 200 OK |
+
+### Known Limitations
+1. **SQLite Database** - Not suitable for high-concurrency production. User chose this for cost reasons.
+2. **Google Gemini deprecation warning** - `google.generativeai` package should be migrated to `google.genai`
+
+### Future Enhancements (P2)
+- PostgreSQL migration for production stability
+- Enhanced mood trend visualization with charts
+- Vedic Planetary Aspects (Drishti)
+- Push notifications
+- Automated database backup system
+
+### Files Modified This Session
+- `/app/core/views.py` - Fixed duplicate `get_birthday_countdown()` function
+- `/app/core/api_views.py` - Fixed import for models
+- `/app/jaytipargal/settings.py` - Added `.emergentcf.cloud` to CSRF_TRUSTED_ORIGINS
+- `/app/static/icons/` - Created actual PNG icons (replaced placeholders)
