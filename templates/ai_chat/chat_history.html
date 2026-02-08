@@ -43,13 +43,13 @@
         </div>
     </div>
 
-    {% if messages %}
+    {% if chat_messages %}
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex flex-column gap-2">
-                        {% for message in messages %}
+                        {% for message in chat_messages %}
                         <div class="message-item {% if message.sender == 'user' %}message-user{% else %}message-ai{% endif %}">
                             <div class="d-flex align-items-start gap-2">
                                 {% if message.sender == 'ai' %}
