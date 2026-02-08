@@ -16,7 +16,7 @@ from diary.services.search import search_diary
 from diary.services.pdf_export import export_diary_pdf
 from goals.services.progress_analytics import get_progress_chart_data
 from astro.services.daily_insight import get_daily_astro_insight
-from core.models_notifications import PushSubscription, NotificationSchedule
+from core.models import PushSubscription, NotificationSchedule
 
 
 @login_required
