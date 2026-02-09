@@ -15,7 +15,11 @@ sys.path.insert(0, '/app')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'jaytipargal.settings')
 
+# Disable connection pooling during initial setup to prevent blocking
+os.environ.setdefault('DJANGO_DISABLE_CONNECTION_CHECKS', '1')
+
 # Setup Django FIRST - server must be ready for health checks immediately
+# This should be non-blocking since we haven't touched the DB yet
 import django
 django.setup()
 
@@ -27,7 +31,7 @@ print("[JAYTI] Django ASGI application ready on port 8001")
 def run_background_setup():
     """Run migrations and initial setup in background after server starts"""
     import time
-    time.sleep(2)  # Wait for server to fully start
+    time.sleep(3)  # Wait for server to fully start and be healthy
     
     python_exec = sys.executable
     
@@ -38,7 +42,7 @@ def run_background_setup():
             cwd='/app',
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=180,  # Increased timeout for slow DB connections
             env={**os.environ, 'DJANGO_SETTINGS_MODULE': 'jaytipargal.settings'}
         )
         if result.returncode == 0:
