@@ -27,7 +27,7 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from core.models import UserProfile, DailyThought
 from notes.models import Note, NoteFolder
-from diary.models import DiaryEntry, Mood
+from diary.models import DiaryEntry
 from goals.models import Goal, Task
 from ai_chat.models import ChatSession, ChatMessage
 
