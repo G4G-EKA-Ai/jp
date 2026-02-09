@@ -94,27 +94,32 @@ WSGI_APPLICATION = 'jaytipargal.wsgi.application'
 
 def get_database_config():
     """
-    Get database configuration with proper SSL handling for Railway.
+    Get database configuration with proper SSL handling for Railway/Supabase.
     Returns a dict compatible with Django DATABASES setting.
+    CRITICAL: Connection settings optimized to prevent blocking during health checks.
     """
     database_url = os.environ.get('DATABASE_URL')
     
     if database_url:
-        # Production: Use PostgreSQL with Railway
+        # Production: Use PostgreSQL with Supabase/Railway
         # Parse the URL and handle SSL properly
         config = dj_database_url.parse(
             database_url,
             conn_max_age=600,
         )
         
-        # Add SSL mode for Railway PostgreSQL (required for connections)
-        # Railway requires SSL for external connections
+        # Add SSL mode and connection timeouts for Supabase PostgreSQL
         if 'OPTIONS' not in config:
             config['OPTIONS'] = {}
         
         # Handle sslmode properly for psycopg2
-        # Railway requires SSL but we need to pass it correctly
         config['OPTIONS']['sslmode'] = 'require'
+        
+        # Connection timeout settings to prevent blocking during startup
+        config['OPTIONS']['connect_timeout'] = 10  # 10 seconds max for connection
+        
+        # Add CONN_HEALTH_CHECKS to prevent stale connections
+        config['CONN_HEALTH_CHECKS'] = True
         
         return config
     else:
