@@ -29,7 +29,7 @@ from core.models import UserProfile, DailyThought
 from notes.models import Note, NoteFolder
 from diary.models import DiaryEntry
 from goals.models import Goal, Task
-from ai_chat.models import ChatSession, ChatMessage
+from ai_chat.models import AIConversation, AIMessage
 
 EXPORT_DIR = '/app/data_export'
 
