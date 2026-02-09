@@ -116,24 +116,8 @@ def export_notes():
     return len(notes_data)
 
 def export_diary():
-    """Export diary entries and moods"""
+    """Export diary entries"""
     print("Exporting diary...")
-    
-    # Export moods
-    moods_data = []
-    for mood in Mood.objects.all():
-        moods_data.append({
-            'id': mood.id,
-            'user_id': mood.user_id,
-            'mood_type': mood.mood_type,
-            'intensity': mood.intensity,
-            'note': mood.note,
-            'created_at': mood.created_at.isoformat() if mood.created_at else None,
-        })
-    
-    with open(f'{EXPORT_DIR}/moods.json', 'w') as f:
-        json.dump(moods_data, f, indent=2, default=serialize_datetime)
-    print(f"  Exported {len(moods_data)} moods")
     
     # Export diary entries
     diary_data = []
