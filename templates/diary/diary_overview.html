@@ -2,145 +2,235 @@
 
 {% block title %}My Diary - JaytiPargal.in{% endblock %}
 
+{% block extra_css %}
+<style>
+/* Diary Stats Grid */
+.diary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.diary-stat-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+}
+
+.diary-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.diary-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    color: white;
+}
+
+.diary-stat-icon.streak { background: linear-gradient(135deg, #f6d365, #fda085); }
+.diary-stat-icon.total { background: linear-gradient(135deg, #667eea, #764ba2); }
+.diary-stat-icon.recent { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.diary-stat-icon.insights { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+.diary-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2C2C2C;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.diary-stat-label {
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Entry Cards Grid */
+.entries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.entry-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.entry-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .diary-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .diary-stat-card {
+        min-height: 120px;
+        padding: 1rem;
+    }
+    
+    .diary-stat-number {
+        font-size: 1.75rem;
+    }
+    
+    .diary-stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .entries-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-4">
     <!-- Header -->
-    <div class="row mb-4">
-        <div class="col-md-8">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
             <h2 style="color: var(--dusty-rose);"><i class="fas fa-book-open me-2"></i>My Diary</h2>
-            <p class="text-muted">A safe space for your thoughts, memories, and reflections.</p>
+            <p class="text-muted mb-0">A safe space for your thoughts, memories, and reflections.</p>
         </div>
-        <div class="col-md-4 text-md-end">
-            <a href="{% url 'diary_write' %}" class="btn btn-primary">
-                <i class="fas fa-pen-fancy me-2"></i>Write Today
-            </a>
-        </div>
+        <a href="{% url 'diary_write' %}" class="btn btn-primary mt-2 mt-md-0">
+            <i class="fas fa-pen-fancy me-2"></i>Write Today
+        </a>
     </div>
 
-    <!-- Stats Row -->
-    <div class="row mb-4">
-        <div class="col-md-3 mb-3">
-            <div class="card h-100 text-center p-3">
-                <div class="card-body">
-                    <i class="fas fa-fire text-warning mb-2" style="font-size: 2rem;"></i>
-                    <h3 class="mb-1">{{ streak }}</h3>
-                    <p class="text-muted mb-0">Day Streak</p>
-                </div>
+    <!-- Stats Grid -->
+    <div class="diary-stats-grid">
+        <div class="diary-stat-card">
+            <div class="diary-stat-icon streak">
+                <i class="fas fa-fire"></i>
             </div>
+            <div class="diary-stat-number">{{ streak }}</div>
+            <div class="diary-stat-label">Day Streak</div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card h-100 text-center p-3">
-                <div class="card-body">
-                    <i class="fas fa-book text-primary mb-2" style="font-size: 2rem;"></i>
-                    <h3 class="mb-1">{{ total_entries }}</h3>
-                    <p class="text-muted mb-0">Total Entries</p>
-                </div>
+        <div class="diary-stat-card">
+            <div class="diary-stat-icon total">
+                <i class="fas fa-book"></i>
             </div>
+            <div class="diary-stat-number">{{ total_entries }}</div>
+            <div class="diary-stat-label">Total Entries</div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card h-100 text-center p-3">
-                <div class="card-body">
-                    <i class="fas fa-calendar-alt text-info mb-2" style="font-size: 2rem;"></i>
-                    <h3 class="mb-1">{{ entries|length }}</h3>
-                    <p class="text-muted mb-0">Recent Entries</p>
-                </div>
+        <div class="diary-stat-card">
+            <div class="diary-stat-icon recent">
+                <i class="fas fa-calendar-alt"></i>
             </div>
+            <div class="diary-stat-number">{{ entries|length }}</div>
+            <div class="diary-stat-label">Recent Entries</div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card h-100 text-center p-3">
-                <div class="card-body">
-                    <i class="fas fa-chart-line text-success mb-2" style="font-size: 2rem;"></i>
-                    <a href="{% url 'diary_summary' %}" class="btn btn-outline-primary btn-sm">View Summary</a>
-                    <p class="text-muted mb-0 mt-2 small">Insights</p>
-                </div>
+        <div class="diary-stat-card">
+            <div class="diary-stat-icon insights">
+                <i class="fas fa-chart-line"></i>
             </div>
+            <a href="{% url 'diary_summary' %}" class="btn btn-outline-primary btn-sm">View Summary</a>
+            <div class="diary-stat-label mt-2">Insights</div>
         </div>
     </div>
 
     <!-- Quick Actions -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body d-flex flex-wrap gap-2">
-                    <a href="{% url 'diary_write' %}" class="btn btn-primary">
-                        <i class="fas fa-pen me-2"></i>Write Entry
-                    </a>
-                    <a href="{% url 'diary_calendar' %}" class="btn btn-outline-primary">
-                        <i class="fas fa-calendar me-2"></i>Calendar View
-                    </a>
-                    <a href="{% url 'diary_summary' %}" class="btn btn-outline-info">
-                        <i class="fas fa-chart-pie me-2"></i>Summary
-                    </a>
-                </div>
-            </div>
+    <div class="card mb-4">
+        <div class="card-body d-flex flex-wrap gap-2">
+            <a href="{% url 'diary_write' %}" class="btn btn-primary">
+                <i class="fas fa-pen me-2"></i>Write Entry
+            </a>
+            <a href="{% url 'diary_calendar' %}" class="btn btn-outline-primary">
+                <i class="fas fa-calendar me-2"></i>Calendar View
+            </a>
+            <a href="{% url 'diary_summary' %}" class="btn btn-outline-info">
+                <i class="fas fa-chart-pie me-2"></i>Summary
+            </a>
         </div>
     </div>
 
     <!-- Recent Entries -->
-    <div class="row">
-        <div class="col-12">
-            <h4 class="mb-3"><i class="fas fa-history me-2"></i>Recent Entries</h4>
-            
-            {% if entries %}
-                <div class="row">
-                    {% for entry in entries %}
-                    <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-header bg-white py-2">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-muted small">
-                                        <i class="far fa-calendar me-1"></i>{{ entry.entry_date|date:"M d, Y" }}
-                                    </span>
-                                    {% if entry.mood %}
-                                    <span class="badge bg-light text-dark">
-                                        {% if entry.mood == 1 %}😔{% elif entry.mood == 2 %}😕{% elif entry.mood == 3 %}😐{% elif entry.mood == 4 %}🙂{% else %}😊{% endif %}
-                                    </span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                {% if entry.prompt_used %}
-                                <p class="text-muted small fst-italic mb-2">"{{ entry.prompt_used|truncatechars:60 }}"</p>
-                                {% endif %}
-                                
-                                <p class="card-text text-muted">
-                                    {% if entry.content %}
-                                        {{ entry.content|truncatechars:100 }}
-                                    {% else %}
-                                        <em>No text content</em>
-                                    {% endif %}
-                                </p>
-                                
-                                <div class="mt-2">
-                                    {% if entry.input_method == 'voice' %}
-                                        <span class="badge bg-info"><i class="fas fa-microphone me-1"></i>Voice</span>
-                                    {% elif entry.input_method == 'stylus' %}
-                                        <span class="badge bg-secondary"><i class="fas fa-pen me-1"></i>Handwritten</span>
-                                    {% else %}
-                                        <span class="badge bg-light text-dark"><i class="fas fa-keyboard me-1"></i>Typed</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="card-footer bg-white py-2">
-                                <a href="{% url 'diary_entry_detail' entry.pk %}" class="btn btn-sm btn-outline-primary w-100">
-                                    <i class="fas fa-eye me-1"></i>Read Entry
-                                </a>
-                            </div>
-                        </div>
+    <h4 class="mb-3"><i class="fas fa-history me-2"></i>Recent Entries</h4>
+    
+    {% if entries %}
+        <div class="entries-grid">
+            {% for entry in entries %}
+            <div class="entry-card">
+                <div class="card-header bg-white py-2 px-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted small">
+                            <i class="far fa-calendar me-1"></i>{{ entry.entry_date|date:"M d, Y" }}
+                        </span>
+                        {% if entry.mood %}
+                        <span class="badge bg-light text-dark">
+                            {% if entry.mood == 1 %}😔{% elif entry.mood == 2 %}😕{% elif entry.mood == 3 %}😐{% elif entry.mood == 4 %}🙂{% else %}😊{% endif %}
+                        </span>
+                        {% endif %}
                     </div>
-                    {% endfor %}
                 </div>
-            {% else %}
-                <div class="text-center py-5">
-                    <i class="fas fa-book-open text-muted mb-3" style="font-size: 3rem;"></i>
-                    <h5 class="text-muted">No entries yet</h5>
-                    <p class="text-muted">Start your journey by writing your first entry today.</p>
-                    <a href="{% url 'diary_write' %}" class="btn btn-primary">
-                        <i class="fas fa-pen-fancy me-2"></i>Write First Entry
+                <div class="card-body">
+                    {% if entry.prompt_used %}
+                    <p class="text-muted small fst-italic mb-2">"{{ entry.prompt_used|truncatechars:60 }}"</p>
+                    {% endif %}
+                    
+                    <p class="card-text text-muted">
+                        {% if entry.content %}
+                            {{ entry.content|truncatechars:100 }}
+                        {% else %}
+                            <em>No text content</em>
+                        {% endif %}
+                    </p>
+                    
+                    <div class="mt-2">
+                        {% if entry.input_method == 'voice' %}
+                            <span class="badge bg-info"><i class="fas fa-microphone me-1"></i>Voice</span>
+                        {% elif entry.input_method == 'stylus' %}
+                            <span class="badge bg-secondary"><i class="fas fa-pen me-1"></i>Handwritten</span>
+                        {% else %}
+                            <span class="badge bg-light text-dark"><i class="fas fa-keyboard me-1"></i>Typed</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer bg-white py-2 px-3">
+                    <a href="{% url 'diary_entry_detail' entry.pk %}" class="btn btn-sm btn-outline-primary w-100">
+                        <i class="fas fa-eye me-1"></i>Read Entry
                     </a>
                 </div>
-            {% endif %}
+            </div>
+            {% endfor %}
         </div>
-    </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-book-open text-muted mb-3" style="font-size: 3rem;"></i>
+            <h5 class="text-muted">No entries yet</h5>
+            <p class="text-muted">Start your journey by writing your first entry today.</p>
+            <a href="{% url 'diary_write' %}" class="btn btn-primary">
+                <i class="fas fa-pen-fancy me-2"></i>Write First Entry
+            </a>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
