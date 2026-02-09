@@ -148,33 +148,6 @@ def import_notes():
     print(f"  Imported {count} notes")
     return count
 
-def import_moods():
-    """Import moods"""
-    filepath = f'{EXPORT_DIR}/moods.json'
-    if not os.path.exists(filepath):
-        print("  No moods.json found, skipping...")
-        return 0
-    
-    print("Importing moods...")
-    with open(filepath, 'r') as f:
-        moods_data = json.load(f)
-    
-    count = 0
-    for mood_dict in moods_data:
-        Mood.objects.update_or_create(
-            id=mood_dict['id'],
-            defaults={
-                'user_id': mood_dict['user_id'],
-                'mood_type': mood_dict['mood_type'],
-                'intensity': mood_dict.get('intensity', 5),
-                'note': mood_dict.get('note', ''),
-            }
-        )
-        count += 1
-    
-    print(f"  Imported {count} moods")
-    return count
-
 def import_diary_entries():
     """Import diary entries"""
     filepath = f'{EXPORT_DIR}/diary_entries.json'
