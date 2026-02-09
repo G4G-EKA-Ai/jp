@@ -48,7 +48,7 @@ Database - Supabase PostgreSQL (Production)
 - **Password:** jayati2026
 
 ## Preview URL
-https://jayti-birthday-2.preview.emergentagent.com/
+https://jayti-square.preview.emergentagent.com/
 
 ## Database
 - **Provider:** Supabase (Free Tier)

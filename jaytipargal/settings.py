@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted Origins for Emergent platform
 CSRF_TRUSTED_ORIGINS = [
-    'https://jayti-birthday-2.preview.emergentagent.com',
+    'https://jayti-square.preview.emergentagent.com',
     'https://*.emergentagent.com',
     'https://*.emergentcf.cloud',
     'https://*.emergent.host',
