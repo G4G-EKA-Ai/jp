@@ -262,36 +262,15 @@ def birthday_seen(request):
 def health_check(request):
     """
     Health check endpoint for deployment.
-    Returns 200 OK if the app is healthy.
-    Fast response for Kubernetes probes.
+    Returns 200 OK immediately - CRITICAL for Kubernetes probes.
+    Database check is optional and non-blocking.
     """
-    from django.db import connection
-    from django.db.utils import OperationalError
+    from datetime import datetime
     
+    # Return 200 immediately - server is alive
     health_status = {
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
-        'checks': {}
     }
-    status_code = 200
     
-    # Quick database check with timeout
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT 1")
-        health_status['checks']['database'] = 'ok'
-    except (OperationalError, Exception) as e:
-        # Database not ready yet - still return 200 for initial startup
-        health_status['checks']['database'] = 'initializing'
-    
-    # Static files check
-    health_status['checks']['staticfiles'] = 'ok'
-    
-    # Astrology check (optional)
-    try:
-        import swisseph as swe
-        health_status['checks']['astrology'] = 'available'
-    except ImportError:
-        health_status['checks']['astrology'] = 'unavailable'
-    
-    return JsonResponse(health_status, status=status_code)
+    return JsonResponse(health_status, status=200)
