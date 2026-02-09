@@ -1,1 +1,1 @@
-web: cd /app && python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn jaytipargal.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+web: cd /app && gunicorn jaytipargal.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT --workers 2 --timeout 120
