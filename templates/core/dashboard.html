@@ -321,87 +321,81 @@
   </div>
   
   <!-- Quick Stats -->
-  <div class="row mb-4">
-    <div class="col-md-3 col-sm-6 mb-3">
-      <div class="stat-card">
-        <div class="stat-number" aria-label="{{ recent_notes }} notes">{{ recent_notes }}</div>
-        <div class="stat-label">Notes</div>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon notes">
+        <i class="fas fa-sticky-note"></i>
       </div>
+      <div class="stat-number" aria-label="{{ recent_notes }} notes">{{ recent_notes }}</div>
+      <div class="stat-label">Notes</div>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
-      <div class="stat-card">
-        <div class="stat-number" aria-label="{{ recent_diary }} diary entries">{{ recent_diary }}</div>
-        <div class="stat-label">Diary Entries</div>
+    <div class="stat-card">
+      <div class="stat-icon diary">
+        <i class="fas fa-book"></i>
       </div>
+      <div class="stat-number" aria-label="{{ recent_diary }} diary entries">{{ recent_diary }}</div>
+      <div class="stat-label">Diary Entries</div>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
-      <div class="stat-card">
-        <div class="stat-number" aria-label="{{ active_goals }} active goals">{{ active_goals }}</div>
-        <div class="stat-label">Active Goals</div>
+    <div class="stat-card">
+      <div class="stat-icon goals">
+        <i class="fas fa-bullseye"></i>
       </div>
+      <div class="stat-number" aria-label="{{ active_goals }} active goals">{{ active_goals }}</div>
+      <div class="stat-label">Active Goals</div>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
-      <div class="stat-card">
-        <div class="stat-number" aria-label="{{ pending_tasks }} pending tasks">{{ pending_tasks }}</div>
-        <div class="stat-label">Pending Tasks</div>
+    <div class="stat-card">
+      <div class="stat-icon tasks">
+        <i class="fas fa-tasks"></i>
       </div>
+      <div class="stat-number" aria-label="{{ pending_tasks }} pending tasks">{{ pending_tasks }}</div>
+      <div class="stat-label">Pending Tasks</div>
     </div>
   </div>
   
   <!-- Charts Row -->
-  <div class="row">
-    <div class="col-lg-6 mb-4">
-      <div class="card">
-        <div class="card-header">
-          <h4><i class="fas fa-chart-line"></i> Mood Trends (Last 30 Days)</h4>
-        </div>
-        <div class="card-body">
-          <div class="chart-container">
-            <canvas id="moodChart" role="img" aria-label="Mood trends chart"></canvas>
-          </div>
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="card-header">
+        <h4><i class="fas fa-chart-line me-2"></i>Mood Trends (Last 30 Days)</h4>
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="moodChart" role="img" aria-label="Mood trends chart"></canvas>
         </div>
       </div>
     </div>
     
-    <div class="col-lg-6 mb-4">
-      <div class="card">
-        <div class="card-header">
-          <h4><i class="fas fa-bullseye"></i> Goal Progress</h4>
-        </div>
-        <div class="card-body">
-          <div class="chart-container">
-            <canvas id="goalChart" role="img" aria-label="Goal progress chart"></canvas>
-          </div>
+    <div class="chart-card">
+      <div class="card-header">
+        <h4><i class="fas fa-bullseye me-2"></i>Goal Progress</h4>
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="goalChart" role="img" aria-label="Goal progress chart"></canvas>
         </div>
       </div>
     </div>
   </div>
   
   <!-- Quick Actions -->
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <h3>Quick Actions</h3>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
-      <a href="{% url 'diary_write' %}" class="btn btn-primary btn-block btn-lg w-100" style="min-height: 44px;">
-        <i class="fas fa-book"></i> Write Diary
-      </a>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
-      <a href="{% url 'note_create' %}" class="btn btn-success btn-block btn-lg w-100" style="min-height: 44px;">
-        <i class="fas fa-sticky-note"></i> New Note
-      </a>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
-      <a href="{% url 'goal_list' %}" class="btn btn-info btn-block btn-lg w-100" style="min-height: 44px;">
-        <i class="fas fa-bullseye"></i> View Goals
-      </a>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
-      <a href="{% url 'ai_chat' %}" class="btn btn-warning btn-block btn-lg w-100" style="min-height: 44px;">
-        <i class="fas fa-robot"></i> Ask Jayti
-      </a>
-    </div>
+  <h3 class="mb-3">Quick Actions</h3>
+  <div class="actions-row">
+    <a href="{% url 'diary_write' %}" class="action-btn diary">
+      <i class="fas fa-book"></i>
+      <span>Write Diary</span>
+    </a>
+    <a href="{% url 'note_create' %}" class="action-btn note">
+      <i class="fas fa-sticky-note"></i>
+      <span>New Note</span>
+    </a>
+    <a href="{% url 'goal_list' %}" class="action-btn goals">
+      <i class="fas fa-bullseye"></i>
+      <span>View Goals</span>
+    </a>
+    <a href="{% url 'ai_chat' %}" class="action-btn chat">
+      <i class="fas fa-robot"></i>
+      <span>Ask Jayti</span>
+    </a>
   </div>
   
   <!-- Weekly Summary (Show on Sundays) -->
