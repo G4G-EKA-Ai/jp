@@ -5,8 +5,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import JsonResponse
+from datetime import datetime
+
+def root_health_check(request):
+    """
+    Root-level health check for Kubernetes probes.
+    CRITICAL: Must respond immediately without any DB operations.
+    """
+    return JsonResponse({
+        'status': 'healthy',
+        'timestamp': datetime.now().isoformat(),
+    }, status=200)
 
 urlpatterns = [
+    # Health check at root level - responds BEFORE any middleware/DB
+    path('health', root_health_check, name='root_health'),
+    path('health/', root_health_check, name='root_health_slash'),
+    
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('notes/', include('notes.urls')),
