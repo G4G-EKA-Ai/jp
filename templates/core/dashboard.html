@@ -4,57 +4,87 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/dark-mode.css' %}">
 <style>
-.daily-briefing-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 1.5rem;
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
-
-.astro-insight-card {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-  padding: 1.25rem;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-}
-
-.chart-container {
-  position: relative;
-  min-height: 280px;
-  padding: 0.5rem;
-}
-
-/* Square Stat Cards */
-.stats-row {
+/* ALL SQUARE BOXES - No horizontal rectangles */
+.dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.stat-card {
+/* Square Box Base */
+.square-box {
+  aspect-ratio: 1 / 1;
   background: rgba(255, 255, 255, 0.95);
-  padding: 1.5rem 1rem;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  text-align: center;
-  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 140px;
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
 }
 
-.stat-card:hover {
+.square-box:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
-.stat-icon {
+/* Small Square - for stats */
+.square-box.small {
+  min-width: 140px;
+  max-width: 200px;
+}
+
+/* Medium Square - for features */
+.square-box.medium {
+  min-width: 180px;
+  max-width: 280px;
+}
+
+/* Large Square - for charts */
+.square-box.large {
+  min-width: 280px;
+  aspect-ratio: 1 / 1;
+}
+
+/* Gradient backgrounds for feature boxes */
+.square-box.gradient-purple {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.square-box.gradient-pink {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+}
+
+.square-box.gradient-blue {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+}
+
+.square-box.gradient-green {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  color: white;
+}
+
+.square-box.gradient-orange {
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  color: white;
+}
+
+.square-box.gradient-gold {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+}
+
+/* Icon in box */
+.box-icon {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -63,350 +93,239 @@
   justify-content: center;
   margin-bottom: 0.75rem;
   font-size: 1.25rem;
+}
+
+.box-icon.white-bg {
+  background: rgba(255,255,255,0.2);
   color: white;
 }
 
-.stat-icon.notes { background: linear-gradient(135deg, #667eea, #764ba2); }
-.stat-icon.diary { background: linear-gradient(135deg, #f093fb, #f5576c); }
-.stat-icon.goals { background: linear-gradient(135deg, #4facfe, #00f2fe); }
-.stat-icon.tasks { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+.box-icon.purple { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+.box-icon.pink { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+.box-icon.blue { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+.box-icon.green { background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; }
+.box-icon.orange { background: linear-gradient(135deg, #f6d365, #fda085); color: white; }
 
-.stat-number {
+/* Numbers */
+.box-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2C2C2C;
   line-height: 1;
   margin-bottom: 0.25rem;
 }
 
-.stat-label {
-  color: #666;
-  font-size: 0.9rem;
+.box-number.white { color: white; }
+
+.box-label {
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  opacity: 0.9;
 }
 
-/* Charts Row */
-.charts-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.chart-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-
-.chart-card .card-header {
-  background: transparent;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  padding: 1rem 1.25rem;
-}
-
-.chart-card .card-header h4 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #2C2C2C;
-}
-
-.chart-card .card-body {
-  padding: 1rem;
-}
-
-/* Quick Actions Grid */
-.actions-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.action-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
-  border-radius: 16px;
-  text-decoration: none;
-  color: white;
+.box-title {
+  font-size: 1rem;
   font-weight: 600;
-  min-height: 100px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-}
-
-.action-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  color: white;
-}
-
-.action-btn i {
-  font-size: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
-.action-btn.diary { background: linear-gradient(135deg, #667eea, #764ba2); }
-.action-btn.note { background: linear-gradient(135deg, #43e97b, #38f9d7); }
-.action-btn.goals { background: linear-gradient(135deg, #4facfe, #00f2fe); }
-.action-btn.chat { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.box-text {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+/* Chart container inside square */
+.chart-wrapper {
+  width: 100%;
+  height: 70%;
+  position: relative;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #2C2C2C;
+}
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  .stats-row {
+  .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
   
-  .stat-card {
-    min-height: 120px;
-    padding: 1rem;
+  .square-box {
+    padding: 0.75rem;
   }
   
-  .stat-number {
-    font-size: 2rem;
+  .square-box.small {
+    min-width: 100px;
   }
   
-  .stat-icon {
-    width: 40px;
-    height: 40px;
+  .square-box.large {
+    min-width: 100%;
+    grid-column: span 2;
+  }
+  
+  .box-number {
+    font-size: 1.75rem;
+  }
+  
+  .box-icon {
+    width: 36px;
+    height: 36px;
     font-size: 1rem;
   }
   
-  .charts-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .chart-container {
-    min-height: 220px;
-  }
-  
-  .actions-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-  
-  .action-btn {
-    min-height: 80px;
-    padding: 1rem;
-  }
-  
-  .action-btn i {
-    font-size: 1.5rem;
-  }
-  
-  .daily-briefing-card,
-  .astro-insight-card {
-    padding: 1rem;
-  }
-  
-  .birthday-countdown-card {
-    padding: 1rem !important;
-  }
-  
-  .countdown-display {
-    font-size: 2rem !important;
+  .box-label {
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
-  .stats-row {
+  .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .stat-number {
-    font-size: 1.75rem;
-  }
-  
-  .actions-row {
-    grid-template-columns: 1fr 1fr;
   }
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-  <h1>Welcome back, {{ display_name }}! <i class="fas fa-hand-wave"></i></h1>
+<div class="container py-3">
+  <h1 class="mb-3">Welcome back, {{ display_name }}!</h1>
   
-  <!-- Birthday Countdown Widget -->
-  {% if birthday_countdown %}
-  <div class="birthday-countdown-card" role="region" aria-label="Birthday countdown" 
-       style="{% if birthday_countdown.is_today %}background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);{% else %}background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);{% endif %}
-              color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; 
-              box-shadow: 0 10px 30px rgba(0,0,0,0.15); text-align: center;
-              animation: {% if birthday_countdown.is_today %}pulse 2s infinite{% else %}none{% endif %};"
-       {% if birthday_countdown.is_today %}class="celebration-active"{% endif %}>
-    <div class="row align-items-center">
-      <div class="col-md-8">
-        <h3 style="margin-bottom: 10px;">
-          {% if birthday_countdown.is_today %}
-            <i class="fas fa-birthday-cake"></i> Happy Birthday Jayti! <i class="fas fa-gift"></i>
-          {% elif birthday_countdown.is_tomorrow %}
-            <i class="fas fa-clock"></i> Birthday Tomorrow!
-          {% else %}
-            <i class="fas fa-calendar-heart"></i> Birthday Countdown
-          {% endif %}
-        </h3>
-        <p style="font-size: 1.1em; margin-bottom: 0;">
-          {% if birthday_countdown.is_today %}
-            <strong>Turning {{ birthday_countdown.age_on_next_birthday }} today!</strong> 
-            Wishing you a year filled with joy, success, and beautiful moments! 
-            <i class="fas fa-heart" style="color: #ff6b6b;"></i>
-          {% elif birthday_countdown.is_tomorrow %}
-            Only <strong>1 day</strong> left until your special day! 
-            You'll be turning {{ birthday_countdown.age_on_next_birthday }}! 
-            <i class="fas fa-star" style="color: #FFD700;"></i>
-          {% else %}
-            <strong>{{ birthday_countdown.days_until }} days</strong> until your birthday
-            (February 6{{ birthday_countdown.next_birthday|date:" Y" }})! 
-            You'll be turning {{ birthday_countdown.age_on_next_birthday }}!
-          {% endif %}
-        </p>
-      </div>
-      <div class="col-md-4">
-        <div class="countdown-display" style="font-size: 3em; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
-          {% if birthday_countdown.is_today %}
-            <i class="fas fa-birthday-cake"></i>
-          {% else %}
-            {{ birthday_countdown.days_until }}
-            <span style="font-size: 0.4em; display: block;">days</span>
-          {% endif %}
-        </div>
-      </div>
-    </div>
+  <!-- All Square Boxes Grid -->
+  <div class="dashboard-grid">
     
-    {% if birthday_countdown.is_today %}
-    <div class="celebration-message mt-3" style="font-size: 1.2em; font-style: italic;">
-      "May this year bring you closer to your dreams and fill your life with happiness!"
-      <br><small style="opacity: 0.9;">- With love, from your Personal Dashboard</small>
+    <!-- Birthday Countdown Square -->
+    {% if birthday_countdown %}
+    <div class="square-box medium {% if birthday_countdown.is_today %}gradient-gold{% else %}gradient-pink{% endif %}">
+      <div class="box-icon white-bg">
+        <i class="fas fa-birthday-cake"></i>
+      </div>
+      {% if birthday_countdown.is_today %}
+        <div class="box-number white">🎉</div>
+        <div class="box-label">Happy Birthday!</div>
+      {% else %}
+        <div class="box-number white">{{ birthday_countdown.days_until }}</div>
+        <div class="box-label">Days to Birthday</div>
+      {% endif %}
     </div>
     {% endif %}
-  </div>
-  
-  <style>
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-      50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3); }
-    }
-    .birthday-countdown-card.celebration-active {
-      border: 3px solid #FFD700;
-    }
-  </style>
-  {% endif %}
-  
-  <!-- Daily Briefing Card -->
-  <div class="daily-briefing-card" id="daily-briefing" role="region" aria-label="Daily briefing">
-    <h2><i class="fas fa-sun"></i> Your Daily Briefing</h2>
-    <div id="briefing-content" aria-live="polite">
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
+    
+    <!-- Daily Briefing Square -->
+    <div class="square-box medium gradient-purple" id="briefing-box">
+      <div class="box-icon white-bg">
+        <i class="fas fa-sun"></i>
       </div>
-    </div>
-  </div>
-  
-  <!-- Daily Astro Insight -->
-  <div class="astro-insight-card" id="astro-insight" role="region" aria-label="Astrological insight">
-    <h3><i class="fas fa-star"></i> Today's Cosmic Insight</h3>
-    <div id="astro-content" aria-live="polite">
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Quick Stats -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-icon notes">
-        <i class="fas fa-sticky-note"></i>
-      </div>
-      <div class="stat-number" aria-label="{{ recent_notes }} notes">{{ recent_notes }}</div>
-      <div class="stat-label">Notes</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon diary">
-        <i class="fas fa-book"></i>
-      </div>
-      <div class="stat-number" aria-label="{{ recent_diary }} diary entries">{{ recent_diary }}</div>
-      <div class="stat-label">Diary Entries</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon goals">
-        <i class="fas fa-bullseye"></i>
-      </div>
-      <div class="stat-number" aria-label="{{ active_goals }} active goals">{{ active_goals }}</div>
-      <div class="stat-label">Active Goals</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon tasks">
-        <i class="fas fa-tasks"></i>
-      </div>
-      <div class="stat-number" aria-label="{{ pending_tasks }} pending tasks">{{ pending_tasks }}</div>
-      <div class="stat-label">Pending Tasks</div>
-    </div>
-  </div>
-  
-  <!-- Charts Row -->
-  <div class="charts-row">
-    <div class="chart-card">
-      <div class="card-header">
-        <h4><i class="fas fa-chart-line me-2"></i>Mood Trends (Last 30 Days)</h4>
-      </div>
-      <div class="card-body">
-        <div class="chart-container">
-          <canvas id="moodChart" role="img" aria-label="Mood trends chart"></canvas>
-        </div>
+      <div class="box-title">Daily Briefing</div>
+      <div class="box-text" id="briefing-content">
+        <i class="fas fa-spinner fa-spin"></i>
       </div>
     </div>
     
-    <div class="chart-card">
-      <div class="card-header">
-        <h4><i class="fas fa-bullseye me-2"></i>Goal Progress</h4>
+    <!-- Astro Insight Square -->
+    <div class="square-box medium gradient-orange" id="astro-box">
+      <div class="box-icon white-bg">
+        <i class="fas fa-star"></i>
       </div>
-      <div class="card-body">
-        <div class="chart-container">
-          <canvas id="goalChart" role="img" aria-label="Goal progress chart"></canvas>
-        </div>
+      <div class="box-title">Cosmic Insight</div>
+      <div class="box-text" id="astro-content">
+        <i class="fas fa-spinner fa-spin"></i>
       </div>
     </div>
-  </div>
-  
-  <!-- Quick Actions -->
-  <h3 class="mb-3">Quick Actions</h3>
-  <div class="actions-row">
-    <a href="{% url 'diary_write' %}" class="action-btn diary">
-      <i class="fas fa-book"></i>
-      <span>Write Diary</span>
+    
+    <!-- Stats Squares -->
+    <div class="square-box small">
+      <div class="box-icon purple">
+        <i class="fas fa-sticky-note"></i>
+      </div>
+      <div class="box-number">{{ recent_notes }}</div>
+      <div class="box-label">Notes</div>
+    </div>
+    
+    <div class="square-box small">
+      <div class="box-icon pink">
+        <i class="fas fa-book"></i>
+      </div>
+      <div class="box-number">{{ recent_diary }}</div>
+      <div class="box-label">Diary</div>
+    </div>
+    
+    <div class="square-box small">
+      <div class="box-icon blue">
+        <i class="fas fa-bullseye"></i>
+      </div>
+      <div class="box-number">{{ active_goals }}</div>
+      <div class="box-label">Goals</div>
+    </div>
+    
+    <div class="square-box small">
+      <div class="box-icon green">
+        <i class="fas fa-tasks"></i>
+      </div>
+      <div class="box-number">{{ pending_tasks }}</div>
+      <div class="box-label">Tasks</div>
+    </div>
+    
+    <!-- Chart Squares -->
+    <div class="square-box large">
+      <div class="box-title" style="color: #2C2C2C;"><i class="fas fa-chart-line me-2"></i>Mood Trends</div>
+      <div class="chart-wrapper">
+        <canvas id="moodChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="square-box large">
+      <div class="box-title" style="color: #2C2C2C;"><i class="fas fa-bullseye me-2"></i>Goal Progress</div>
+      <div class="chart-wrapper">
+        <canvas id="goalChart"></canvas>
+      </div>
+    </div>
+    
+    <!-- Quick Action Squares -->
+    <a href="{% url 'diary_write' %}" class="square-box small gradient-purple">
+      <div class="box-icon white-bg">
+        <i class="fas fa-pen"></i>
+      </div>
+      <div class="box-label">Write Diary</div>
     </a>
-    <a href="{% url 'note_create' %}" class="action-btn note">
-      <i class="fas fa-sticky-note"></i>
-      <span>New Note</span>
+    
+    <a href="{% url 'note_create' %}" class="square-box small gradient-green">
+      <div class="box-icon white-bg">
+        <i class="fas fa-plus"></i>
+      </div>
+      <div class="box-label">New Note</div>
     </a>
-    <a href="{% url 'goal_list' %}" class="action-btn goals">
-      <i class="fas fa-bullseye"></i>
-      <span>View Goals</span>
+    
+    <a href="{% url 'goal_list' %}" class="square-box small gradient-blue">
+      <div class="box-icon white-bg">
+        <i class="fas fa-bullseye"></i>
+      </div>
+      <div class="box-label">Goals</div>
     </a>
-    <a href="{% url 'ai_chat' %}" class="action-btn chat">
-      <i class="fas fa-robot"></i>
-      <span>Ask Jayti</span>
+    
+    <a href="{% url 'ai_chat' %}" class="square-box small gradient-pink">
+      <div class="box-icon white-bg">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="box-label">Ask Jayti</div>
     </a>
+    
   </div>
   
   <!-- Weekly Summary (Show on Sundays) -->
   {% if show_weekly_summary %}
-  <div class="card mt-4" style="border-left: 5px solid #D4A5A5;" role="region" aria-label="Weekly summary">
-    <div class="card-body">
-      <h3><i class="fas fa-calendar-week"></i> Your Weekly Summary</h3>
-      <div id="weekly-summary-content" aria-live="polite">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+  <div class="dashboard-grid">
+    <div class="square-box large" id="weekly-box">
+      <div class="box-icon orange">
+        <i class="fas fa-calendar-week"></i>
+      </div>
+      <div class="box-title" style="color: #2C2C2C;">Weekly Summary</div>
+      <div class="box-text" style="color: #666;" id="weekly-content">
+        <i class="fas fa-spinner fa-spin"></i>
       </div>
     </div>
   </div>
@@ -425,24 +344,28 @@ fetch('/api/daily-briefing/')
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      document.getElementById('briefing-content').innerHTML = 
-        '<p style="white-space: pre-wrap; line-height: 1.8;">' + data.briefing + '</p>';
+      const text = data.briefing.substring(0, 80) + '...';
+      document.getElementById('briefing-content').innerHTML = text;
     }
   })
-  .catch(error => console.error('Error loading briefing:', error));
+  .catch(error => {
+    document.getElementById('briefing-content').innerHTML = 'Your daily insights';
+  });
 
 // Load astro insight
 fetch('/api/daily-astro/')
   .then(response => response.json())
   .then(data => {
     if (data.success && data.insight.has_chart) {
-      document.getElementById('astro-content').innerHTML = 
-        '<p>' + data.insight.insight + '</p>';
+      const text = data.insight.insight.substring(0, 60) + '...';
+      document.getElementById('astro-content').innerHTML = text;
     } else {
-      document.getElementById('astro-insight').style.display = 'none';
+      document.getElementById('astro-content').innerHTML = 'Cosmic guidance';
     }
   })
-  .catch(error => console.error('Error loading astro:', error));
+  .catch(error => {
+    document.getElementById('astro-content').innerHTML = 'Cosmic guidance';
+  });
 
 // Load mood chart
 fetch('/api/mood-trends/?period=month')
@@ -466,20 +389,16 @@ fetch('/api/mood-trends/?period=month')
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
           scales: {
-            y: {
-              beginAtZero: true,
-              max: 5,
-              ticks: {
-                stepSize: 1
-              }
-            }
+            y: { beginAtZero: true, max: 5, ticks: { stepSize: 1 } },
+            x: { display: false }
           }
         }
       });
     }
   })
-  .catch(error => console.error('Error loading mood chart:', error));
+  .catch(error => console.error('Error:', error));
 
 // Load goal progress chart
 fetch('/api/goal-progress/')
@@ -499,16 +418,12 @@ fetch('/api/goal-progress/')
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom'
-            }
-          }
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
         }
       });
     }
   })
-  .catch(error => console.error('Error loading goal chart:', error));
+  .catch(error => console.error('Error:', error));
 
 // Load weekly summary (if Sunday)
 {% if show_weekly_summary %}
@@ -516,11 +431,10 @@ fetch('/api/weekly-summary/')
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      document.getElementById('weekly-summary-content').innerHTML = 
-        '<p style="white-space: pre-wrap; line-height: 1.8;">' + data.summary + '</p>';
+      document.getElementById('weekly-content').innerHTML = data.summary.substring(0, 150) + '...';
     }
   })
-  .catch(error => console.error('Error loading weekly summary:', error));
+  .catch(error => console.error('Error:', error));
 {% endif %}
 </script>
 {% endblock %}
