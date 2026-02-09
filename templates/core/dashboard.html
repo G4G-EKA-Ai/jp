@@ -168,6 +168,7 @@
   .square-box.large {
     min-width: 100%;
     grid-column: span 2;
+    aspect-ratio: 1 / 1;
   }
   
   .box-number {
@@ -188,6 +189,11 @@
 @media (max-width: 480px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .square-box.large {
+    grid-column: span 2;
+    aspect-ratio: 1 / 1;
   }
 }
 </style>
