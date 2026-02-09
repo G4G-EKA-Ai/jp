@@ -333,8 +333,8 @@ def reset_sequences():
         ('diary_diaryentry', 'diary_diaryentry_id_seq'),
         ('goals_goal', 'goals_goal_id_seq'),
         ('goals_task', 'goals_task_id_seq'),
-        ('ai_chat_chatsession', 'ai_chat_chatsession_id_seq'),
-        ('ai_chat_chatmessage', 'ai_chat_chatmessage_id_seq'),
+        ('ai_chat_aiconversation', 'ai_chat_aiconversation_id_seq'),
+        ('ai_chat_aimessage', 'ai_chat_aimessage_id_seq'),
     ]
     
     with connection.cursor() as cursor:
