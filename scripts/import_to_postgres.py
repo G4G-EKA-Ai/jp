@@ -330,7 +330,6 @@ def reset_sequences():
         ('core_dailythought', 'core_dailythought_id_seq'),
         ('notes_notefolder', 'notes_notefolder_id_seq'),
         ('notes_note', 'notes_note_id_seq'),
-        ('diary_mood', 'diary_mood_id_seq'),
         ('diary_diaryentry', 'diary_diaryentry_id_seq'),
         ('goals_goal', 'goals_goal_id_seq'),
         ('goals_task', 'goals_task_id_seq'),
