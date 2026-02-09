@@ -252,7 +252,7 @@ def import_chat_sessions():
     
     count = 0
     for session_dict in sessions_data:
-        ChatSession.objects.update_or_create(
+        AIConversation.objects.update_or_create(
             id=session_dict['id'],
             defaults={
                 'user_id': session_dict['user_id'],
@@ -277,10 +277,10 @@ def import_chat_messages():
     
     count = 0
     for msg_dict in messages_data:
-        ChatMessage.objects.update_or_create(
+        AIMessage.objects.update_or_create(
             id=msg_dict['id'],
             defaults={
-                'session_id': msg_dict['session_id'],
+                'conversation_id': msg_dict.get('conversation_id') or msg_dict.get('session_id'),
                 'role': msg_dict['role'],
                 'content': msg_dict['content'],
             }
