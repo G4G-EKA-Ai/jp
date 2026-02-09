@@ -364,7 +364,6 @@ def main():
     total += import_users()
     total += import_note_folders()
     total += import_notes()
-    total += import_moods()
     total += import_diary_entries()
     total += import_goals()
     total += import_tasks()
