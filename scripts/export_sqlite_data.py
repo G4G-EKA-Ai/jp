@@ -185,17 +185,16 @@ def export_goals():
     return len(goals_data)
 
 def export_ai_chat():
-    """Export AI chat sessions and messages"""
+    """Export AI chat conversations and messages"""
     print("Exporting AI chat...")
     
     sessions_data = []
-    for session in ChatSession.objects.all():
+    for session in AIConversation.objects.all():
         sessions_data.append({
             'id': session.id,
             'user_id': session.user_id,
             'title': session.title,
             'created_at': session.created_at.isoformat() if session.created_at else None,
-            'updated_at': session.updated_at.isoformat() if session.updated_at else None,
         })
     
     with open(f'{EXPORT_DIR}/chat_sessions.json', 'w') as f:
@@ -203,10 +202,10 @@ def export_ai_chat():
     print(f"  Exported {len(sessions_data)} chat sessions")
     
     messages_data = []
-    for msg in ChatMessage.objects.all():
+    for msg in AIMessage.objects.all():
         messages_data.append({
             'id': msg.id,
-            'session_id': msg.session_id,
+            'conversation_id': msg.conversation_id,
             'role': msg.role,
             'content': msg.content,
             'created_at': msg.created_at.isoformat() if msg.created_at else None,
