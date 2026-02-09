@@ -26,7 +26,7 @@ from core.models import UserProfile, DailyThought, PushSubscription, Notificatio
 from notes.models import Note, NoteFolder
 from diary.models import DiaryEntry
 from goals.models import Goal, Task
-from ai_chat.models import ChatSession, ChatMessage
+from ai_chat.models import AIConversation, AIMessage
 
 # Create export directory
 EXPORT_DIR = '/app/data_export'
