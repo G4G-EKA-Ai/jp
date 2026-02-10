@@ -79,6 +79,13 @@ def goal_create(request):
             create_decomposed_tasks(goal)
             messages.success(request, 'Goal created successfully. Tasks have been generated (fallback mode).')
         
+        # Track activity
+        try:
+            from core.services.activity_tracker import record_goal_created
+            record_goal_created(request.user)
+        except Exception:
+            pass
+        
         return redirect('goal_detail', pk=goal.pk)
     
     return render(request, 'goals/goal_form.html')
