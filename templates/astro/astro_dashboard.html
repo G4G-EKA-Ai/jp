@@ -2,144 +2,348 @@
 
 {% block title %}Astro - JaytiPargal.in{% endblock %}
 
-{% block content %}
-<div class="container py-4">
-    <!-- Header -->
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h2 style="color: var(--dusty-rose);"><i class="fas fa-star me-2"></i>Your Astrology</h2>
-            <p class="text-muted">Vedic birth chart and cosmic guidance based on your birth details.</p>
-        </div>
-    </div>
-
-    {% if swisseph_unavailable %}
-    <div class="alert alert-warning">
-        <i class="fas fa-exclamation-triangle me-2"></i>
-        <strong>Astrology features temporarily unavailable.</strong> Please try again later.
-    </div>
-    {% endif %}
-
-    <!-- Birth Info Card -->
-    <div class="row mb-4">
-        <div class="col-lg-6 mb-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-white py-3">
-                    <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i>Birth Details</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><strong><i class="fas fa-birthday-cake me-2 text-primary"></i>Date:</strong> {{ birth_data.day }}-{{ birth_data.month }}-{{ birth_data.year }}</li>
-                        <li class="mb-2"><strong><i class="fas fa-clock me-2 text-primary"></i>Time:</strong> {{ birth_data.hour }}:{{ birth_data.minute|default:'00' }}</li>
-                        <li class="mb-2"><strong><i class="fas fa-map-marker-alt me-2 text-primary"></i>Place:</strong> {{ birth_data.location }}</li>
-                        <li><strong><i class="fas fa-globe me-2 text-primary"></i>Coordinates:</strong> {{ birth_data.latitude }}, {{ birth_data.longitude }}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 mb-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-white py-3">
-                    <h5 class="mb-0"><i class="fas fa-sun me-2"></i>Ascendant</h5>
-                </div>
-                <div class="card-body text-center">
-                    <h2 style="font-size: 3rem;">{{ rashi_info.symbol }}</h2>
-                    <h4 class="mb-1">{{ ascendant|title }}</h4>
-                    <p class="text-muted mb-2">{{ rashi_info.quality }} {{ rashi_info.element }}</p>
-                    <p class="small text-muted">Lord: {{ rashi_info.lord|title }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Cards -->
-    <div class="row mb-4">
-        <div class="col-md-6 col-lg-3 mb-3">
-            <a href="{% url 'birth_chart' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3 hover-card">
-                    <div class="card-body">
-                        <i class="fas fa-chart-pie text-primary mb-3" style="font-size: 2.5rem;"></i>
-                        <h5>Birth Chart</h5>
-                        <p class="text-muted small mb-0">View your complete Kundli with planetary positions</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 mb-3">
-            <a href="{% url 'house_details' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3 hover-card">
-                    <div class="card-body">
-                        <i class="fas fa-home text-success mb-3" style="font-size: 2.5rem;"></i>
-                        <h5>12 Houses</h5>
-                        <p class="text-muted small mb-0">Detailed analysis of each house in your chart</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 mb-3">
-            <a href="{% url 'dasha_periods' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3 hover-card">
-                    <div class="card-body">
-                        <i class="fas fa-hourglass-half text-warning mb-3" style="font-size: 2.5rem;"></i>
-                        <h5>Dasha Periods</h5>
-                        <p class="text-muted small mb-0">Vimshottari Dasha timeline and predictions</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 mb-3">
-            <a href="{% url 'predictions' %}" class="text-decoration-none">
-                <div class="card h-100 text-center p-3 hover-card">
-                    <div class="card-body">
-                        <i class="fas fa-compass text-info mb-3" style="font-size: 2.5rem;"></i>
-                        <h5>Guidance</h5>
-                        <p class="text-muted small mb-0">90-day cosmic guidance and predictions</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- Current Dasha -->
-    {% if current_dasha %}
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-header bg-white py-3">
-                    <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Current Mahadasha</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 style="color: var(--dusty-rose);">{{ current_dasha.lord }} Mahadasha</h4>
-                            <p class="text-muted">
-                                <i class="far fa-calendar-alt me-2"></i>
-                                {{ current_dasha.start_date|date:"M d, Y" }} - {{ current_dasha.end_date|date:"M d, Y" }}
-                            </p>
-                        </div>
-                        <div class="col-md-6 text-md-end">
-                            <a href="{% url 'dasha_periods' %}" class="btn btn-primary">
-                                <i class="fas fa-eye me-2"></i>View Full Timeline
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-</div>
-
+{% block extra_css %}
 <style>
-.hover-card {
-    transition: transform 0.2s, box-shadow 0.2s;
+/* ========================================
+   ENTERPRISE ASTRO PAGE
+======================================== */
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
-.hover-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.page-header p {
+  color: #6b7280;
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* Grid System */
+.enterprise-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Enterprise Card */
+.e-card {
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.e-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  color: white;
+}
+
+/* Sober Color Palette */
+.bg-indigo { background: linear-gradient(145deg, #6366f1, #4f46e5); }
+.bg-emerald { background: linear-gradient(145deg, #10b981, #059669); }
+.bg-amber { background: linear-gradient(145deg, #f59e0b, #d97706); }
+.bg-cyan { background: linear-gradient(145deg, #06b6d4, #0891b2); }
+.bg-violet { background: linear-gradient(145deg, #8b5cf6, #7c3aed); }
+.bg-rose { background: linear-gradient(145deg, #f43f5e, #e11d48); }
+
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+/* Info Cards - Non-Square */
+.info-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.info-card h5 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-card h5 i {
+  color: #6366f1;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.9rem;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info-list li:last-child {
+  border-bottom: none;
+}
+
+.info-list li i {
+  width: 20px;
+  color: #6366f1;
+}
+
+.info-list li strong {
+  color: #1a1a2e;
+}
+
+/* Ascendant Card */
+.ascendant-card {
+  text-align: center;
+}
+
+.ascendant-symbol {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ascendant-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.25rem;
+}
+
+.ascendant-quality {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.ascendant-lord {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title i {
+  color: #6366f1;
+}
+
+/* Dasha Card */
+.dasha-card {
+  background: linear-gradient(145deg, #1a1a2e, #2d2d44);
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: white;
+}
+
+.dasha-card h4 {
+  color: #f4c2c2;
+  margin-bottom: 0.5rem;
+}
+
+.dasha-card p {
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+
+.dasha-card .btn-view {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.dasha-card .btn-view:hover {
+  background: rgba(255,255,255,0.25);
+  color: white;
+}
+
+/* Alert */
+.alert-enterprise {
+  background: linear-gradient(145deg, #fef3c7, #fde68a);
+  border: none;
+  border-radius: 12px;
+  color: #92400e;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .enterprise-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container { padding: 1rem; }
+  
+  .enterprise-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
+  .card-title { font-size: 0.9rem; }
+  .card-desc { font-size: 0.75rem; }
+  
+  .ascendant-symbol { font-size: 2.5rem; }
+  .ascendant-name { font-size: 1.25rem; }
 }
 </style>
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  
+  <!-- Header -->
+  <div class="page-header">
+    <h2><i class="fas fa-star me-2"></i>Your Astrology</h2>
+    <p>Vedic birth chart and cosmic guidance based on your birth details.</p>
+  </div>
+
+  {% if swisseph_unavailable %}
+  <div class="alert-enterprise">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <strong>Astrology features temporarily unavailable.</strong> Please try again later.
+  </div>
+  {% endif %}
+
+  <!-- Birth Info Cards -->
+  <div class="enterprise-grid grid-2" style="margin-bottom: 2rem;">
+    <div class="info-card">
+      <h5><i class="fas fa-user-circle"></i> Birth Details</h5>
+      <ul class="info-list">
+        <li><i class="fas fa-birthday-cake"></i> <strong>Date:</strong> {{ birth_data.day }}-{{ birth_data.month }}-{{ birth_data.year }}</li>
+        <li><i class="fas fa-clock"></i> <strong>Time:</strong> {{ birth_data.hour }}:{{ birth_data.minute|default:'00' }}</li>
+        <li><i class="fas fa-map-marker-alt"></i> <strong>Place:</strong> {{ birth_data.location }}</li>
+        <li><i class="fas fa-globe"></i> <strong>Coordinates:</strong> {{ birth_data.latitude }}, {{ birth_data.longitude }}</li>
+      </ul>
+    </div>
+
+    <div class="info-card ascendant-card">
+      <h5 style="justify-content: center;"><i class="fas fa-sun"></i> Ascendant</h5>
+      <div class="ascendant-symbol">{{ rashi_info.symbol }}</div>
+      <div class="ascendant-name">{{ ascendant|title }}</div>
+      <div class="ascendant-quality">{{ rashi_info.quality }} {{ rashi_info.element }}</div>
+      <div class="ascendant-lord">Lord: {{ rashi_info.lord|title }}</div>
+    </div>
+  </div>
+
+  <!-- Navigation Cards -->
+  <h3 class="section-title"><i class="fas fa-compass"></i> Explore Your Chart</h3>
+  <div class="enterprise-grid">
+    <a href="{% url 'birth_chart' %}" class="e-card bg-indigo">
+      <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+      <div class="card-title">Birth Chart</div>
+      <div class="card-desc">Complete Kundli</div>
+    </a>
+
+    <a href="{% url 'house_details' %}" class="e-card bg-emerald">
+      <div class="card-icon"><i class="fas fa-home"></i></div>
+      <div class="card-title">12 Houses</div>
+      <div class="card-desc">House Analysis</div>
+    </a>
+
+    <a href="{% url 'dasha_periods' %}" class="e-card bg-amber">
+      <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
+      <div class="card-title">Dasha Periods</div>
+      <div class="card-desc">Timeline</div>
+    </a>
+
+    <a href="{% url 'predictions' %}" class="e-card bg-cyan">
+      <div class="card-icon"><i class="fas fa-magic"></i></div>
+      <div class="card-title">Guidance</div>
+      <div class="card-desc">90-Day Predictions</div>
+    </a>
+  </div>
+
+  <!-- Current Dasha -->
+  {% if current_dasha %}
+  <div class="dasha-card" style="margin-top: 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h5 style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; font-size: 0.85rem;">
+          <i class="fas fa-clock me-2"></i>Current Mahadasha
+        </h5>
+        <h4>{{ current_dasha.lord }} Mahadasha</h4>
+        <p>
+          <i class="far fa-calendar-alt me-2"></i>
+          {{ current_dasha.start_date|date:"M d, Y" }} - {{ current_dasha.end_date|date:"M d, Y" }}
+        </p>
+      </div>
+      <a href="{% url 'dasha_periods' %}" class="btn-view">
+        <i class="fas fa-eye me-2"></i>View Full Timeline
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}
