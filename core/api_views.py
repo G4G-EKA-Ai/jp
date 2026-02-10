@@ -296,3 +296,41 @@ def api_notification_settings(request):
             'success': False,
             'error': str(e)
         }, status=500)
+
+
+@login_required
+@require_http_methods(["GET"])
+def api_activity_calendar(request):
+    """Get activity calendar data from Feb 6, 2026 onwards"""
+    try:
+        calendar_data = get_activity_calendar(request.user)
+        stats = get_activity_stats(request.user)
+        
+        return JsonResponse({
+            'success': True,
+            'calendar': calendar_data,
+            'stats': stats
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@login_required
+@require_http_methods(["GET"])
+def api_activity_stats(request):
+    """Get activity statistics summary"""
+    try:
+        stats = get_activity_stats(request.user)
+        
+        return JsonResponse({
+            'success': True,
+            'stats': stats
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
