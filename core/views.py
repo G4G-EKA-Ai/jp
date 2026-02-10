@@ -150,6 +150,12 @@ def login_view(request):
         
         if user is not None:
             login(request, user)
+            # Record login activity
+            try:
+                from core.services.activity_tracker import record_login
+                record_login(user)
+            except Exception:
+                pass  # Don't block login if tracking fails
             return redirect('dashboard')
         else:
             error = "Invalid credentials. Please try again."
