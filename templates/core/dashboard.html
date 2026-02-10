@@ -355,6 +355,29 @@
 <div class="container py-3">
   <h1 class="mb-3">Welcome back, {{ display_name }}!</h1>
   
+  <!-- Activity Tracker - Your Journey Since Feb 6, 2026 -->
+  <div class="activity-tracker" id="activity-tracker">
+    <div class="activity-header">
+      <h3><i class="fas fa-fire me-2"></i>Your Journey Since Feb 6</h3>
+      <div class="activity-stats" id="activity-stats">
+        <span class="stat-item"><i class="fas fa-fire streak"></i> <span id="streak-count">-</span> streak</span>
+        <span class="stat-item"><i class="fas fa-check-circle active"></i> <span id="active-days">-</span> active</span>
+        <span class="stat-item"><i class="fas fa-times-circle inactive"></i> <span id="inactive-days">-</span> missed</span>
+      </div>
+    </div>
+    <div class="activity-calendar" id="activity-calendar">
+      <div style="text-align: center; padding: 1rem; grid-column: span 7;">
+        <i class="fas fa-spinner fa-spin"></i> Loading your journey...
+      </div>
+    </div>
+    <div class="calendar-legend">
+      <div class="legend-item"><div class="legend-color none"></div> No activity</div>
+      <div class="legend-item"><div class="legend-color low"></div> Light</div>
+      <div class="legend-item"><div class="legend-color med"></div> Good</div>
+      <div class="legend-item"><div class="legend-color high"></div> Great!</div>
+    </div>
+  </div>
+  
   <!-- All Square Boxes Grid -->
   <div class="dashboard-grid">
     
