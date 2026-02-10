@@ -112,6 +112,14 @@ def diary_write(request, date=None):
             entry.prompt_used = request.POST.get('prompt_used')
         
         entry.save()
+        
+        # Track activity
+        try:
+            from core.services.activity_tracker import record_diary_entry
+            record_diary_entry(request.user)
+        except Exception:
+            pass
+        
         messages.success(request, 'Diary entry saved. Thank you for taking this time for yourself.')
         return redirect('diary_entry_detail', pk=entry.pk)
     
