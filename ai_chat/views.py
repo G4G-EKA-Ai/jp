@@ -317,6 +317,13 @@ def send_message(request):
             content=ai_response
         )
         
+        # Track AI chat activity
+        try:
+            from core.services.activity_tracker import record_ai_chat
+            record_ai_chat(request.user)
+        except Exception:
+            pass
+        
         return JsonResponse({
             'response': ai_response,
             'timestamp': conversation.messages.last().timestamp.isoformat(),
