@@ -4,122 +4,249 @@
 
 {% block extra_css %}
 <style>
-/* Square Box Grid System */
-.notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+/* ========================================
+   ENTERPRISE NOTES PAGE
+======================================== */
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
 
-/* Square Box Base */
-.square-box {
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.page-header p {
+  color: #6b7280;
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}
+
+.btn-group-custom {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-action {
+  background: linear-gradient(145deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  color: white;
+}
+
+.btn-outline-custom {
+  background: white;
+  color: #ef4444;
+  border: 2px solid #ef4444;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-custom:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Grid System */
+.enterprise-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Enterprise Card */
+.e-card {
   aspect-ratio: 1 / 1;
-  background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1rem;
-  transition: all 0.3s ease;
   text-decoration: none;
-  color: inherit;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.square-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+.e-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  color: white;
 }
 
-/* Gradient backgrounds */
-.square-box.gradient-purple { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.square-box.gradient-pink { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
-.square-box.gradient-blue { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+/* Sober Color Palette */
+.bg-violet { background: linear-gradient(145deg, #8b5cf6, #7c3aed); }
+.bg-indigo { background: linear-gradient(145deg, #6366f1, #4f46e5); }
+.bg-pink { background: linear-gradient(145deg, #ec4899, #db2777); }
+.bg-teal { background: linear-gradient(145deg, #14b8a6, #0d9488); }
 
-/* Icon */
-.box-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.75rem;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
 }
 
-.box-icon.white-bg { background: rgba(255,255,255,0.2); color: white; }
-.box-icon.purple { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.box-icon.pink { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
-
-.box-number {
-  font-size: 2rem;
+.card-value {
+  font-size: 2.25rem;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
 }
 
-.box-label {
+.card-label {
   font-size: 0.8rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.9;
+  letter-spacing: 1px;
+  opacity: 0.95;
 }
 
-/* Note Cards - Square */
-.note-box {
+/* Section Title */
+.section-title {
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title i {
+  color: #8b5cf6;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+}
+
+.search-btn {
+  background: linear-gradient(145deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  padding: 0 1.25rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Note Cards */
+.note-card {
   aspect-ratio: 1 / 1;
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  transition: all 0.3s ease;
   text-decoration: none;
-  color: inherit;
-  overflow: hidden;
+  color: #1a1a2e;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
 }
 
-.note-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+.note-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  color: #1a1a2e;
 }
 
-.note-box.pinned {
-  border: 2px solid #f093fb;
+.note-card.pinned {
+  border: 2px solid #ec4899;
+}
+
+.pin-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #ec4899;
+  font-size: 0.85rem;
 }
 
 .note-title {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #2C2C2C;
-  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 
 .note-content {
-  font-size: 0.8rem;
-  color: #666;
+  font-size: 0.85rem;
+  color: #6b7280;
   flex: 1;
+  line-height: 1.5;
   overflow: hidden;
-  line-height: 1.4;
 }
 
 .note-footer {
   margin-top: auto;
-  font-size: 0.7rem;
-  color: #888;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.5rem;
+  padding-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
 }
 
-/* Folder sidebar */
+/* Sidebar */
+.sidebar {
+  background: white;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
 .folder-list {
   display: flex;
   flex-direction: column;
@@ -130,154 +257,197 @@
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
-  background: rgba(255,255,255,0.95);
-  border-radius: 12px;
+  border-radius: 10px;
   text-decoration: none;
-  color: #555;
+  color: #4b5563;
   transition: all 0.2s ease;
+  font-size: 0.9rem;
 }
 
-.folder-item:hover, .folder-item.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+.folder-item:hover {
+  background: #f3f4f6;
+  color: #1a1a2e;
+}
+
+.folder-item.active {
+  background: linear-gradient(145deg, #8b5cf6, #7c3aed);
   color: white;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .notes-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+.folder-badge {
+  margin-left: auto;
+  background: rgba(0,0,0,0.1);
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+}
+
+.folder-item.active .folder-badge {
+  background: rgba(255,255,255,0.2);
+}
+
+.btn-new-folder {
+  width: 100%;
+  background: white;
+  color: #8b5cf6;
+  border: 2px dashed #8b5cf6;
+  padding: 0.6rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-new-folder:hover {
+  background: #8b5cf6;
+  color: white;
+  border-style: solid;
+}
+
+/* Empty State */
+.empty-state {
+  grid-column: span 2;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .enterprise-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
   
-  .square-box, .note-box {
-    padding: 0.75rem;
-  }
-  
-  .box-number {
-    font-size: 1.5rem;
-  }
-  
-  .box-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
-  }
-  
-  .sidebar-section {
+  .sidebar-col {
     display: none;
   }
+  
+  .main-col {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container { padding: 1rem; }
+  
+  .enterprise-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .btn-group-custom {
+    width: 100%;
+  }
+  
+  .card-value { font-size: 1.75rem; }
+  .card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
+  .card-label { font-size: 0.7rem; }
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-3">
+<div class="page-container">
+  
   <!-- Header -->
-  <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <div class="page-header">
     <div>
-      <h2 style="color: var(--dusty-rose);"><i class="fas fa-sticky-note me-2"></i>Your Notes</h2>
-      <p class="text-muted mb-0 small">Externalize your thoughts and free your mind</p>
+      <h2><i class="fas fa-sticky-note me-2"></i>Your Notes</h2>
+      <p>Externalize your thoughts and free your mind</p>
     </div>
-    <div class="mt-2 mt-md-0">
-      <a href="{% url 'api_export_notes_pdf' %}" class="btn btn-outline-danger btn-sm me-1">
-        <i class="fas fa-file-pdf me-1"></i>PDF
+    <div class="btn-group-custom">
+      <a href="{% url 'api_export_notes_pdf' %}" class="btn-outline-custom">
+        <i class="fas fa-file-pdf me-2"></i>Export PDF
       </a>
-      <a href="{% url 'note_create' %}" class="btn btn-primary btn-sm">
-        <i class="fas fa-plus me-1"></i>New Note
+      <a href="{% url 'note_create' %}" class="btn-action">
+        <i class="fas fa-plus me-2"></i>New Note
       </a>
     </div>
   </div>
-  
+
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-lg-3 mb-4 sidebar-section">
-      <div class="folder-list mb-3">
-        <a href="{% url 'note_list' %}" class="folder-item {% if not current_folder %}active{% endif %}">
-          <i class="fas fa-inbox me-2"></i>
-          <span>All Notes</span>
-          <span class="ms-auto badge bg-secondary">{{ total_notes }}</span>
-        </a>
-        {% for folder in folders %}
-        <a href="?folder={{ folder.id }}" class="folder-item {% if current_folder.id == folder.id %}active{% endif %}">
-          <span class="me-2">{{ folder.icon|default:"📁" }}</span>
-          <span>{{ folder.name }}</span>
-          <span class="ms-auto badge bg-secondary">{{ folder.notes.count }}</span>
-        </a>
-        {% endfor %}
+    <div class="col-lg-3 mb-4 sidebar-col">
+      <div class="sidebar">
+        <div class="folder-list">
+          <a href="{% url 'note_list' %}" class="folder-item {% if not current_folder %}active{% endif %}">
+            <i class="fas fa-inbox me-2"></i>
+            <span>All Notes</span>
+            <span class="folder-badge">{{ total_notes }}</span>
+          </a>
+          {% for folder in folders %}
+          <a href="?folder={{ folder.id }}" class="folder-item {% if current_folder.id == folder.id %}active{% endif %}">
+            <span class="me-2">{{ folder.icon|default:"📁" }}</span>
+            <span>{{ folder.name }}</span>
+            <span class="folder-badge">{{ folder.notes.count }}</span>
+          </a>
+          {% endfor %}
+        </div>
+        
+        <button class="btn-new-folder" onclick="showCreateFolderModal()">
+          <i class="fas fa-plus me-2"></i>New Folder
+        </button>
       </div>
-      
-      <button class="btn btn-outline-primary btn-sm w-100" onclick="showCreateFolderModal()">
-        <i class="fas fa-plus me-1"></i>New Folder
-      </button>
     </div>
     
     <!-- Main Content -->
-    <div class="col-lg-9">
+    <div class="col-lg-9 main-col">
       <!-- Search -->
-      <form method="get" class="mb-3">
+      <form method="get" class="search-bar">
         {% if current_folder %}<input type="hidden" name="folder" value="{{ current_folder.id }}">{% endif %}
-        <div class="d-flex gap-2">
-          <input type="text" name="q" class="form-control form-control-sm" placeholder="Search notes..." value="{{ query|default:'' }}">
-          <button type="submit" class="btn btn-outline-primary btn-sm">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+        <input type="text" name="q" class="search-input" placeholder="Search notes..." value="{{ query|default:'' }}">
+        <button type="submit" class="search-btn">
+          <i class="fas fa-search"></i>
+        </button>
       </form>
       
-      <!-- Quick Actions - Square Boxes -->
-      <div class="notes-grid">
-        <a href="{% url 'note_create' %}" class="square-box gradient-purple">
-          <div class="box-icon white-bg">
-            <i class="fas fa-plus"></i>
-          </div>
-          <div class="box-label">New Note</div>
+      <!-- Stats Grid -->
+      <div class="enterprise-grid">
+        <a href="{% url 'note_create' %}" class="e-card bg-violet">
+          <div class="card-icon"><i class="fas fa-plus"></i></div>
+          <div class="card-label">New Note</div>
         </a>
         
-        <div class="square-box">
-          <div class="box-icon purple">
-            <i class="fas fa-sticky-note"></i>
-          </div>
-          <div class="box-number">{{ total_notes }}</div>
-          <div class="box-label" style="color: #666;">Total Notes</div>
+        <div class="e-card bg-indigo">
+          <div class="card-icon"><i class="fas fa-sticky-note"></i></div>
+          <div class="card-value">{{ total_notes }}</div>
+          <div class="card-label">Total Notes</div>
         </div>
         
         {% if folders %}
-        <div class="square-box">
-          <div class="box-icon pink">
-            <i class="fas fa-folder"></i>
-          </div>
-          <div class="box-number">{{ folders|length }}</div>
-          <div class="box-label" style="color: #666;">Folders</div>
+        <div class="e-card bg-pink">
+          <div class="card-icon"><i class="fas fa-folder"></i></div>
+          <div class="card-value">{{ folders|length }}</div>
+          <div class="card-label">Folders</div>
         </div>
         {% endif %}
       </div>
       
       <!-- Notes Grid -->
       {% if notes %}
-      <h5 class="mb-3"><i class="fas fa-file-alt me-2"></i>Your Notes</h5>
-      <div class="notes-grid">
+      <h3 class="section-title"><i class="fas fa-file-alt"></i> Your Notes</h3>
+      <div class="enterprise-grid">
         {% for note in notes %}
-        <a href="{% url 'note_detail' note.pk %}" class="note-box {% if note.is_pinned %}pinned{% endif %}">
+        <a href="{% url 'note_detail' note.pk %}" class="note-card {% if note.is_pinned %}pinned{% endif %}">
           {% if note.is_pinned %}
-          <div style="position: absolute; top: 8px; right: 8px;">
-            <i class="fas fa-thumbtack" style="color: #f093fb; font-size: 0.8rem;"></i>
-          </div>
+          <i class="fas fa-thumbtack pin-icon"></i>
           {% endif %}
-          <div class="note-title">{{ note.title|default:"Untitled"|truncatechars:25 }}</div>
-          <div class="note-content">{{ note.content_plain|truncatewords:15|default:"No content" }}</div>
+          <div class="note-title">{{ note.title|default:"Untitled"|truncatechars:30 }}</div>
+          <div class="note-content">{{ note.content_plain|truncatewords:20|default:"No content" }}</div>
           <div class="note-footer">
-            <span>{{ note.modified_at|date:"M d" }}</span>
+            <i class="far fa-clock me-1"></i>{{ note.modified_at|date:"M d, Y" }}
           </div>
         </a>
         {% endfor %}
       </div>
       {% else %}
-      <div class="notes-grid">
-        <a href="{% url 'note_create' %}" class="square-box gradient-purple" style="grid-column: span 2;">
-          <div class="box-icon white-bg">
-            <i class="fas fa-plus"></i>
-          </div>
-          <div class="box-label">Create First Note</div>
+      <div class="enterprise-grid">
+        <a href="{% url 'note_create' %}" class="e-card bg-violet empty-state">
+          <div class="card-icon"><i class="fas fa-plus"></i></div>
+          <div class="card-label">Create Your First Note</div>
         </a>
       </div>
       {% endif %}
