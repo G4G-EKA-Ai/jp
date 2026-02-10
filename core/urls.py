@@ -30,6 +30,10 @@ urlpatterns = [
     path('api/push-unsubscribe/', api_views.api_push_unsubscribe, name='api_push_unsubscribe'),
     path('api/notification-settings/', api_views.api_notification_settings, name='api_notification_settings'),
     
+    # Activity Tracker API
+    path('api/activity-calendar/', api_views.api_activity_calendar, name='api_activity_calendar'),
+    path('api/activity-stats/', api_views.api_activity_stats, name='api_activity_stats'),
+    
     # Health check for Railway deployment
     path('health/', views.health_check, name='health_check'),
 ]
