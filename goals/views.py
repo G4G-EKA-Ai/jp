@@ -409,12 +409,21 @@ def task_update(request, pk):
     task = get_object_or_404(Task, pk=pk, goal__user=request.user)
     
     if request.method == 'POST':
+        old_status = task.status
         task.status = request.POST.get('status')
         task.completion_percentage = int(request.POST.get('completion_percentage', 0))
         
         if task.status == 'done':
             task.completion_percentage = 100
             task.completed_at = timezone.now()
+            
+            # Track task completion activity
+            if old_status != 'done':
+                try:
+                    from core.services.activity_tracker import record_task_completed
+                    record_task_completed(request.user)
+                except Exception:
+                    pass
         
         if task.status == 'blocked':
             task.blocked_reason = request.POST.get('blocked_reason', '')
