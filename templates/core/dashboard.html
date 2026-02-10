@@ -521,6 +521,93 @@
 <script src="{% static 'js/pwa-register.js' %}"></script>
 
 <script>
+// Load Activity Calendar
+fetch('/api/activity-calendar/')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      renderActivityCalendar(data.calendar, data.stats);
+    }
+  })
+  .catch(error => {
+    console.error('Activity calendar error:', error);
+    document.getElementById('activity-calendar').innerHTML = 
+      '<div style="text-align: center; padding: 1rem; grid-column: span 7; color: #666;">Start your journey today!</div>';
+  });
+
+function renderActivityCalendar(calendar, stats) {
+  // Update stats
+  document.getElementById('streak-count').textContent = stats.current_streak;
+  document.getElementById('active-days').textContent = stats.active_days;
+  document.getElementById('inactive-days').textContent = stats.inactive_days;
+  
+  // Build calendar HTML
+  const calendarEl = document.getElementById('activity-calendar');
+  let html = '';
+  
+  // Get today's date
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Add day headers
+  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  days.forEach(day => {
+    html += `<div style="text-align: center; font-size: 0.6rem; color: #6b7280; padding: 2px;">${day}</div>`;
+  });
+  
+  // Add empty cells for alignment (first day offset)
+  if (calendar.length > 0) {
+    const firstDayWeekday = calendar[0].weekday;
+    for (let i = 0; i < firstDayWeekday; i++) {
+      html += '<div class="calendar-day" style="background: transparent;"></div>';
+    }
+  }
+  
+  // Add each day
+  calendar.forEach(day => {
+    let activityClass = 'no-activity';
+    let activityText = 'No activity';
+    
+    if (day.activity_score >= 50) {
+      activityClass = 'high-activity';
+      activityText = 'Great day!';
+    } else if (day.activity_score >= 25) {
+      activityClass = 'medium-activity';
+      activityText = 'Good progress';
+    } else if (day.activity_score > 0) {
+      activityClass = 'low-activity';
+      activityText = 'Light activity';
+    }
+    
+    // Check if it's today
+    const isToday = day.date === today;
+    const todayClass = isToday ? ' today' : '';
+    
+    // Build tooltip content
+    let tooltip = `${day.date}<br>`;
+    if (day.has_activity) {
+      const d = day.details;
+      const parts = [];
+      if (d.diary > 0) parts.push(`📖 ${d.diary} diary`);
+      if (d.notes > 0) parts.push(`📝 ${d.notes} notes`);
+      if (d.goals > 0) parts.push(`🎯 ${d.goals} goals`);
+      if (d.tasks > 0) parts.push(`✅ ${d.tasks} tasks`);
+      if (d.chats > 0) parts.push(`💬 ${d.chats} chats`);
+      tooltip += parts.join(', ') || activityText;
+    } else {
+      tooltip += '😴 No activity';
+    }
+    
+    html += `
+      <div class="calendar-day ${activityClass}${todayClass}" data-date="${day.date}">
+        ${day.day}
+        <div class="calendar-day-tooltip">${tooltip}</div>
+      </div>
+    `;
+  });
+  
+  calendarEl.innerHTML = html;
+}
+
 // Load daily briefing
 fetch('/api/daily-briefing/')
   .then(response => response.json())
