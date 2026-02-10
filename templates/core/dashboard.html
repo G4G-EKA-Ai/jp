@@ -2,245 +2,102 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dark-mode.css' %}">
 <style>
-/* ALL SQUARE BOXES - No horizontal rectangles */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+/* ========================================
+   PREMIUM ENTERPRISE DASHBOARD
+   Clean, Professional, Properly Aligned
+======================================== */
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
 
-/* Square Box Base */
-.square-box {
-  aspect-ratio: 1 / 1;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: inherit;
+/* Welcome Header */
+.welcome-header {
+  margin-bottom: 2rem;
 }
 
-.square-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
-
-/* Small Square - for stats */
-.square-box.small {
-  min-width: 140px;
-  max-width: 200px;
-}
-
-/* Medium Square - for features */
-.square-box.medium {
-  min-width: 180px;
-  max-width: 280px;
-}
-
-/* Large Square - for charts */
-.square-box.large {
-  min-width: 280px;
-  max-width: 400px;
-  aspect-ratio: 1 / 1;
-}
-
-/* Gradient backgrounds for feature boxes */
-.square-box.gradient-purple {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-}
-
-.square-box.gradient-pink {
-  background: linear-gradient(135deg, #f093fb, #f5576c);
-  color: white;
-}
-
-.square-box.gradient-blue {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  color: white;
-}
-
-.square-box.gradient-green {
-  background: linear-gradient(135deg, #43e97b, #38f9d7);
-  color: white;
-}
-
-.square-box.gradient-orange {
-  background: linear-gradient(135deg, #f6d365, #fda085);
-  color: white;
-}
-
-.square-box.gradient-gold {
-  background: linear-gradient(135deg, #FFD700, #FFA500);
-  color: white;
-}
-
-/* Icon in box */
-.box-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.75rem;
-  font-size: 1.25rem;
-}
-
-.box-icon.white-bg {
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
-
-.box-icon.purple { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.box-icon.pink { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
-.box-icon.blue { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
-.box-icon.green { background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; }
-.box-icon.orange { background: linear-gradient(135deg, #f6d365, #fda085); color: white; }
-
-/* Numbers */
-.box-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 0.25rem;
-}
-
-.box-number.white { color: white; }
-
-.box-label {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.9;
-}
-
-.box-title {
-  font-size: 1rem;
+.welcome-header h1 {
+  font-size: 1.75rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+  margin: 0;
 }
 
-.box-text {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  line-height: 1.4;
-}
-
-/* Chart container inside square */
-.chart-wrapper {
-  width: 100%;
-  height: 70%;
-  position: relative;
-}
-
-/* Section titles */
-.section-title {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  color: #2C2C2C;
-}
-
-/* Activity Tracker Styles */
-.activity-tracker {
-  background: rgba(255, 255, 255, 0.95);
+/* Activity Tracker Section */
+.activity-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  color: white;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.activity-section h3 {
+  color: white;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .activity-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
   margin-bottom: 1rem;
-}
-
-.activity-header h3 {
-  font-size: 1.1rem;
-  color: #2C2C2C;
-  margin: 0;
 }
 
 .activity-stats {
   display: flex;
-  gap: 1rem;
-  font-size: 0.8rem;
+  gap: 1.5rem;
+  font-size: 0.9rem;
 }
 
-.stat-item {
+.stat-badge {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.15);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
 }
-
-.stat-item .streak { color: #f59e0b; }
-.stat-item .active { color: #10b981; }
-.stat-item .inactive { color: #ef4444; }
 
 .activity-calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
+  gap: 4px;
+  margin-bottom: 1rem;
 }
 
 .calendar-day {
-  aspect-ratio: 1 / 1;
-  border-radius: 4px;
+  aspect-ratio: 1;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 500;
   cursor: pointer;
   position: relative;
   transition: transform 0.2s;
 }
 
 .calendar-day:hover {
-  transform: scale(1.2);
+  transform: scale(1.15);
   z-index: 10;
 }
 
-.calendar-day.no-activity {
-  background: #fecaca;
-  color: #991b1b;
-}
-
-.calendar-day.low-activity {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.calendar-day.medium-activity {
-  background: #bbf7d0;
-  color: #166534;
-}
-
-.calendar-day.high-activity {
-  background: #86efac;
-  color: #14532d;
-}
-
-.calendar-day.future {
-  background: #f3f4f6;
-  color: #9ca3af;
-  cursor: default;
-}
-
-.calendar-day.today {
-  border: 2px solid #667eea;
-  font-weight: bold;
-}
+.calendar-day.no-activity { background: rgba(255,255,255,0.2); color: white; }
+.calendar-day.low-activity { background: rgba(255,255,255,0.4); color: #1a1a2e; }
+.calendar-day.medium-activity { background: rgba(255,255,255,0.7); color: #1a1a2e; }
+.calendar-day.high-activity { background: white; color: #667eea; font-weight: 700; }
+.calendar-day.today { box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(255,255,255,0.3); }
 
 .calendar-day-tooltip {
   display: none;
@@ -248,409 +105,468 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #1f2937;
+  background: #1a1a2e;
   color: white;
-  padding: 0.5rem;
-  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
   font-size: 0.7rem;
   white-space: nowrap;
   z-index: 100;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
-.calendar-day:hover .calendar-day-tooltip {
-  display: block;
-}
+.calendar-day:hover .calendar-day-tooltip { display: block; }
 
 .calendar-legend {
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
-  font-size: 0.7rem;
-  color: #6b7280;
+  gap: 1rem;
+  font-size: 0.75rem;
+  opacity: 0.9;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.3rem;
 }
 
-.legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
 }
 
-.legend-color.none { background: #fecaca; }
-.legend-color.low { background: #fef3c7; }
-.legend-color.med { background: #bbf7d0; }
-.legend-color.high { background: #86efac; }
+.legend-dot.none { background: rgba(255,255,255,0.2); }
+.legend-dot.low { background: rgba(255,255,255,0.4); }
+.legend-dot.med { background: rgba(255,255,255,0.7); }
+.legend-dot.high { background: white; }
 
-/* Mobile Responsive */
+/* ========================================
+   MAIN GRID - Fixed 4 Columns
+======================================== */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Enterprise Card - All Same Size */
+.enterprise-card {
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.enterprise-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  color: white;
+}
+
+/* Sober, Professional Color Palette */
+.card-slate { background: linear-gradient(145deg, #475569, #334155); }
+.card-indigo { background: linear-gradient(145deg, #6366f1, #4f46e5); }
+.card-violet { background: linear-gradient(145deg, #8b5cf6, #7c3aed); }
+.card-rose { background: linear-gradient(145deg, #f43f5e, #e11d48); }
+.card-amber { background: linear-gradient(145deg, #f59e0b, #d97706); }
+.card-emerald { background: linear-gradient(145deg, #10b981, #059669); }
+.card-cyan { background: linear-gradient(145deg, #06b6d4, #0891b2); }
+.card-pink { background: linear-gradient(145deg, #ec4899, #db2777); }
+.card-teal { background: linear-gradient(145deg, #14b8a6, #0d9488); }
+.card-blue { background: linear-gradient(145deg, #3b82f6, #2563eb); }
+.card-purple { background: linear-gradient(145deg, #a855f7, #9333ea); }
+.card-orange { background: linear-gradient(145deg, #f97316, #ea580c); }
+
+/* Card Icon */
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Card Content */
+.card-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.card-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.95;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+/* Chart Cards - Span 2 columns */
+.chart-card {
+  grid-column: span 2;
+  aspect-ratio: auto;
+  min-height: 280px;
+  background: white;
+  color: #1a1a2e;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.chart-card:hover {
+  color: #1a1a2e;
+}
+
+.chart-card .card-icon {
+  background: linear-gradient(145deg, #6366f1, #4f46e5);
+  color: white;
+}
+
+.chart-card .card-title {
+  color: #1a1a2e;
+}
+
+.chart-wrapper {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+======================================== */
+@media (max-width: 1024px) {
+  .main-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .chart-card {
+    grid-column: span 3;
+  }
+}
+
 @media (max-width: 768px) {
-  .dashboard-grid {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .main-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 1rem;
   }
   
-  .square-box {
-    padding: 0.75rem;
-  }
-  
-  .square-box.small {
-    min-width: 100px;
-  }
-  
-  .square-box.large {
-    min-width: 100%;
+  .chart-card {
     grid-column: span 2;
-    aspect-ratio: 1 / 1;
+    min-height: 220px;
   }
   
-  .box-number {
-    font-size: 1.75rem;
+  .enterprise-card {
+    padding: 1rem;
   }
   
-  .box-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
   }
   
-  .box-label {
+  .card-value {
+    font-size: 2rem;
+  }
+  
+  .card-label {
     font-size: 0.75rem;
   }
   
   .activity-header {
     flex-direction: column;
-    gap: 0.5rem;
     align-items: flex-start;
   }
   
   .activity-stats {
     flex-wrap: wrap;
+    gap: 0.75rem;
   }
   
-  .calendar-day {
-    font-size: 0.55rem;
+  .welcome-header h1 {
+    font-size: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .calendar-day {
+    font-size: 0.6rem;
   }
   
-  .square-box.large {
-    grid-column: span 2;
-    aspect-ratio: 1 / 1;
+  .card-value {
+    font-size: 1.75rem;
+  }
+  
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
   }
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-3">
-  <h1 class="mb-3">Welcome back, {{ display_name }}!</h1>
+<div class="dashboard-container">
   
-  <!-- Activity Tracker - Your Journey Since Feb 6, 2026 -->
-  <div class="activity-tracker" id="activity-tracker">
+  <!-- Welcome Header -->
+  <div class="welcome-header">
+    <h1>Welcome back, {{ display_name }}!</h1>
+  </div>
+  
+  <!-- Activity Tracker Section -->
+  <div class="activity-section" id="activity-tracker">
     <div class="activity-header">
       <h3><i class="fas fa-fire me-2"></i>Your Journey Since Feb 6</h3>
-      <div class="activity-stats" id="activity-stats">
-        <span class="stat-item"><i class="fas fa-fire streak"></i> <span id="streak-count">-</span> streak</span>
-        <span class="stat-item"><i class="fas fa-check-circle active"></i> <span id="active-days">-</span> active</span>
-        <span class="stat-item"><i class="fas fa-times-circle inactive"></i> <span id="inactive-days">-</span> missed</span>
+      <div class="activity-stats">
+        <span class="stat-badge"><i class="fas fa-fire"></i> <span id="streak-count">-</span> streak</span>
+        <span class="stat-badge"><i class="fas fa-check-circle"></i> <span id="active-days">-</span> active</span>
+        <span class="stat-badge"><i class="fas fa-times-circle"></i> <span id="inactive-days">-</span> missed</span>
       </div>
     </div>
     <div class="activity-calendar" id="activity-calendar">
-      <div style="text-align: center; padding: 1rem; grid-column: span 7;">
-        <i class="fas fa-spinner fa-spin"></i> Loading your journey...
+      <div style="text-align: center; padding: 1rem; grid-column: span 7; opacity: 0.8;">
+        <i class="fas fa-spinner fa-spin"></i> Loading...
       </div>
     </div>
     <div class="calendar-legend">
-      <div class="legend-item"><div class="legend-color none"></div> No activity</div>
-      <div class="legend-item"><div class="legend-color low"></div> Light</div>
-      <div class="legend-item"><div class="legend-color med"></div> Good</div>
-      <div class="legend-item"><div class="legend-color high"></div> Great!</div>
+      <div class="legend-item"><div class="legend-dot none"></div> None</div>
+      <div class="legend-item"><div class="legend-dot low"></div> Light</div>
+      <div class="legend-item"><div class="legend-dot med"></div> Good</div>
+      <div class="legend-item"><div class="legend-dot high"></div> Great</div>
     </div>
   </div>
   
-  <!-- All Square Boxes Grid -->
-  <div class="dashboard-grid">
+  <!-- Main Grid - All Cards -->
+  <div class="main-grid">
     
-    <!-- Birthday Countdown Square -->
+    <!-- Row 1: Birthday, Briefing, Astro, Stats -->
     {% if birthday_countdown %}
-    <div class="square-box medium {% if birthday_countdown.is_today %}gradient-gold{% else %}gradient-pink{% endif %}">
-      <div class="box-icon white-bg">
-        <i class="fas fa-birthday-cake"></i>
-      </div>
+    <div class="enterprise-card card-rose">
+      <div class="card-icon"><i class="fas fa-birthday-cake"></i></div>
       {% if birthday_countdown.is_today %}
-        <div class="box-number white">🎉</div>
-        <div class="box-label">Happy Birthday!</div>
+        <div class="card-value">🎉</div>
+        <div class="card-label">Happy Birthday!</div>
       {% else %}
-        <div class="box-number white">{{ birthday_countdown.days_until }}</div>
-        <div class="box-label">Days to Birthday</div>
+        <div class="card-value">{{ birthday_countdown.days_until }}</div>
+        <div class="card-label">Days to Birthday</div>
       {% endif %}
     </div>
     {% endif %}
     
-    <!-- Daily Briefing Square -->
-    <div class="square-box medium gradient-purple" id="briefing-box">
-      <div class="box-icon white-bg">
-        <i class="fas fa-sun"></i>
-      </div>
-      <div class="box-title">Daily Briefing</div>
-      <div class="box-text" id="briefing-content">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
+    <div class="enterprise-card card-indigo" id="briefing-box">
+      <div class="card-icon"><i class="fas fa-sun"></i></div>
+      <div class="card-title">Daily Briefing</div>
+      <div class="card-desc" id="briefing-content"><i class="fas fa-spinner fa-spin"></i></div>
     </div>
     
-    <!-- Astro Insight Square -->
-    <div class="square-box medium gradient-orange" id="astro-box">
-      <div class="box-icon white-bg">
-        <i class="fas fa-star"></i>
-      </div>
-      <div class="box-title">Cosmic Insight</div>
-      <div class="box-text" id="astro-content">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
+    <div class="enterprise-card card-amber" id="astro-box">
+      <div class="card-icon"><i class="fas fa-star"></i></div>
+      <div class="card-title">Cosmic Insight</div>
+      <div class="card-desc" id="astro-content"><i class="fas fa-spinner fa-spin"></i></div>
     </div>
     
-    <!-- Stats Squares -->
-    <div class="square-box small">
-      <div class="box-icon purple">
-        <i class="fas fa-sticky-note"></i>
-      </div>
-      <div class="box-number">{{ recent_notes }}</div>
-      <div class="box-label">Notes</div>
+    <div class="enterprise-card card-violet">
+      <div class="card-icon"><i class="fas fa-sticky-note"></i></div>
+      <div class="card-value">{{ recent_notes }}</div>
+      <div class="card-label">Notes</div>
     </div>
     
-    <div class="square-box small">
-      <div class="box-icon pink">
-        <i class="fas fa-book"></i>
-      </div>
-      <div class="box-number">{{ recent_diary }}</div>
-      <div class="box-label">Diary</div>
+    <!-- Row 2: More Stats -->
+    <div class="enterprise-card card-pink">
+      <div class="card-icon"><i class="fas fa-book"></i></div>
+      <div class="card-value">{{ recent_diary }}</div>
+      <div class="card-label">Diary Entries</div>
     </div>
     
-    <div class="square-box small">
-      <div class="box-icon blue">
-        <i class="fas fa-bullseye"></i>
-      </div>
-      <div class="box-number">{{ active_goals }}</div>
-      <div class="box-label">Goals</div>
+    <div class="enterprise-card card-cyan">
+      <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+      <div class="card-value">{{ active_goals }}</div>
+      <div class="card-label">Active Goals</div>
     </div>
     
-    <div class="square-box small">
-      <div class="box-icon green">
-        <i class="fas fa-tasks"></i>
-      </div>
-      <div class="box-number">{{ pending_tasks }}</div>
-      <div class="box-label">Tasks</div>
+    <div class="enterprise-card card-emerald">
+      <div class="card-icon"><i class="fas fa-tasks"></i></div>
+      <div class="card-value">{{ pending_tasks }}</div>
+      <div class="card-label">Pending Tasks</div>
     </div>
     
-    <!-- Chart Squares -->
-    <div class="square-box large">
-      <div class="box-title" style="color: #2C2C2C;"><i class="fas fa-chart-line me-2"></i>Mood Trends</div>
+    <a href="{% url 'ai_chat' %}" class="enterprise-card card-purple">
+      <div class="card-icon"><i class="fas fa-robot"></i></div>
+      <div class="card-title">Ask Jayti</div>
+      <div class="card-desc">Your AI companion</div>
+    </a>
+    
+    <!-- Row 3: Charts (span 2 each) -->
+    <div class="enterprise-card chart-card">
+      <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="card-title">Mood Trends</div>
       <div class="chart-wrapper">
         <canvas id="moodChart"></canvas>
       </div>
     </div>
     
-    <div class="square-box large">
-      <div class="box-title" style="color: #2C2C2C;"><i class="fas fa-bullseye me-2"></i>Goal Progress</div>
+    <div class="enterprise-card chart-card">
+      <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+      <div class="card-title">Goal Progress</div>
       <div class="chart-wrapper">
         <canvas id="goalChart"></canvas>
       </div>
     </div>
     
-    <!-- Quick Action Squares -->
-    <a href="{% url 'diary_write' %}" class="square-box small gradient-purple">
-      <div class="box-icon white-bg">
-        <i class="fas fa-pen"></i>
-      </div>
-      <div class="box-label">Write Diary</div>
+    <!-- Row 4: Quick Actions -->
+    <a href="{% url 'diary_write' %}" class="enterprise-card card-slate">
+      <div class="card-icon"><i class="fas fa-pen"></i></div>
+      <div class="card-title">Write Diary</div>
+      <div class="card-desc">Capture your day</div>
     </a>
     
-    <a href="{% url 'note_create' %}" class="square-box small gradient-green">
-      <div class="box-icon white-bg">
-        <i class="fas fa-plus"></i>
-      </div>
-      <div class="box-label">New Note</div>
+    <a href="{% url 'note_create' %}" class="enterprise-card card-teal">
+      <div class="card-icon"><i class="fas fa-plus"></i></div>
+      <div class="card-title">New Note</div>
+      <div class="card-desc">Quick thoughts</div>
     </a>
     
-    <a href="{% url 'goal_list' %}" class="square-box small gradient-blue">
-      <div class="box-icon white-bg">
-        <i class="fas fa-bullseye"></i>
-      </div>
-      <div class="box-label">Goals</div>
+    <a href="{% url 'goal_list' %}" class="enterprise-card card-blue">
+      <div class="card-icon"><i class="fas fa-flag"></i></div>
+      <div class="card-title">View Goals</div>
+      <div class="card-desc">Track progress</div>
     </a>
     
-    <a href="{% url 'ai_chat' %}" class="square-box small gradient-pink">
-      <div class="box-icon white-bg">
-        <i class="fas fa-robot"></i>
-      </div>
-      <div class="box-label">Ask Jayti</div>
+    <a href="{% url 'astro_dashboard' %}" class="enterprise-card card-orange">
+      <div class="card-icon"><i class="fas fa-moon"></i></div>
+      <div class="card-title">Astro</div>
+      <div class="card-desc">Cosmic guidance</div>
     </a>
     
   </div>
   
-  <!-- Weekly Summary (Show on Sundays) -->
-  {% if show_weekly_summary %}
-  <div class="dashboard-grid">
-    <div class="square-box large" id="weekly-box">
-      <div class="box-icon orange">
-        <i class="fas fa-calendar-week"></i>
-      </div>
-      <div class="box-title" style="color: #2C2C2C;">Weekly Summary</div>
-      <div class="box-text" style="color: #666;" id="weekly-content">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-    </div>
-  </div>
-  {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="{% static 'js/dark-mode.js' %}"></script>
-<script src="{% static 'js/pwa-register.js' %}"></script>
 
 <script>
-// Load Activity Calendar
+// Activity Calendar
 fetch('/api/activity-calendar/')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
-    if (data.success) {
-      renderActivityCalendar(data.calendar, data.stats);
-    }
+    if (data.success) renderCalendar(data.calendar, data.stats);
   })
-  .catch(error => {
-    console.error('Activity calendar error:', error);
-    document.getElementById('activity-calendar').innerHTML = 
-      '<div style="text-align: center; padding: 1rem; grid-column: span 7; color: #666;">Start your journey today!</div>';
+  .catch(() => {
+    document.getElementById('activity-calendar').innerHTML = '<div style="text-align:center;padding:1rem;grid-column:span 7;opacity:0.8;">Start your journey!</div>';
   });
 
-function renderActivityCalendar(calendar, stats) {
-  // Update stats
+function renderCalendar(calendar, stats) {
   document.getElementById('streak-count').textContent = stats.current_streak;
   document.getElementById('active-days').textContent = stats.active_days;
   document.getElementById('inactive-days').textContent = stats.inactive_days;
   
-  // Build calendar HTML
-  const calendarEl = document.getElementById('activity-calendar');
+  const el = document.getElementById('activity-calendar');
   let html = '';
-  
-  // Get today's date
   const today = new Date().toISOString().split('T')[0];
   
-  // Add day headers
-  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  days.forEach(day => {
-    html += `<div style="text-align: center; font-size: 0.6rem; color: #6b7280; padding: 2px;">${day}</div>`;
+  ['M','T','W','T','F','S','S'].forEach(d => {
+    html += `<div style="text-align:center;font-size:0.65rem;opacity:0.7;padding:4px;">${d}</div>`;
   });
   
-  // Add empty cells for alignment (first day offset)
   if (calendar.length > 0) {
-    const firstDayWeekday = calendar[0].weekday;
-    for (let i = 0; i < firstDayWeekday; i++) {
-      html += '<div class="calendar-day" style="background: transparent;"></div>';
+    for (let i = 0; i < calendar[0].weekday; i++) {
+      html += '<div></div>';
     }
   }
   
-  // Add each day
   calendar.forEach(day => {
-    let activityClass = 'no-activity';
-    let activityText = 'No activity';
+    let cls = 'no-activity';
+    if (day.activity_score >= 50) cls = 'high-activity';
+    else if (day.activity_score >= 25) cls = 'medium-activity';
+    else if (day.activity_score > 0) cls = 'low-activity';
     
-    if (day.activity_score >= 50) {
-      activityClass = 'high-activity';
-      activityText = 'Great day!';
-    } else if (day.activity_score >= 25) {
-      activityClass = 'medium-activity';
-      activityText = 'Good progress';
-    } else if (day.activity_score > 0) {
-      activityClass = 'low-activity';
-      activityText = 'Light activity';
-    }
-    
-    // Check if it's today
-    const isToday = day.date === today;
-    const todayClass = isToday ? ' today' : '';
-    
-    // Build tooltip content
-    let tooltip = `${day.date}<br>`;
+    const isToday = day.date === today ? ' today' : '';
+    const d = day.details;
+    let tip = day.date + '<br>';
     if (day.has_activity) {
-      const d = day.details;
-      const parts = [];
-      if (d.diary > 0) parts.push(`📖 ${d.diary} diary`);
-      if (d.notes > 0) parts.push(`📝 ${d.notes} notes`);
-      if (d.goals > 0) parts.push(`🎯 ${d.goals} goals`);
-      if (d.tasks > 0) parts.push(`✅ ${d.tasks} tasks`);
-      if (d.chats > 0) parts.push(`💬 ${d.chats} chats`);
-      tooltip += parts.join(', ') || activityText;
+      const p = [];
+      if (d.diary > 0) p.push('📖 ' + d.diary);
+      if (d.notes > 0) p.push('📝 ' + d.notes);
+      if (d.goals > 0) p.push('🎯 ' + d.goals);
+      if (d.tasks > 0) p.push('✅ ' + d.tasks);
+      tip += p.join(' ') || 'Active';
     } else {
-      tooltip += '😴 No activity';
+      tip += 'No activity';
     }
     
-    html += `
-      <div class="calendar-day ${activityClass}${todayClass}" data-date="${day.date}">
-        ${day.day}
-        <div class="calendar-day-tooltip">${tooltip}</div>
-      </div>
-    `;
+    html += `<div class="calendar-day ${cls}${isToday}">${day.day}<div class="calendar-day-tooltip">${tip}</div></div>`;
   });
   
-  calendarEl.innerHTML = html;
+  el.innerHTML = html;
 }
 
-// Load daily briefing
+// Daily Briefing
 fetch('/api/daily-briefing/')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
-    if (data.success) {
-      const text = data.briefing.substring(0, 80) + '...';
-      document.getElementById('briefing-content').innerHTML = text;
-    }
+    document.getElementById('briefing-content').innerHTML = data.success ? data.briefing.substring(0, 60) + '...' : 'Your insights';
   })
-  .catch(error => {
-    document.getElementById('briefing-content').innerHTML = 'Your daily insights';
-  });
+  .catch(() => { document.getElementById('briefing-content').innerHTML = 'Your insights'; });
 
-// Load astro insight
+// Astro
 fetch('/api/daily-astro/')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
-    if (data.success && data.insight.has_chart) {
-      const text = data.insight.insight.substring(0, 60) + '...';
-      document.getElementById('astro-content').innerHTML = text;
-    } else {
-      document.getElementById('astro-content').innerHTML = 'Cosmic guidance';
-    }
+    document.getElementById('astro-content').innerHTML = (data.success && data.insight.has_chart) ? data.insight.insight.substring(0, 50) + '...' : 'Cosmic guidance';
   })
-  .catch(error => {
-    document.getElementById('astro-content').innerHTML = 'Cosmic guidance';
-  });
+  .catch(() => { document.getElementById('astro-content').innerHTML = 'Cosmic guidance'; });
 
-// Load mood chart
+// Mood Chart
 fetch('/api/mood-trends/?period=month')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
     if (data.success && data.chart_data.labels.length > 0) {
-      const ctx = document.getElementById('moodChart').getContext('2d');
-      new Chart(ctx, {
+      new Chart(document.getElementById('moodChart'), {
         type: 'line',
         data: {
           labels: data.chart_data.labels,
           datasets: [{
-            label: 'Mood',
             data: data.chart_data.data,
-            borderColor: '#FF69B4',
-            backgroundColor: 'rgba(255, 105, 180, 0.1)',
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99,102,241,0.1)',
             tension: 0.4,
             fill: true
           }]
@@ -659,51 +575,30 @@ fetch('/api/mood-trends/?period=month')
           responsive: true,
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
-          scales: {
-            y: { beginAtZero: true, max: 5, ticks: { stepSize: 1 } },
-            x: { display: false }
-          }
+          scales: { y: { beginAtZero: true, max: 5 }, x: { display: false } }
         }
       });
     }
-  })
-  .catch(error => console.error('Error:', error));
+  });
 
-// Load goal progress chart
+// Goal Chart
 fetch('/api/goal-progress/')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
     if (data.success && data.charts.goals.labels.length > 0) {
-      const ctx = document.getElementById('goalChart').getContext('2d');
-      new Chart(ctx, {
+      new Chart(document.getElementById('goalChart'), {
         type: 'doughnut',
         data: {
           labels: data.charts.goals.labels,
-          datasets: [{
-            data: data.charts.goals.data,
-            backgroundColor: data.charts.goals.colors
-          }]
+          datasets: [{ data: data.charts.goals.data, backgroundColor: ['#6366f1','#10b981','#f59e0b','#ef4444'] }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15 } } }
         }
       });
     }
-  })
-  .catch(error => console.error('Error:', error));
-
-// Load weekly summary (if Sunday)
-{% if show_weekly_summary %}
-fetch('/api/weekly-summary/')
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      document.getElementById('weekly-content').innerHTML = data.summary.substring(0, 150) + '...';
-    }
-  })
-  .catch(error => console.error('Error:', error));
-{% endif %}
+  });
 </script>
 {% endblock %}
