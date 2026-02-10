@@ -71,6 +71,13 @@ def note_create(request):
                 tag, _ = Tag.objects.get_or_create(name=tag_name.lower())
                 note.tags.add(tag)
         
+        # Track activity
+        try:
+            from core.services.activity_tracker import record_note_created
+            record_note_created(request.user)
+        except Exception:
+            pass
+        
         messages.success(request, 'Note created successfully.')
         return redirect('note_detail', pk=note.pk)
     
