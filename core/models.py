@@ -113,3 +113,57 @@ class NotificationSchedule(models.Model):
     
     def __str__(self):
         return f"Notification schedule for {self.user.username}"
+
+
+class DailyActivity(models.Model):
+    """Track daily user activity from Feb 6, 2026 onwards"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_activities')
+    date = models.DateField()
+    
+    # Activity counts
+    notes_created = models.IntegerField(default=0)
+    notes_edited = models.IntegerField(default=0)
+    diary_entries = models.IntegerField(default=0)
+    goals_created = models.IntegerField(default=0)
+    tasks_completed = models.IntegerField(default=0)
+    ai_chats = models.IntegerField(default=0)
+    
+    # Session info
+    login_count = models.IntegerField(default=0)
+    total_time_minutes = models.IntegerField(default=0)  # Estimated time spent
+    
+    # Timestamps
+    first_activity = models.DateTimeField(null=True, blank=True)
+    last_activity = models.DateTimeField(null=True, blank=True)
+    
+    class Meta:
+        unique_together = ['user', 'date']
+        ordering = ['-date']
+        verbose_name_plural = 'Daily Activities'
+    
+    def __str__(self):
+        return f"Activity for {self.user.username} on {self.date}"
+    
+    @property
+    def has_activity(self):
+        """Check if any activity was recorded"""
+        return (
+            self.notes_created > 0 or
+            self.notes_edited > 0 or
+            self.diary_entries > 0 or
+            self.goals_created > 0 or
+            self.tasks_completed > 0 or
+            self.ai_chats > 0 or
+            self.login_count > 0
+        )
+    
+    @property
+    def activity_score(self):
+        """Calculate engagement score (0-100)"""
+        score = 0
+        score += min(self.notes_created * 15, 30)  # Max 30 for notes
+        score += min(self.diary_entries * 25, 25)  # Max 25 for diary
+        score += min(self.goals_created * 10, 20)  # Max 20 for goals
+        score += min(self.tasks_completed * 5, 15)  # Max 15 for tasks
+        score += min(self.ai_chats * 2, 10)  # Max 10 for chats
+        return min(score, 100)
