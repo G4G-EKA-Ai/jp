@@ -38,17 +38,28 @@ _csrf_origins = [
     'https://*.railway.app',
     'http://localhost:3000',
     'http://localhost:8001',
+    # Production domains - catch-all for emergent deployments
+    'https://jayti-square.emergent.host',
+    'https://*.stage-preview.emergentagent.com',
 ]
 
 # Add any custom domain from environment
 _custom_origin = _os.environ.get('CSRF_TRUSTED_ORIGIN')
 if _custom_origin:
     _csrf_origins.append(_custom_origin)
+    _csrf_origins.append(f'https://{_custom_origin}')
     
 # Add the deployment URL if available
 _deploy_url = _os.environ.get('DEPLOYMENT_URL')
 if _deploy_url:
     _csrf_origins.append(_deploy_url)
+    if not _deploy_url.startswith('http'):
+        _csrf_origins.append(f'https://{_deploy_url}')
+
+# Add HOST from request dynamically via middleware
+_host = _os.environ.get('HOST')
+if _host:
+    _csrf_origins.append(f'https://{_host}')
 
 CSRF_TRUSTED_ORIGINS = _csrf_origins
 
@@ -61,6 +72,10 @@ CSRF_COOKIE_SAMESITE = 'Lax'  # Allows form submissions from same site
 # Session settings
 SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SAMESITE = 'Lax'
+
+# Trust X-Forwarded headers from reverse proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 # Application definition
 INSTALLED_APPS = [
