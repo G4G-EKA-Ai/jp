@@ -26,7 +26,9 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted Origins for Emergent platform
-CSRF_TRUSTED_ORIGINS = [
+# Dynamically add origins from environment variable if present
+import os as _os
+_csrf_origins = [
     'https://jayti-square.preview.emergentagent.com',
     'https://*.emergentagent.com',
     'https://*.emergentcf.cloud',
@@ -37,6 +39,28 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8001',
 ]
+
+# Add any custom domain from environment
+_custom_origin = _os.environ.get('CSRF_TRUSTED_ORIGIN')
+if _custom_origin:
+    _csrf_origins.append(_custom_origin)
+    
+# Add the deployment URL if available
+_deploy_url = _os.environ.get('DEPLOYMENT_URL')
+if _deploy_url:
+    _csrf_origins.append(_deploy_url)
+
+CSRF_TRUSTED_ORIGINS = _csrf_origins
+
+# CSRF Cookie settings for production
+CSRF_COOKIE_SECURE = not DEBUG  # Use secure cookies in production
+CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read CSRF token
+CSRF_USE_SESSIONS = False  # Use cookies instead of sessions for CSRF
+CSRF_COOKIE_SAMESITE = 'Lax'  # Allows form submissions from same site
+
+# Session settings
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 # Application definition
 INSTALLED_APPS = [
