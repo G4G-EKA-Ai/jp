@@ -5,11 +5,30 @@
 Build a personal, feature-rich website called "JAYTI" as a birthday gift with Notes, Diary, Goals, Vedic Astrology, and AI Companion features.
 
 ### Current Status: PRODUCTION READY ✅
-**Last Updated:** February 9, 2026
+**Last Updated:** February 10, 2026
 
 ---
 
-## Recent Updates (Feb 9, 2026)
+## Recent Updates (Feb 10, 2026)
+
+### Activity Tracker Feature ✅ (NEW)
+- **Tracks user engagement from Feb 6, 2026 onwards**
+- Shows calendar-style heatmap of daily activity
+- Color-coded days: No activity (pink), Light (yellow), Good (light green), Great (dark green)
+- Stats display: Current streak, Active days, Missed days
+- Tracks: Notes created/edited, Diary entries, Goals created, Tasks completed, AI chats
+- Auto-calculates historical activity from existing data
+- Tooltip shows detailed activity breakdown per day
+
+### Deployment Health Check Fix ✅ (NEW)
+- Added root-level `/health` endpoint (without trailing slash) for Kubernetes probes
+- Updated Procfile with fallback port and `--preload` flag
+- Added database connection timeout settings
+- Health check responds immediately without DB operations
+
+---
+
+## Previous Updates (Feb 9, 2026)
 
 ### PostgreSQL Migration Complete ✅
 - **Database:** Supabase PostgreSQL (free tier)
