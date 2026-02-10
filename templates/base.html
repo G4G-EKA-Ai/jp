@@ -70,39 +70,96 @@
             font-family: 'Dancing Script', cursive;
         }
         
-        /* Navigation */
+        /* Navigation - Premium Enterprise Header */
         .navbar-custom {
-            background: rgba(255,255,255,0.98);
+            background: #1a1a2e;
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(244,194,194,0.2);
-            padding: 0.75rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
         }
         
         .navbar-brand {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--dusty-rose) !important;
+            font-size: 1.4rem;
+            color: white !important;
             font-weight: 600;
+            padding: 1rem 1.5rem;
+            margin: 0;
+        }
+        
+        .navbar-brand i {
+            color: #f4c2c2;
         }
         
         .nav-link {
-            color: #3A3A3A !important;
+            color: rgba(255,255,255,0.85) !important;
             font-weight: 500;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            margin: 0 0.25rem;
+            padding: 1rem 1.25rem !important;
+            margin: 0;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .nav-link:hover {
-            color: #1A1A1A !important;
-            background: rgba(244,194,194,0.15);
+            color: white !important;
+            background: rgba(255,255,255,0.08);
         }
         
         .nav-link.active {
-            color: #1A1A1A !important;
-            background: rgba(244,194,194,0.25);
+            color: white !important;
+            background: rgba(255,255,255,0.12);
+            border-bottom: 3px solid #f4c2c2;
+        }
+        
+        .nav-link i {
+            font-size: 0.95rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .dropdown-menu {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            margin-top: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .dropdown-item {
+            color: rgba(255,255,255,0.85);
+            padding: 0.75rem 1.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .dropdown-item:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .dropdown-item.text-danger {
+            color: #f87171 !important;
+        }
+        
+        .dropdown-item.text-danger:hover {
+            background: rgba(248,113,113,0.15);
+        }
+        
+        .dropdown-divider {
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.3);
+            padding: 0.5rem 0.75rem;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
         
         /* Cards */
