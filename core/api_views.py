@@ -11,6 +11,7 @@ import json
 # Import services
 from core.services.daily_briefing import get_daily_briefing
 from core.services.weekly_summary import get_weekly_summary
+from core.services.activity_tracker import get_activity_calendar, get_activity_stats, record_login
 from diary.services.mood_trends import get_mood_chart_data, MoodTrendService
 from diary.services.search import search_diary
 from diary.services.pdf_export import export_diary_pdf
