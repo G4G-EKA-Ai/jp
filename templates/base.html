@@ -29,22 +29,21 @@
     
     <style>
         :root {
-            /* Pink/Rose Background Colors */
-            --bg-pink-light: #FFF0F3;
-            --bg-pink-medium: #FFE4EC;
-            --bg-rose: #FFDCE5;
+            /* Pink/Coral Color Palette from Reference */
+            --pink-lightest: #FFE5EC;
+            --pink-light: #FFC2D1;
+            --pink-medium: #FFB3C6;
+            --pink-dark: #FF8FAB;
+            --pink-accent: #FB6F92;
             
-            /* Teal/Turquoise Card Colors */
-            --teal-dark: #0D9488;
-            --teal-medium: #14B8A6;
-            --teal-light: #2DD4BF;
-            --teal-accent: #5EEAD4;
+            /* Dark Sidebar */
+            --sidebar-dark: #2D2D2D;
+            --sidebar-darker: #1A1A1A;
             
             /* Supporting Colors */
             --white: #FFFFFF;
-            --warm-charcoal: #374151;
-            --text-light: #F0FDFA;
-            --text-muted: #99F6E4;
+            --text-dark: #333333;
+            --text-muted: #666666;
         }
         
         * {
@@ -54,9 +53,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #FFF0F3 0%, #FFE4EC 50%, #FFDCE5 100%);
+            background: #FFE5EC;
             background-attachment: fixed;
-            color: #374151;
+            color: #333333;
             font-family: 'Lato', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
@@ -66,24 +65,24 @@
         
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Playfair Display', serif;
-            color: #1F2937;
+            color: #333333;
         }
         
         p, span, div {
-            color: #374151;
+            color: #333333;
         }
         
         .font-script {
             font-family: 'Dancing Script', cursive;
         }
         
-        /* Navigation - Teal Header */
+        /* Navigation - Dark Header like reference */
         .navbar-custom {
-            background: linear-gradient(135deg, #0D9488, #0F766E);
+            background: #2D2D2D;
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255,255,255,0.15);
+            border-bottom: none;
             padding: 0;
-            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
         
         .navbar-brand {
@@ -96,11 +95,11 @@
         }
         
         .navbar-brand i {
-            color: #5EEAD4;
+            color: #FB6F92;
         }
         
         .nav-link {
-            color: rgba(255,255,255,0.9) !important;
+            color: rgba(255,255,255,0.85) !important;
             font-weight: 500;
             font-size: 0.9rem;
             transition: all 0.3s ease;
@@ -114,13 +113,13 @@
         
         .nav-link:hover {
             color: white !important;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
         }
         
         .nav-link.active {
             color: white !important;
-            background: rgba(255,255,255,0.15);
-            border-bottom: 3px solid #5EEAD4;
+            background: rgba(251, 111, 146, 0.2);
+            border-bottom: 3px solid #FB6F92;
         }
         
         .nav-link i {
@@ -130,34 +129,34 @@
         }
         
         .dropdown-menu {
-            background: linear-gradient(135deg, #0D9488, #0F766E);
-            border: 1px solid rgba(255,255,255,0.15);
+            background: #2D2D2D;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
             margin-top: 0;
-            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .dropdown-item {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.85);
             padding: 0.75rem 1.25rem;
             transition: all 0.2s ease;
         }
         
         .dropdown-item:hover {
             color: white;
-            background: rgba(255,255,255,0.1);
+            background: rgba(251, 111, 146, 0.2);
         }
         
         .dropdown-item.text-danger {
-            color: #FCA5A5 !important;
+            color: #FB6F92 !important;
         }
         
         .dropdown-item.text-danger:hover {
-            background: rgba(252,165,165,0.15);
+            background: rgba(251, 111, 146, 0.15);
         }
         
         .dropdown-divider {
-            border-color: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.1);
         }
         
         .navbar-toggler {
@@ -166,7 +165,7 @@
         }
         
         .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
         
         /* Cards - Teal Theme */
