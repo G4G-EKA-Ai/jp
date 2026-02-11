@@ -583,7 +583,7 @@ fetch('/api/daily-astro/')
   })
   .catch(() => {});
 
-// Charts - Teal Theme
+// Charts - Pink Theme
 fetch('/api/mood-trends/?period=month')
   .then(r => r.json())
   .then(data => {
@@ -594,8 +594,8 @@ fetch('/api/mood-trends/?period=month')
           labels: data.chart_data.labels,
           datasets: [{
             data: data.chart_data.data,
-            borderColor: '#5EEAD4',
-            backgroundColor: 'rgba(94, 234, 212, 0.2)',
+            borderColor: 'white',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
             tension: 0.4,
             fill: true
           }]
@@ -609,7 +609,7 @@ fetch('/api/mood-trends/?period=month')
               beginAtZero: true, 
               max: 5,
               ticks: { color: 'rgba(255,255,255,0.7)' },
-              grid: { color: 'rgba(255,255,255,0.1)' }
+              grid: { color: 'rgba(255,255,255,0.15)' }
             }, 
             x: { display: false } 
           }
@@ -628,8 +628,8 @@ fetch('/api/goal-progress/')
           labels: data.charts.goals.labels,
           datasets: [{ 
             data: data.charts.goals.data, 
-            backgroundColor: ['#5EEAD4','#2DD4BF','#14B8A6','#0D9488'],
-            borderColor: '#0F766E',
+            backgroundColor: ['#FFE5EC','#FFC2D1','#FFB3C6','#FF8FAB'],
+            borderColor: '#FB6F92',
             borderWidth: 2
           }]
         },
