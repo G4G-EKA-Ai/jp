@@ -1,9 +1,11 @@
 """
 AI Weekly Summary Service
 Generates personalized weekly summaries using Gemini AI
+With caching for performance
 """
 from django.conf import settings
 from django.utils import timezone
+from django.core.cache import cache
 from datetime import timedelta
 import google.generativeai as genai
 from diary.models import DiaryEntry
