@@ -121,6 +121,16 @@ This week, you wrote {context['diary_count']} diary entries and completed {len(c
 
 
 def get_weekly_summary(user):
-    """Main function to get weekly summary"""
+    """Main function to get weekly summary with caching"""
+    # Cache weekly summary for 6 hours
+    cache_key = f"weekly_summary_{user.id}_{timezone.now().strftime('%Y%W')}"
+    
+    cached_summary = cache.get(cache_key)
+    if cached_summary:
+        return cached_summary
+    
     service = WeeklySummaryService(user)
-    return service.generate_summary()
+    summary = service.generate_summary()
+    
+    cache.set(cache_key, summary, 60 * 60 * 6)
+    return summary
