@@ -35,6 +35,17 @@ def run_background_setup():
     
     python_exec = sys.executable
     
+    # Pre-warm database connection
+    print("[JAYTI] Pre-warming database connection...")
+    try:
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT 1')
+            cursor.fetchone()
+        print("[JAYTI] Database connection warmed up")
+    except Exception as e:
+        print(f"[JAYTI] Database warmup note: {e}")
+    
     print("[JAYTI] Running background database migrations...")
     try:
         result = subprocess.run(
