@@ -7,10 +7,19 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.cache import cache
 from datetime import timedelta
-import google.generativeai as genai
 from diary.models import DiaryEntry
 from goals.models import Task
 from notes.models import Note
+import warnings
+
+# Suppress the FutureWarning for google.generativeai
+warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+
+
+def _get_genai():
+    """Lazy import of google.generativeai"""
+    import google.generativeai as genai
+    return genai
 
 
 class WeeklySummaryService:
