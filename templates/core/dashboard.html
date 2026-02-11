@@ -583,7 +583,7 @@ fetch('/api/daily-astro/')
   })
   .catch(() => {});
 
-// Charts
+// Charts - Teal Theme
 fetch('/api/mood-trends/?period=month')
   .then(r => r.json())
   .then(data => {
@@ -594,8 +594,8 @@ fetch('/api/mood-trends/?period=month')
           labels: data.chart_data.labels,
           datasets: [{
             data: data.chart_data.data,
-            borderColor: '#e2e8f0',
-            backgroundColor: 'rgba(226,232,240,0.1)',
+            borderColor: '#5EEAD4',
+            backgroundColor: 'rgba(94, 234, 212, 0.2)',
             tension: 0.4,
             fill: true
           }]
@@ -608,8 +608,8 @@ fetch('/api/mood-trends/?period=month')
             y: { 
               beginAtZero: true, 
               max: 5,
-              ticks: { color: 'rgba(226,232,240,0.6)' },
-              grid: { color: 'rgba(226,232,240,0.1)' }
+              ticks: { color: 'rgba(255,255,255,0.7)' },
+              grid: { color: 'rgba(255,255,255,0.1)' }
             }, 
             x: { display: false } 
           }
@@ -628,8 +628,8 @@ fetch('/api/goal-progress/')
           labels: data.charts.goals.labels,
           datasets: [{ 
             data: data.charts.goals.data, 
-            backgroundColor: ['rgba(226,232,240,0.9)','rgba(226,232,240,0.6)','rgba(226,232,240,0.4)','rgba(226,232,240,0.2)'],
-            borderColor: '#1a202c',
+            backgroundColor: ['#5EEAD4','#2DD4BF','#14B8A6','#0D9488'],
+            borderColor: '#0F766E',
             borderWidth: 2
           }]
         },
@@ -642,7 +642,7 @@ fetch('/api/goal-progress/')
               labels: { 
                 boxWidth: 12, 
                 padding: 15,
-                color: '#e2e8f0',
+                color: 'white',
                 font: { family: 'Lora', weight: '600' }
               } 
             } 
