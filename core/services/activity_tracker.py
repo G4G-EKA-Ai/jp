@@ -236,6 +236,9 @@ def get_activity_calendar(user, year=None, month=None):
         calendar_data.append(day_data)
         current_date += timedelta(days=1)
     
+    # Cache for 10 minutes
+    cache.set(cache_key, calendar_data, 60 * 10)
+    
     return calendar_data
 
 
