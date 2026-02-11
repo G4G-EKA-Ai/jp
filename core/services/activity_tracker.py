@@ -93,7 +93,13 @@ def calculate_historical_activity(user):
     """
     Calculate activity from historical data for dates without activity records.
     This fills in gaps from Feb 6, 2026 to today based on created_at timestamps.
+    Cached to avoid recalculating on every request.
     """
+    # Check if we've already calculated today
+    cache_key = f"historical_activity_calculated_{user.id}_{timezone.now().strftime('%Y%m%d')}"
+    if cache.get(cache_key):
+        return  # Already calculated today
+    
     ist_tz = pytz.timezone('Asia/Kolkata')
     today = timezone.now().astimezone(ist_tz).date()
     
