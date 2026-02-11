@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Dynamically add origins from environment variable if present
 import os as _os
 _csrf_origins = [
-    'https://jayti-square.preview.emergentagent.com',
+    'https://squares-jayti.preview.emergentagent.com',
     'https://*.emergentagent.com',
     'https://*.emergentcf.cloud',
     'https://*.emergent.host',
