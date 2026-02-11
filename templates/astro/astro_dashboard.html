@@ -4,7 +4,7 @@
 
 {% block extra_css %}
 <style>
-/* Enterprise Astro Page */
+/* Astro Page - Teal Cards on Pink Background */
 .page-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -19,14 +19,14 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.5rem;
-  color: #2d3748;
+  color: #0F766E;
   margin: 0;
 }
 
 .page-header p {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: #718096;
+  color: #374151;
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
 }
@@ -50,31 +50,31 @@
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  background: linear-gradient(145deg, #2d3748, #1a202c);
-  color: #e2e8f0;
+  background: linear-gradient(145deg, #14B8A6, #0D9488);
+  color: white;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
-  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.3);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .e-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(45, 55, 72, 0.35);
+  box-shadow: 0 15px 40px rgba(13, 148, 136, 0.4);
   color: white;
-  background: linear-gradient(145deg, #3d4a5c, #2d3748);
+  background: linear-gradient(145deg, #2DD4BF, #14B8A6);
 }
 
 .card-icon {
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 1rem;
-  color: #e2e8f0;
+  color: white;
 }
 
 .card-title {
@@ -89,16 +89,16 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.8rem;
-  color: rgba(226, 232, 240, 0.7);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Info Cards */
 .info-card {
-  background: linear-gradient(145deg, #2d3748, #1a202c);
+  background: linear-gradient(145deg, #14B8A6, #0D9488);
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
-  color: #e2e8f0;
+  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.3);
+  color: white;
 }
 
 .info-card h5 {
@@ -120,18 +120,18 @@
 
 .info-list li {
   padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(226, 232, 240, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
 .info-list li:last-child { border-bottom: none; }
-.info-list li i { width: 20px; color: rgba(226, 232, 240, 0.5); }
+.info-list li i { width: 20px; color: rgba(255, 255, 255, 0.7); }
 .info-list li strong { color: white; }
 
 .ascendant-card { text-align: center; }
@@ -147,20 +147,20 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(226, 232, 240, 0.7);
+  color: rgba(255, 255, 255, 0.85);
 }
 .ascendant-lord {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.85rem;
-  color: rgba(226, 232, 240, 0.5);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .section-title {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #2d3748;
+  color: #0F766E;
   margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
@@ -169,11 +169,11 @@
 
 /* Dasha Card */
 .dasha-card {
-  background: linear-gradient(145deg, #2d3748, #1a202c);
+  background: linear-gradient(145deg, #14B8A6, #0D9488);
   border-radius: 20px;
   padding: 1.5rem;
-  color: #e2e8f0;
-  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
+  color: white;
+  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.3);
 }
 
 .dasha-card h4 {
@@ -185,18 +185,18 @@
 .dasha-card h5 {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: rgba(226, 232, 240, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.85rem;
 }
 
 .dasha-card p {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: rgba(226, 232, 240, 0.8);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .dasha-card .btn-view {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.2);
   color: white;
   border: none;
   padding: 0.6rem 1.25rem;
@@ -207,15 +207,15 @@
 }
 
 .dasha-card .btn-view:hover {
-  background: rgba(255,255,255,0.2);
-  color: white;
+  background: #5EEAD4;
+  color: #0F766E;
 }
 
 .alert-enterprise {
-  background: linear-gradient(145deg, #2d3748, #1a202c);
+  background: linear-gradient(145deg, #14B8A6, #0D9488);
   border: none;
   border-radius: 12px;
-  color: #e2e8f0;
+  color: white;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   font-family: 'Lora', serif;
