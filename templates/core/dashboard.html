@@ -4,8 +4,8 @@
 {% block extra_css %}
 <style>
 /* ========================================
-   PREMIUM DASHBOARD - BLACK & WHITE THEME
-   Font: Lora Semi Bold
+   ENTERPRISE DASHBOARD - SOPHISTICATED DESIGN
+   Clean, Professional, Premium Look
 ======================================== */
 
 /* Dashboard Container */
@@ -24,24 +24,24 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.75rem;
-  color: #1a1a1a;
+  color: #2d3748;
   margin: 0;
 }
 
-/* Activity Tracker Section */
+/* Activity Tracker Section - Sophisticated Dark */
 .activity-section {
-  background: #1a1a1a;
-  border-radius: 16px;
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  border-radius: 20px;
   padding: 1.5rem;
   margin-bottom: 2rem;
   color: white;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px rgba(45, 55, 72, 0.3);
 }
 
 .activity-section h3 {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: white;
+  color: #e2e8f0;
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
@@ -57,52 +57,53 @@
 
 .activity-stats {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   font-family: 'Lora', serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .stat-badge {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255,255,255,0.1);
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .activity-calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 6px;
   margin-bottom: 1rem;
 }
 
 .calendar-day {
   aspect-ratio: 1;
-  border-radius: 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Lora', serif;
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   cursor: pointer;
   position: relative;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
 }
 
 .calendar-day:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
   z-index: 10;
 }
 
-.calendar-day.no-activity { background: rgba(255,255,255,0.15); color: white; }
-.calendar-day.low-activity { background: rgba(255,255,255,0.3); color: white; }
-.calendar-day.medium-activity { background: rgba(255,255,255,0.5); color: #1a1a1a; }
-.calendar-day.high-activity { background: white; color: #1a1a1a; }
-.calendar-day.today { box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(255,255,255,0.3); }
+.calendar-day.no-activity { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+.calendar-day.low-activity { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
+.calendar-day.medium-activity { background: rgba(255,255,255,0.4); color: #1a202c; }
+.calendar-day.high-activity { background: #e2e8f0; color: #1a202c; font-weight: 700; }
+.calendar-day.today { box-shadow: 0 0 0 2px #e2e8f0; }
 
 .calendar-day-tooltip {
   display: none;
@@ -111,14 +112,14 @@
   left: 50%;
   transform: translateX(-50%);
   background: white;
-  color: #1a1a1a;
+  color: #2d3748;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   font-size: 0.7rem;
   white-space: nowrap;
   z-index: 100;
   margin-bottom: 6px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .calendar-day:hover .calendar-day-tooltip { display: block; }
@@ -126,32 +127,32 @@
 .calendar-legend {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.75rem;
-  opacity: 0.9;
+  color: rgba(255,255,255,0.7);
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.4rem;
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
 }
 
-.legend-dot.none { background: rgba(255,255,255,0.15); }
-.legend-dot.low { background: rgba(255,255,255,0.3); }
-.legend-dot.med { background: rgba(255,255,255,0.5); }
-.legend-dot.high { background: white; }
+.legend-dot.none { background: rgba(255,255,255,0.08); }
+.legend-dot.low { background: rgba(255,255,255,0.2); }
+.legend-dot.med { background: rgba(255,255,255,0.4); }
+.legend-dot.high { background: #e2e8f0; }
 
 /* ========================================
-   MAIN GRID - Fixed 4 Columns
+   MAIN GRID - Sophisticated Enterprise Cards
 ======================================== */
 .main-grid {
   display: grid;
@@ -160,44 +161,56 @@
   margin-bottom: 2rem;
 }
 
-/* Enterprise Card - BLACK BACKGROUND */
+/* Enterprise Card - Sophisticated Gradient */
 .enterprise-card {
   aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  padding: 1.25rem;
+  border-radius: 20px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  background: #1a1a1a;
-  color: white;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  color: #e2e8f0;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
+  border: 1px solid rgba(255,255,255,0.05);
   position: relative;
   overflow: hidden;
 }
 
+.enterprise-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
 .enterprise-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 15px 40px rgba(45, 55, 72, 0.35);
   color: white;
-  background: #2a2a2a;
+  background: linear-gradient(145deg, #3d4a5c, #2d3748);
 }
 
 /* Card Icon */
 .card-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.1);
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: white;
+  color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 /* Card Content - Lora Semi Bold */
@@ -206,17 +219,17 @@
   font-weight: 600;
   font-size: 2.5rem;
   line-height: 1;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
   color: white;
 }
 
 .card-label {
   font-family: 'Lora', serif;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(255,255,255,0.9);
+  letter-spacing: 1.5px;
+  color: rgba(226, 232, 240, 0.8);
 }
 
 .card-title {
@@ -231,7 +244,7 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(226, 232, 240, 0.7);
   line-height: 1.4;
 }
 
@@ -240,21 +253,6 @@
   grid-column: span 2;
   aspect-ratio: auto;
   min-height: 280px;
-  background: #1a1a1a;
-  color: white;
-}
-
-.chart-card:hover {
-  color: white;
-}
-
-.chart-card .card-icon {
-  background: rgba(255,255,255,0.1);
-  color: white;
-}
-
-.chart-card .card-title {
-  color: white;
 }
 
 .chart-wrapper {
@@ -294,11 +292,12 @@
   
   .enterprise-card {
     padding: 1rem;
+    border-radius: 16px;
   }
   
   .card-icon {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     font-size: 1.2rem;
   }
   
@@ -307,7 +306,7 @@
   }
   
   .card-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
   
   .activity-header {
@@ -317,7 +316,7 @@
   
   .activity-stats {
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
   
   .welcome-header h1 {
@@ -327,7 +326,7 @@
 
 @media (max-width: 480px) {
   .calendar-day {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
   }
   
   .card-value {
@@ -335,8 +334,8 @@
   }
   
   .card-icon {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     font-size: 1rem;
     margin-bottom: 0.75rem;
   }
@@ -357,16 +356,12 @@
     <div class="activity-header">
       <h3><i class="fas fa-fire me-2"></i>Your Journey Since Feb 6</h3>
       <div class="activity-stats">
-        <span class="stat-badge"><i class="fas fa-fire"></i> <span id="streak-count">-</span> streak</span>
-        <span class="stat-badge"><i class="fas fa-check-circle"></i> <span id="active-days">-</span> active</span>
-        <span class="stat-badge"><i class="fas fa-times-circle"></i> <span id="inactive-days">-</span> missed</span>
+        <span class="stat-badge"><i class="fas fa-fire"></i> <span id="streak-count">0</span> streak</span>
+        <span class="stat-badge"><i class="fas fa-check-circle"></i> <span id="active-days">0</span> active</span>
+        <span class="stat-badge"><i class="fas fa-times-circle"></i> <span id="inactive-days">0</span> missed</span>
       </div>
     </div>
-    <div class="activity-calendar" id="activity-calendar">
-      <div style="text-align: center; padding: 1rem; grid-column: span 7; opacity: 0.8;">
-        <i class="fas fa-spinner fa-spin"></i> Loading...
-      </div>
-    </div>
+    <div class="activity-calendar" id="activity-calendar"></div>
     <div class="calendar-legend">
       <div class="legend-item"><div class="legend-dot none"></div> None</div>
       <div class="legend-item"><div class="legend-dot low"></div> Light</div>
@@ -378,7 +373,7 @@
   <!-- Main Grid - All Cards -->
   <div class="main-grid">
     
-    <!-- Row 1: Birthday, Briefing, Astro, Stats -->
+    <!-- Row 1 -->
     {% if birthday_countdown %}
     <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-birthday-cake"></i></div>
@@ -395,13 +390,13 @@
     <div class="enterprise-card" id="briefing-box">
       <div class="card-icon"><i class="fas fa-sun"></i></div>
       <div class="card-title">Daily Briefing</div>
-      <div class="card-desc" id="briefing-content"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="card-desc" id="briefing-content">Your insights await</div>
     </div>
     
     <div class="enterprise-card" id="astro-box">
       <div class="card-icon"><i class="fas fa-star"></i></div>
       <div class="card-title">Cosmic Insight</div>
-      <div class="card-desc" id="astro-content"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="card-desc" id="astro-content">Cosmic guidance</div>
     </div>
     
     <div class="enterprise-card">
@@ -410,7 +405,7 @@
       <div class="card-label">Notes</div>
     </div>
     
-    <!-- Row 2: More Stats -->
+    <!-- Row 2 -->
     <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-book"></i></div>
       <div class="card-value">{{ recent_diary }}</div>
@@ -435,7 +430,7 @@
       <div class="card-desc">Your AI companion</div>
     </a>
     
-    <!-- Row 3: Charts (span 2 each) -->
+    <!-- Row 3: Charts -->
     <div class="enterprise-card chart-card">
       <div class="card-icon"><i class="fas fa-chart-line"></i></div>
       <div class="card-title">Mood Trends</div>
@@ -486,27 +481,59 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <script>
-// Activity Calendar
+// Render calendar immediately with placeholder data while loading
+function renderCalendarPlaceholder() {
+  const el = document.getElementById('activity-calendar');
+  let html = '';
+  const days = ['M','T','W','T','F','S','S'];
+  
+  days.forEach(d => {
+    html += `<div style="text-align:center;font-size:0.65rem;color:rgba(255,255,255,0.5);padding:4px;font-family:'Lora',serif;font-weight:600;">${d}</div>`;
+  });
+  
+  // Show Feb 6 to today placeholder
+  const startDate = new Date(2026, 1, 6); // Feb 6, 2026
+  const today = new Date();
+  const startDay = startDate.getDay() === 0 ? 6 : startDate.getDay() - 1; // Monday = 0
+  
+  for (let i = 0; i < startDay; i++) {
+    html += '<div></div>';
+  }
+  
+  let currentDate = new Date(startDate);
+  while (currentDate <= today) {
+    const day = currentDate.getDate();
+    const isToday = currentDate.toDateString() === today.toDateString();
+    html += `<div class="calendar-day no-activity${isToday ? ' today' : ''}">${day}</div>`;
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  el.innerHTML = html;
+}
+
+// Show placeholder immediately
+renderCalendarPlaceholder();
+
+// Load actual data in background
 fetch('/api/activity-calendar/')
   .then(r => r.json())
   .then(data => {
-    if (data.success) renderCalendar(data.calendar, data.stats);
+    if (data.success) {
+      document.getElementById('streak-count').textContent = data.stats.current_streak;
+      document.getElementById('active-days').textContent = data.stats.active_days;
+      document.getElementById('inactive-days').textContent = data.stats.inactive_days;
+      renderCalendar(data.calendar);
+    }
   })
-  .catch(() => {
-    document.getElementById('activity-calendar').innerHTML = '<div style="text-align:center;padding:1rem;grid-column:span 7;opacity:0.8;">Start your journey!</div>';
-  });
+  .catch(() => {});
 
-function renderCalendar(calendar, stats) {
-  document.getElementById('streak-count').textContent = stats.current_streak;
-  document.getElementById('active-days').textContent = stats.active_days;
-  document.getElementById('inactive-days').textContent = stats.inactive_days;
-  
+function renderCalendar(calendar) {
   const el = document.getElementById('activity-calendar');
   let html = '';
   const today = new Date().toISOString().split('T')[0];
   
   ['M','T','W','T','F','S','S'].forEach(d => {
-    html += `<div style="text-align:center;font-size:0.65rem;opacity:0.7;padding:4px;font-family:'Lora',serif;font-weight:600;">${d}</div>`;
+    html += `<div style="text-align:center;font-size:0.65rem;color:rgba(255,255,255,0.5);padding:4px;font-family:'Lora',serif;font-weight:600;">${d}</div>`;
   });
   
   if (calendar.length > 0) {
@@ -541,23 +568,22 @@ function renderCalendar(calendar, stats) {
   el.innerHTML = html;
 }
 
-// Daily Briefing
+// Load other data without blocking
 fetch('/api/daily-briefing/')
   .then(r => r.json())
   .then(data => {
-    document.getElementById('briefing-content').innerHTML = data.success ? data.briefing.substring(0, 60) + '...' : 'Your insights';
+    if (data.success) document.getElementById('briefing-content').innerHTML = data.briefing.substring(0, 60) + '...';
   })
-  .catch(() => { document.getElementById('briefing-content').innerHTML = 'Your insights'; });
+  .catch(() => {});
 
-// Astro
 fetch('/api/daily-astro/')
   .then(r => r.json())
   .then(data => {
-    document.getElementById('astro-content').innerHTML = (data.success && data.insight.has_chart) ? data.insight.insight.substring(0, 50) + '...' : 'Cosmic guidance';
+    if (data.success && data.insight.has_chart) document.getElementById('astro-content').innerHTML = data.insight.insight.substring(0, 50) + '...';
   })
-  .catch(() => { document.getElementById('astro-content').innerHTML = 'Cosmic guidance'; });
+  .catch(() => {});
 
-// Mood Chart - White lines on dark background
+// Charts
 fetch('/api/mood-trends/?period=month')
   .then(r => r.json())
   .then(data => {
@@ -568,8 +594,8 @@ fetch('/api/mood-trends/?period=month')
           labels: data.chart_data.labels,
           datasets: [{
             data: data.chart_data.data,
-            borderColor: 'white',
-            backgroundColor: 'rgba(255,255,255,0.1)',
+            borderColor: '#e2e8f0',
+            backgroundColor: 'rgba(226,232,240,0.1)',
             tension: 0.4,
             fill: true
           }]
@@ -582,19 +608,16 @@ fetch('/api/mood-trends/?period=month')
             y: { 
               beginAtZero: true, 
               max: 5,
-              ticks: { color: 'rgba(255,255,255,0.7)' },
-              grid: { color: 'rgba(255,255,255,0.1)' }
+              ticks: { color: 'rgba(226,232,240,0.6)' },
+              grid: { color: 'rgba(226,232,240,0.1)' }
             }, 
-            x: { 
-              display: false 
-            } 
+            x: { display: false } 
           }
         }
       });
     }
   });
 
-// Goal Chart - White colors
 fetch('/api/goal-progress/')
   .then(r => r.json())
   .then(data => {
@@ -605,8 +628,8 @@ fetch('/api/goal-progress/')
           labels: data.charts.goals.labels,
           datasets: [{ 
             data: data.charts.goals.data, 
-            backgroundColor: ['rgba(255,255,255,0.9)','rgba(255,255,255,0.7)','rgba(255,255,255,0.5)','rgba(255,255,255,0.3)'],
-            borderColor: '#1a1a1a',
+            backgroundColor: ['rgba(226,232,240,0.9)','rgba(226,232,240,0.6)','rgba(226,232,240,0.4)','rgba(226,232,240,0.2)'],
+            borderColor: '#1a202c',
             borderWidth: 2
           }]
         },
@@ -619,7 +642,7 @@ fetch('/api/goal-progress/')
               labels: { 
                 boxWidth: 12, 
                 padding: 15,
-                color: 'white',
+                color: '#e2e8f0',
                 font: { family: 'Lora', weight: '600' }
               } 
             } 
