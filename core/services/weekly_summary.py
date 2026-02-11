@@ -102,6 +102,7 @@ Generate 200-250 words with 4-5 paragraphs. NO EMOJIS.
             if not settings.GEMINI_API_KEY:
                 return self._fallback_summary(context)
             
+            genai = _get_genai()
             genai.configure(api_key=settings.GEMINI_API_KEY)
             model = genai.GenerativeModel(settings.GEMINI_MODEL)
             
