@@ -1,6 +1,7 @@
 from django.utils import timezone
 from datetime import datetime
 from django.conf import settings
+from django.core.cache import cache
 import hashlib
 from .models import DailyThought
 
@@ -40,21 +41,29 @@ def birthday_check(request):
 
 
 def daily_inspiration(request):
-    """Add daily thought and greeting to context"""
+    """Add daily thought and greeting to context - with caching"""
     today = timezone.now()
     date_seed = today.strftime('%Y%m%d')
     
-    # Get daily thought
-    thoughts = list(DailyThought.objects.filter(is_active=True))
+    # Cache key for daily thought
+    cache_key = f'daily_thought_{date_seed}'
+    thought = cache.get(cache_key)
     
-    if thoughts:
-        hash_val = int(hashlib.md5(date_seed.encode()).hexdigest(), 16)
-        thought = thoughts[hash_val % len(thoughts)]
-    else:
-        # Default fallback thought
-        thought = None
+    if thought is None:
+        # Get daily thought from database
+        thoughts = list(DailyThought.objects.filter(is_active=True))
+        
+        if thoughts:
+            hash_val = int(hashlib.md5(date_seed.encode()).hexdigest(), 16)
+            thought = thoughts[hash_val % len(thoughts)]
+        else:
+            # Default fallback thought
+            thought = None
+        
+        # Cache for 1 hour
+        cache.set(cache_key, thought, 60 * 60)
     
-    # Time-based greeting
+    # Time-based greeting (no DB query needed)
     hour = today.hour
     if 5 <= hour < 11:
         greeting = {
