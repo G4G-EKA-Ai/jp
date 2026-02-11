@@ -3,6 +3,10 @@ Django settings for jaytipargal project.
 Jayti Pargal - Personal Life Companion Website
 Created with love by Vivek
 """
+import warnings
+# Suppress FutureWarning for deprecated google.generativeai package at startup
+warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+warnings.filterwarnings('ignore', message='.*google.generativeai.*')
 
 from pathlib import Path
 import os
