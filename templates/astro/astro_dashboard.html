@@ -5,7 +5,8 @@
 {% block extra_css %}
 <style>
 /* ========================================
-   ENTERPRISE ASTRO PAGE
+   ASTRO PAGE - BLACK & WHITE THEME
+   Font: Lora Semi Bold
 ======================================== */
 .page-container {
   max-width: 1400px;
@@ -18,12 +19,16 @@
 }
 
 .page-header h2 {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 1.5rem;
-  color: #1a1a2e;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .page-header p {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   color: #6b7280;
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
@@ -41,7 +46,7 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* Enterprise Card */
+/* Enterprise Card - BLACK BACKGROUND */
 .e-card {
   aspect-ratio: 1 / 1;
   border-radius: 16px;
@@ -52,61 +57,62 @@
   justify-content: center;
   text-align: center;
   text-decoration: none;
+  background: #1a1a1a;
   color: white;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .e-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
   color: white;
+  background: #2a2a2a;
 }
-
-/* Sober Color Palette */
-.bg-indigo { background: linear-gradient(145deg, #6366f1, #4f46e5); }
-.bg-emerald { background: linear-gradient(145deg, #10b981, #059669); }
-.bg-amber { background: linear-gradient(145deg, #f59e0b, #d97706); }
-.bg-cyan { background: linear-gradient(145deg, #06b6d4, #0891b2); }
-.bg-violet { background: linear-gradient(145deg, #8b5cf6, #7c3aed); }
-.bg-rose { background: linear-gradient(145deg, #f43f5e, #e11d48); }
 
 .card-icon {
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .card-title {
-  font-size: 1rem;
+  font-family: 'Lora', serif;
   font-weight: 600;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
+  color: white;
 }
 
 .card-desc {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.8rem;
-  opacity: 0.9;
+  color: rgba(255,255,255,0.8);
   line-height: 1.4;
 }
 
-/* Info Cards - Non-Square */
+/* Info Cards - BLACK BACKGROUND */
 .info-card {
-  background: white;
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: white;
 }
 
 .info-card h5 {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 1rem;
-  color: #1a1a2e;
+  color: white;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -114,7 +120,7 @@
 }
 
 .info-card h5 i {
-  color: #6366f1;
+  color: rgba(255,255,255,0.8);
 }
 
 .info-list {
@@ -125,9 +131,11 @@
 
 .info-list li {
   padding: 0.5rem 0;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.9rem;
-  color: #4b5563;
+  color: rgba(255,255,255,0.9);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -139,11 +147,11 @@
 
 .info-list li i {
   width: 20px;
-  color: #6366f1;
+  color: rgba(255,255,255,0.6);
 }
 
 .info-list li strong {
-  color: #1a1a2e;
+  color: white;
 }
 
 /* Ascendant Card */
@@ -157,27 +165,34 @@
 }
 
 .ascendant-name {
-  font-size: 1.5rem;
+  font-family: 'Lora', serif;
   font-weight: 600;
-  color: #1a1a2e;
+  font-size: 1.5rem;
+  color: white;
   margin-bottom: 0.25rem;
 }
 
 .ascendant-quality {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.9rem;
-  color: #6b7280;
+  color: rgba(255,255,255,0.8);
   margin-bottom: 0.25rem;
 }
 
 .ascendant-lord {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.85rem;
-  color: #9ca3af;
+  color: rgba(255,255,255,0.6);
 }
 
 /* Section Title */
 .section-title {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 1.1rem;
-  color: #1a1a2e;
+  color: #1a1a1a;
   margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
@@ -185,50 +200,67 @@
 }
 
 .section-title i {
-  color: #6366f1;
+  color: #1a1a1a;
 }
 
-/* Dasha Card */
+/* Dasha Card - BLACK BACKGROUND */
 .dasha-card {
-  background: linear-gradient(145deg, #1a1a2e, #2d2d44);
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.5rem;
   color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .dasha-card h4 {
-  color: #f4c2c2;
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  color: white;
   margin-bottom: 0.5rem;
 }
 
+.dasha-card h5 {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
 .dasha-card p {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   color: rgba(255,255,255,0.8);
   margin: 0;
 }
 
 .dasha-card .btn-view {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.1);
   color: white;
   border: none;
   padding: 0.6rem 1.25rem;
   border-radius: 8px;
   margin-top: 1rem;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .dasha-card .btn-view:hover {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.2);
   color: white;
 }
 
 /* Alert */
 .alert-enterprise {
-  background: linear-gradient(145deg, #fef3c7, #fde68a);
+  background: #1a1a1a;
   border: none;
   border-radius: 12px;
-  color: #92400e;
+  color: white;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
+  font-family: 'Lora', serif;
+  font-weight: 600;
 }
 
 /* Mobile Responsive */
@@ -300,25 +332,25 @@
   <!-- Navigation Cards -->
   <h3 class="section-title"><i class="fas fa-compass"></i> Explore Your Chart</h3>
   <div class="enterprise-grid">
-    <a href="{% url 'birth_chart' %}" class="e-card bg-indigo">
+    <a href="{% url 'birth_chart' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
       <div class="card-title">Birth Chart</div>
       <div class="card-desc">Complete Kundli</div>
     </a>
 
-    <a href="{% url 'house_details' %}" class="e-card bg-emerald">
+    <a href="{% url 'house_details' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-home"></i></div>
       <div class="card-title">12 Houses</div>
       <div class="card-desc">House Analysis</div>
     </a>
 
-    <a href="{% url 'dasha_periods' %}" class="e-card bg-amber">
+    <a href="{% url 'dasha_periods' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
       <div class="card-title">Dasha Periods</div>
       <div class="card-desc">Timeline</div>
     </a>
 
-    <a href="{% url 'predictions' %}" class="e-card bg-cyan">
+    <a href="{% url 'predictions' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-magic"></i></div>
       <div class="card-title">Guidance</div>
       <div class="card-desc">90-Day Predictions</div>
@@ -330,7 +362,7 @@
   <div class="dasha-card" style="margin-top: 1rem;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
       <div>
-        <h5 style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; font-size: 0.85rem;">
+        <h5>
           <i class="fas fa-clock me-2"></i>Current Mahadasha
         </h5>
         <h4>{{ current_dasha.lord }} Mahadasha</h4>
