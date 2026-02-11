@@ -1,9 +1,11 @@
 """
 AI-Powered Daily Morning Briefing Service
 Generates personalized daily briefings using Gemini AI
+With caching to improve performance
 """
 from django.conf import settings
 from django.utils import timezone
+from django.core.cache import cache
 from datetime import timedelta
 import google.generativeai as genai
 from notes.models import Note
