@@ -5,7 +5,8 @@
 {% block extra_css %}
 <style>
 /* ========================================
-   ENTERPRISE GOALS PAGE
+   GOALS PAGE - BLACK & WHITE THEME
+   Font: Lora Semi Bold
 ======================================== */
 .page-container {
   max-width: 1400px;
@@ -23,12 +24,16 @@
 }
 
 .page-header h2 {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 1.5rem;
-  color: #1a1a2e;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .page-header p {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   color: #6b7280;
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
@@ -40,33 +45,36 @@
 }
 
 .btn-action {
-  background: linear-gradient(145deg, #6366f1, #4f46e5);
+  background: #1a1a1a;
   color: white;
   border: none;
   padding: 0.6rem 1.25rem;
   border-radius: 8px;
-  font-weight: 500;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .btn-action:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   color: white;
+  background: #2a2a2a;
 }
 
 .btn-outline {
   background: white;
-  color: #6366f1;
-  border: 2px solid #6366f1;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
   padding: 0.55rem 1.25rem;
   border-radius: 8px;
-  font-weight: 500;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .btn-outline:hover {
-  background: #6366f1;
+  background: #1a1a1a;
   color: white;
 }
 
@@ -78,7 +86,7 @@
   margin-bottom: 2rem;
 }
 
-/* Enterprise Card */
+/* Enterprise Card - BLACK BACKGROUND */
 .e-card {
   aspect-ratio: 1 / 1;
   border-radius: 16px;
@@ -89,55 +97,56 @@
   justify-content: center;
   text-align: center;
   text-decoration: none;
+  background: #1a1a1a;
   color: white;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .e-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
   color: white;
+  background: #2a2a2a;
 }
-
-/* Sober Color Palette */
-.bg-cyan { background: linear-gradient(145deg, #06b6d4, #0891b2); }
-.bg-emerald { background: linear-gradient(145deg, #10b981, #059669); }
-.bg-violet { background: linear-gradient(145deg, #8b5cf6, #7c3aed); }
-.bg-rose { background: linear-gradient(145deg, #f43f5e, #e11d48); }
-.bg-blue { background: linear-gradient(145deg, #3b82f6, #2563eb); }
 
 .card-icon {
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .card-value {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 2.25rem;
-  font-weight: 700;
   line-height: 1;
   margin-bottom: 0.3rem;
+  color: white;
 }
 
 .card-label {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.8rem;
-  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
-  opacity: 0.95;
+  color: rgba(255,255,255,0.9);
 }
 
 /* Section Title */
 .section-title {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 1.1rem;
-  color: #1a1a2e;
+  color: #1a1a1a;
   margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
@@ -145,32 +154,32 @@
 }
 
 .section-title i {
-  color: #f59e0b;
+  color: #1a1a1a;
 }
 
 .section-title.completed i {
-  color: #10b981;
+  color: #1a1a1a;
 }
 
-/* Goal Cards */
+/* Goal Cards - BLACK BACKGROUND */
 .goal-card {
   aspect-ratio: 1 / 1;
-  background: white;
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  color: #1a1a2e;
+  color: white;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .goal-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  color: #1a1a2e;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  color: white;
+  background: #2a2a2a;
 }
 
 .goal-header {
@@ -181,30 +190,36 @@
 }
 
 .goal-badge {
-  background: linear-gradient(145deg, #6366f1, #4f46e5);
+  background: rgba(255,255,255,0.15);
   color: white;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.65rem;
-  font-weight: 500;
 }
 
 .goal-tasks {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.7rem;
-  color: #9ca3af;
+  color: rgba(255,255,255,0.6);
 }
 
 .goal-title {
-  font-size: 0.95rem;
+  font-family: 'Lora', serif;
   font-weight: 600;
-  color: #1a1a2e;
+  font-size: 0.95rem;
+  color: white;
   margin-bottom: 0.5rem;
   line-height: 1.3;
 }
 
 .goal-desc {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: rgba(255,255,255,0.7);
   flex: 1;
   line-height: 1.4;
   overflow: hidden;
@@ -217,7 +232,7 @@
 
 .progress-bar {
   height: 6px;
-  background: #e5e7eb;
+  background: rgba(255,255,255,0.2);
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 0.5rem;
@@ -225,7 +240,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(145deg, #10b981, #059669);
+  background: white;
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -234,22 +249,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.7rem;
-  color: #9ca3af;
+  color: rgba(255,255,255,0.6);
 }
 
 /* Completed Goal Card */
 .completed-card {
-  background: white;
-  border: 2px solid #10b981;
-}
-
-.completed-card .card-icon {
-  background: linear-gradient(145deg, #10b981, #059669);
+  border: 2px solid white;
 }
 
 .completed-card .card-label {
-  color: #6b7280;
+  color: rgba(255,255,255,0.7);
 }
 
 /* Empty State */
@@ -314,24 +326,24 @@
 
   <!-- Stats Grid -->
   <div class="enterprise-grid">
-    <div class="e-card bg-cyan">
+    <div class="e-card">
       <div class="card-icon"><i class="fas fa-bullseye"></i></div>
       <div class="card-value">{{ total_active }}</div>
       <div class="card-label">Active Goals</div>
     </div>
     
-    <div class="e-card bg-emerald">
+    <div class="e-card">
       <div class="card-icon"><i class="fas fa-check-circle"></i></div>
       <div class="card-value">{{ total_completed }}</div>
       <div class="card-label">Completed</div>
     </div>
     
-    <a href="{% url 'goal_board' %}" class="e-card bg-violet">
+    <a href="{% url 'goal_board' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-tasks"></i></div>
       <div class="card-label">View Board</div>
     </a>
     
-    <a href="{% url 'goal_create' %}" class="e-card bg-rose">
+    <a href="{% url 'goal_create' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-plus"></i></div>
       <div class="card-label">New Goal</div>
     </a>
@@ -364,7 +376,7 @@
     </div>
   {% else %}
     <div class="enterprise-grid">
-      <a href="{% url 'goal_create' %}" class="e-card bg-blue empty-state">
+      <a href="{% url 'goal_create' %}" class="e-card empty-state">
         <div class="card-icon"><i class="fas fa-plus"></i></div>
         <div class="card-label">Create Your First Goal</div>
       </a>
@@ -378,7 +390,7 @@
     {% for goal in completed_goals %}
     <div class="e-card completed-card">
       <div class="card-icon"><i class="fas fa-check"></i></div>
-      <div style="font-size: 0.9rem; color: #1a1a2e; font-weight: 600;">{{ goal.title|truncatechars:25 }}</div>
+      <div style="font-family: 'Lora', serif; font-weight: 600; font-size: 0.9rem; color: white;">{{ goal.title|truncatechars:25 }}</div>
       <div class="card-label">Completed</div>
     </div>
     {% endfor %}
