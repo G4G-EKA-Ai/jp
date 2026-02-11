@@ -269,14 +269,16 @@ def health_check(request):
     """
     Health check endpoint for deployment.
     Returns 200 OK immediately - CRITICAL for Kubernetes probes.
-    Database check is optional and non-blocking.
+    This must be extremely lightweight - no database, no imports.
     """
+    import json
     from datetime import datetime
+    from django.http import HttpResponse
     
     # Return 200 immediately - server is alive
-    health_status = {
+    health_data = json.dumps({
         'status': 'healthy',
-        'timestamp': datetime.now().isoformat(),
-    }
+        'timestamp': datetime.utcnow().isoformat() + 'Z',
+    })
     
-    return JsonResponse(health_status, status=200)
+    return HttpResponse(health_data, content_type='application/json', status=200)
