@@ -169,29 +169,30 @@
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
         
-        /* Cards */
+        /* Cards - Teal Theme */
         .card {
             border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            background: linear-gradient(145deg, #0D9488, #0F766E);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.25);
             transition: all 0.3s ease;
             margin-bottom: 1rem;
+            color: white;
         }
         
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(13, 148, 136, 0.35);
         }
         
         .card-body {
             padding: 1.25rem;
         }
         
-        /* Buttons */
+        /* Buttons - Teal Theme */
         .btn-primary {
-            background: linear-gradient(135deg, var(--blush-rose), var(--dusty-rose));
+            background: linear-gradient(135deg, #14B8A6, #0D9488);
             border: none;
             color: white;
             padding: 0.75rem 2rem;
@@ -201,14 +202,14 @@
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--dusty-rose), var(--blush-rose));
+            background: linear-gradient(135deg, #0D9488, #0F766E);
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(244,194,194,0.4);
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
         }
         
         .btn-outline-primary {
-            border: 2px solid var(--blush-rose);
-            color: var(--dusty-rose);
+            border: 2px solid #14B8A6;
+            color: #0D9488;
             background: transparent;
             padding: 0.75rem 2rem;
             border-radius: 25px;
@@ -217,13 +218,13 @@
         }
         
         .btn-outline-primary:hover {
-            background: var(--blush-rose);
+            background: #14B8A6;
             color: white;
         }
         
         /* Form elements */
         .form-control {
-            border: 2px solid rgba(244,194,194,0.3);
+            border: 2px solid rgba(13, 148, 136, 0.3);
             border-radius: 12px;
             padding: 0.75rem 1rem;
             background: white;
@@ -231,12 +232,12 @@
         }
         
         .form-control:focus {
-            border-color: var(--blush-rose);
-            box-shadow: 0 0 0 0.2rem rgba(244,194,194,0.25);
+            border-color: #14B8A6;
+            box-shadow: 0 0 0 0.2rem rgba(20, 184, 166, 0.25);
             background: white;
         }
         
-        /* Pillars */
+        /* Pillars - Teal Variants */
         .pillar-icon {
             width: 60px;
             height: 60px;
@@ -246,13 +247,14 @@
             justify-content: center;
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            color: white;
         }
         
-        .pillar-vibes { background: linear-gradient(135deg, #F4C2C2, #E6A8A8); }
-        .pillar-purpose { background: linear-gradient(135deg, #E6E6FA, #D4D4F0); }
-        .pillar-questions { background: linear-gradient(135deg, #F0FFF0, #D0F0D0); }
-        .pillar-moments { background: linear-gradient(135deg, #FFE4E1, #FFD0C8); }
-        .pillar-feels { background: linear-gradient(135deg, #E0FFFF, #C8F0F0); }
+        .pillar-vibes { background: linear-gradient(135deg, #0D9488, #0F766E); }
+        .pillar-purpose { background: linear-gradient(135deg, #14B8A6, #0D9488); }
+        .pillar-questions { background: linear-gradient(135deg, #2DD4BF, #14B8A6); }
+        .pillar-moments { background: linear-gradient(135deg, #5EEAD4, #2DD4BF); }
+        .pillar-feels { background: linear-gradient(135deg, #99F6E4, #5EEAD4); }
         
         /* Animations */
         @keyframes fadeIn {
