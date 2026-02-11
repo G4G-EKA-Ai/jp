@@ -4,8 +4,8 @@
 {% block extra_css %}
 <style>
 /* ========================================
-   PREMIUM ENTERPRISE DASHBOARD
-   Clean, Professional, Properly Aligned
+   PREMIUM DASHBOARD - BLACK & WHITE THEME
+   Font: Lora Semi Bold
 ======================================== */
 
 /* Dashboard Container */
@@ -21,27 +21,29 @@
 }
 
 .welcome-header h1 {
-  font-size: 1.75rem;
+  font-family: 'Lora', serif;
   font-weight: 600;
-  color: #1a1a2e;
+  font-size: 1.75rem;
+  color: #1a1a1a;
   margin: 0;
 }
 
 /* Activity Tracker Section */
 .activity-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.5rem;
   margin-bottom: 2rem;
   color: white;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
 .activity-section h3 {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   color: white;
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  font-weight: 600;
 }
 
 .activity-header {
@@ -56,6 +58,8 @@
 .activity-stats {
   display: flex;
   gap: 1.5rem;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.9rem;
 }
 
@@ -63,7 +67,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.1);
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
 }
@@ -81,8 +85,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.7rem;
-  font-weight: 500;
   cursor: pointer;
   position: relative;
   transition: transform 0.2s;
@@ -93,10 +98,10 @@
   z-index: 10;
 }
 
-.calendar-day.no-activity { background: rgba(255,255,255,0.2); color: white; }
-.calendar-day.low-activity { background: rgba(255,255,255,0.4); color: #1a1a2e; }
-.calendar-day.medium-activity { background: rgba(255,255,255,0.7); color: #1a1a2e; }
-.calendar-day.high-activity { background: white; color: #667eea; font-weight: 700; }
+.calendar-day.no-activity { background: rgba(255,255,255,0.15); color: white; }
+.calendar-day.low-activity { background: rgba(255,255,255,0.3); color: white; }
+.calendar-day.medium-activity { background: rgba(255,255,255,0.5); color: #1a1a1a; }
+.calendar-day.high-activity { background: white; color: #1a1a1a; }
 .calendar-day.today { box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(255,255,255,0.3); }
 
 .calendar-day-tooltip {
@@ -105,14 +110,15 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #1a1a2e;
-  color: white;
+  background: white;
+  color: #1a1a1a;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   font-size: 0.7rem;
   white-space: nowrap;
   z-index: 100;
   margin-bottom: 6px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .calendar-day:hover .calendar-day-tooltip { display: block; }
@@ -121,6 +127,8 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.75rem;
   opacity: 0.9;
 }
@@ -137,9 +145,9 @@
   border-radius: 3px;
 }
 
-.legend-dot.none { background: rgba(255,255,255,0.2); }
-.legend-dot.low { background: rgba(255,255,255,0.4); }
-.legend-dot.med { background: rgba(255,255,255,0.7); }
+.legend-dot.none { background: rgba(255,255,255,0.15); }
+.legend-dot.low { background: rgba(255,255,255,0.3); }
+.legend-dot.med { background: rgba(255,255,255,0.5); }
 .legend-dot.high { background: white; }
 
 /* ========================================
@@ -152,7 +160,7 @@
   margin-bottom: 2rem;
 }
 
-/* Enterprise Card - All Same Size */
+/* Enterprise Card - BLACK BACKGROUND */
 .enterprise-card {
   aspect-ratio: 1 / 1;
   border-radius: 16px;
@@ -163,71 +171,67 @@
   justify-content: center;
   text-align: center;
   text-decoration: none;
+  background: #1a1a1a;
   color: white;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   position: relative;
   overflow: hidden;
 }
 
 .enterprise-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
   color: white;
+  background: #2a2a2a;
 }
-
-/* Sober, Professional Color Palette */
-.card-slate { background: linear-gradient(145deg, #475569, #334155); }
-.card-indigo { background: linear-gradient(145deg, #6366f1, #4f46e5); }
-.card-violet { background: linear-gradient(145deg, #8b5cf6, #7c3aed); }
-.card-rose { background: linear-gradient(145deg, #f43f5e, #e11d48); }
-.card-amber { background: linear-gradient(145deg, #f59e0b, #d97706); }
-.card-emerald { background: linear-gradient(145deg, #10b981, #059669); }
-.card-cyan { background: linear-gradient(145deg, #06b6d4, #0891b2); }
-.card-pink { background: linear-gradient(145deg, #ec4899, #db2777); }
-.card-teal { background: linear-gradient(145deg, #14b8a6, #0d9488); }
-.card-blue { background: linear-gradient(145deg, #3b82f6, #2563eb); }
-.card-purple { background: linear-gradient(145deg, #a855f7, #9333ea); }
-.card-orange { background: linear-gradient(145deg, #f97316, #ea580c); }
 
 /* Card Icon */
 .card-icon {
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  color: white;
 }
 
-/* Card Content */
+/* Card Content - Lora Semi Bold */
 .card-value {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 2.5rem;
-  font-weight: 700;
   line-height: 1;
   margin-bottom: 0.3rem;
+  color: white;
 }
 
 .card-label {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.85rem;
-  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
-  opacity: 0.95;
+  color: rgba(255,255,255,0.9);
 }
 
 .card-title {
-  font-size: 1rem;
+  font-family: 'Lora', serif;
   font-weight: 600;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
+  color: white;
 }
 
 .card-desc {
+  font-family: 'Lora', serif;
+  font-weight: 600;
   font-size: 0.8rem;
-  opacity: 0.9;
+  color: rgba(255,255,255,0.8);
   line-height: 1.4;
 }
 
@@ -236,22 +240,21 @@
   grid-column: span 2;
   aspect-ratio: auto;
   min-height: 280px;
-  background: white;
-  color: #1a1a2e;
-  border: 1px solid rgba(0,0,0,0.08);
+  background: #1a1a1a;
+  color: white;
 }
 
 .chart-card:hover {
-  color: #1a1a2e;
+  color: white;
 }
 
 .chart-card .card-icon {
-  background: linear-gradient(145deg, #6366f1, #4f46e5);
+  background: rgba(255,255,255,0.1);
   color: white;
 }
 
 .chart-card .card-title {
-  color: #1a1a2e;
+  color: white;
 }
 
 .chart-wrapper {
@@ -377,7 +380,7 @@
     
     <!-- Row 1: Birthday, Briefing, Astro, Stats -->
     {% if birthday_countdown %}
-    <div class="enterprise-card card-rose">
+    <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-birthday-cake"></i></div>
       {% if birthday_countdown.is_today %}
         <div class="card-value">🎉</div>
@@ -389,44 +392,44 @@
     </div>
     {% endif %}
     
-    <div class="enterprise-card card-indigo" id="briefing-box">
+    <div class="enterprise-card" id="briefing-box">
       <div class="card-icon"><i class="fas fa-sun"></i></div>
       <div class="card-title">Daily Briefing</div>
       <div class="card-desc" id="briefing-content"><i class="fas fa-spinner fa-spin"></i></div>
     </div>
     
-    <div class="enterprise-card card-amber" id="astro-box">
+    <div class="enterprise-card" id="astro-box">
       <div class="card-icon"><i class="fas fa-star"></i></div>
       <div class="card-title">Cosmic Insight</div>
       <div class="card-desc" id="astro-content"><i class="fas fa-spinner fa-spin"></i></div>
     </div>
     
-    <div class="enterprise-card card-violet">
+    <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-sticky-note"></i></div>
       <div class="card-value">{{ recent_notes }}</div>
       <div class="card-label">Notes</div>
     </div>
     
     <!-- Row 2: More Stats -->
-    <div class="enterprise-card card-pink">
+    <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-book"></i></div>
       <div class="card-value">{{ recent_diary }}</div>
       <div class="card-label">Diary Entries</div>
     </div>
     
-    <div class="enterprise-card card-cyan">
+    <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-bullseye"></i></div>
       <div class="card-value">{{ active_goals }}</div>
       <div class="card-label">Active Goals</div>
     </div>
     
-    <div class="enterprise-card card-emerald">
+    <div class="enterprise-card">
       <div class="card-icon"><i class="fas fa-tasks"></i></div>
       <div class="card-value">{{ pending_tasks }}</div>
       <div class="card-label">Pending Tasks</div>
     </div>
     
-    <a href="{% url 'ai_chat' %}" class="enterprise-card card-purple">
+    <a href="{% url 'ai_chat' %}" class="enterprise-card">
       <div class="card-icon"><i class="fas fa-robot"></i></div>
       <div class="card-title">Ask Jayti</div>
       <div class="card-desc">Your AI companion</div>
@@ -450,25 +453,25 @@
     </div>
     
     <!-- Row 4: Quick Actions -->
-    <a href="{% url 'diary_write' %}" class="enterprise-card card-slate">
+    <a href="{% url 'diary_write' %}" class="enterprise-card">
       <div class="card-icon"><i class="fas fa-pen"></i></div>
       <div class="card-title">Write Diary</div>
       <div class="card-desc">Capture your day</div>
     </a>
     
-    <a href="{% url 'note_create' %}" class="enterprise-card card-teal">
+    <a href="{% url 'note_create' %}" class="enterprise-card">
       <div class="card-icon"><i class="fas fa-plus"></i></div>
       <div class="card-title">New Note</div>
       <div class="card-desc">Quick thoughts</div>
     </a>
     
-    <a href="{% url 'goal_list' %}" class="enterprise-card card-blue">
+    <a href="{% url 'goal_list' %}" class="enterprise-card">
       <div class="card-icon"><i class="fas fa-flag"></i></div>
       <div class="card-title">View Goals</div>
       <div class="card-desc">Track progress</div>
     </a>
     
-    <a href="{% url 'astro_dashboard' %}" class="enterprise-card card-orange">
+    <a href="{% url 'astro_dashboard' %}" class="enterprise-card">
       <div class="card-icon"><i class="fas fa-moon"></i></div>
       <div class="card-title">Astro</div>
       <div class="card-desc">Cosmic guidance</div>
@@ -503,7 +506,7 @@ function renderCalendar(calendar, stats) {
   const today = new Date().toISOString().split('T')[0];
   
   ['M','T','W','T','F','S','S'].forEach(d => {
-    html += `<div style="text-align:center;font-size:0.65rem;opacity:0.7;padding:4px;">${d}</div>`;
+    html += `<div style="text-align:center;font-size:0.65rem;opacity:0.7;padding:4px;font-family:'Lora',serif;font-weight:600;">${d}</div>`;
   });
   
   if (calendar.length > 0) {
@@ -554,7 +557,7 @@ fetch('/api/daily-astro/')
   })
   .catch(() => { document.getElementById('astro-content').innerHTML = 'Cosmic guidance'; });
 
-// Mood Chart
+// Mood Chart - White lines on dark background
 fetch('/api/mood-trends/?period=month')
   .then(r => r.json())
   .then(data => {
@@ -565,8 +568,8 @@ fetch('/api/mood-trends/?period=month')
           labels: data.chart_data.labels,
           datasets: [{
             data: data.chart_data.data,
-            borderColor: '#6366f1',
-            backgroundColor: 'rgba(99,102,241,0.1)',
+            borderColor: 'white',
+            backgroundColor: 'rgba(255,255,255,0.1)',
             tension: 0.4,
             fill: true
           }]
@@ -575,13 +578,23 @@ fetch('/api/mood-trends/?period=month')
           responsive: true,
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
-          scales: { y: { beginAtZero: true, max: 5 }, x: { display: false } }
+          scales: { 
+            y: { 
+              beginAtZero: true, 
+              max: 5,
+              ticks: { color: 'rgba(255,255,255,0.7)' },
+              grid: { color: 'rgba(255,255,255,0.1)' }
+            }, 
+            x: { 
+              display: false 
+            } 
+          }
         }
       });
     }
   });
 
-// Goal Chart
+// Goal Chart - White colors
 fetch('/api/goal-progress/')
   .then(r => r.json())
   .then(data => {
@@ -590,12 +603,27 @@ fetch('/api/goal-progress/')
         type: 'doughnut',
         data: {
           labels: data.charts.goals.labels,
-          datasets: [{ data: data.charts.goals.data, backgroundColor: ['#6366f1','#10b981','#f59e0b','#ef4444'] }]
+          datasets: [{ 
+            data: data.charts.goals.data, 
+            backgroundColor: ['rgba(255,255,255,0.9)','rgba(255,255,255,0.7)','rgba(255,255,255,0.5)','rgba(255,255,255,0.3)'],
+            borderColor: '#1a1a1a',
+            borderWidth: 2
+          }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15 } } }
+          plugins: { 
+            legend: { 
+              position: 'bottom', 
+              labels: { 
+                boxWidth: 12, 
+                padding: 15,
+                color: 'white',
+                font: { family: 'Lora', weight: '600' }
+              } 
+            } 
+          }
         }
       });
     }
