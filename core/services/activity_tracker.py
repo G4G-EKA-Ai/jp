@@ -1,10 +1,12 @@
 """
 Activity Tracker Service
 Tracks and aggregates user engagement from Feb 6, 2026 onwards
+With caching for performance
 """
 from datetime import date, datetime, timedelta
 from django.utils import timezone
 from django.db.models import Sum, Count
+from django.core.cache import cache
 from core.models import DailyActivity
 from notes.models import Note
 from diary.models import DiaryEntry
