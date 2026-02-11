@@ -4,8 +4,8 @@
 {% block extra_css %}
 <style>
 /* ========================================
-   DASHBOARD - PINK BACKGROUND + TEAL CARDS
-   Fresh, Romantic, Modern Design
+   DASHBOARD - PINK/CORAL ANALYTICS THEME
+   Based on Reference Image Color Palette
 ======================================== */
 
 /* Dashboard Container */
@@ -24,24 +24,24 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.75rem;
-  color: #0F766E;
+  color: #333333;
   margin: 0;
 }
 
-/* Activity Tracker Section - Teal Gradient */
+/* Activity Tracker Section - Pink Gradient */
 .activity-section {
-  background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+  background: linear-gradient(135deg, #FB6F92 0%, #FF8FAB 100%);
   border-radius: 20px;
   padding: 1.5rem;
   margin-bottom: 2rem;
   color: white;
-  box-shadow: 0 10px 40px rgba(13, 148, 136, 0.35);
+  box-shadow: 0 10px 40px rgba(251, 111, 146, 0.35);
 }
 
 .activity-section h3 {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: #F0FDFA;
+  color: white;
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
@@ -67,10 +67,10 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.2);
   padding: 0.5rem 1rem;
   border-radius: 25px;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.25);
 }
 
 .activity-calendar {
@@ -99,11 +99,11 @@
   z-index: 10;
 }
 
-.calendar-day.no-activity { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
-.calendar-day.low-activity { background: rgba(94, 234, 212, 0.4); color: white; }
-.calendar-day.medium-activity { background: rgba(94, 234, 212, 0.7); color: #0F766E; }
-.calendar-day.high-activity { background: #5EEAD4; color: #0F766E; font-weight: 700; }
-.calendar-day.today { box-shadow: 0 0 0 2px #FFC0CB; }
+.calendar-day.no-activity { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
+.calendar-day.low-activity { background: rgba(255,255,255,0.35); color: white; }
+.calendar-day.medium-activity { background: rgba(255,255,255,0.6); color: #FB6F92; }
+.calendar-day.high-activity { background: white; color: #FB6F92; font-weight: 700; }
+.calendar-day.today { box-shadow: 0 0 0 2px white; }
 
 .calendar-day-tooltip {
   display: none;
@@ -112,7 +112,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: white;
-  color: #0F766E;
+  color: #FB6F92;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   font-size: 0.7rem;
@@ -131,7 +131,7 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.9);
 }
 
 .legend-item {
@@ -146,13 +146,13 @@
   border-radius: 4px;
 }
 
-.legend-dot.none { background: rgba(255,255,255,0.1); }
-.legend-dot.low { background: rgba(94, 234, 212, 0.4); }
-.legend-dot.med { background: rgba(94, 234, 212, 0.7); }
-.legend-dot.high { background: #5EEAD4; }
+.legend-dot.none { background: rgba(255,255,255,0.15); }
+.legend-dot.low { background: rgba(255,255,255,0.35); }
+.legend-dot.med { background: rgba(255,255,255,0.6); }
+.legend-dot.high { background: white; }
 
 /* ========================================
-   MAIN GRID - Teal Cards
+   MAIN GRID - Pink/Coral Cards
 ======================================== */
 .main-grid {
   display: grid;
@@ -161,7 +161,7 @@
   margin-bottom: 2rem;
 }
 
-/* Enterprise Card - Teal Gradient */
+/* Enterprise Card - Pink Gradient */
 .enterprise-card {
   aspect-ratio: 1 / 1;
   border-radius: 20px;
@@ -172,11 +172,11 @@
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  background: linear-gradient(145deg, #14B8A6, #0D9488);
+  background: linear-gradient(145deg, #FB6F92, #FF8FAB);
   color: white;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.3);
-  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 30px rgba(251, 111, 146, 0.3);
+  border: 1px solid rgba(255,255,255,0.15);
   position: relative;
   overflow: hidden;
 }
@@ -188,14 +188,14 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
 }
 
 .enterprise-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(13, 148, 136, 0.4);
+  box-shadow: 0 15px 40px rgba(251, 111, 146, 0.4);
   color: white;
-  background: linear-gradient(145deg, #2DD4BF, #14B8A6);
+  background: linear-gradient(145deg, #FF8FAB, #FFB3C6);
 }
 
 /* Card Icon */
@@ -203,14 +203,14 @@
   width: 60px;
   height: 60px;
   border-radius: 16px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: white;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 /* Card Content - Lora Semi Bold */
