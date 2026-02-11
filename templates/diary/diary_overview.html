@@ -4,10 +4,7 @@
 
 {% block extra_css %}
 <style>
-/* ========================================
-   DIARY PAGE - BLACK & WHITE THEME
-   Font: Lora Semi Bold
-======================================== */
+/* Enterprise Diary Page */
 .page-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -27,37 +24,36 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.5rem;
-  color: #1a1a1a;
+  color: #2d3748;
   margin: 0;
 }
 
 .page-header p {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: #6b7280;
+  color: #718096;
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
 }
 
 .btn-action {
-  background: #1a1a1a;
-  color: white;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  color: #e2e8f0;
   border: none;
-  padding: 0.6rem 1.25rem;
-  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 12px;
   font-family: 'Lora', serif;
   font-weight: 600;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(45, 55, 72, 0.2);
 }
 
 .btn-action:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 25px rgba(45, 55, 72, 0.3);
   color: white;
-  background: #2a2a2a;
 }
 
-/* Grid System */
 .enterprise-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -65,41 +61,41 @@
   margin-bottom: 2rem;
 }
 
-/* Enterprise Card - BLACK BACKGROUND */
 .e-card {
   aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  padding: 1.25rem;
+  border-radius: 20px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  background: #1a1a1a;
-  color: white;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  color: #e2e8f0;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .e-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 15px 40px rgba(45, 55, 72, 0.35);
   color: white;
-  background: #2a2a2a;
+  background: linear-gradient(145deg, #3d4a5c, #2d3748);
 }
 
 .card-icon {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 1rem;
-  color: white;
+  color: #e2e8f0;
 }
 
 .card-value {
@@ -117,55 +113,48 @@
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(226, 232, 240, 0.8);
 }
 
-/* Section Title */
 .section-title {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #1a1a1a;
+  color: #2d3748;
   margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.section-title i {
-  color: #1a1a1a;
-}
-
-/* Entry Cards - BLACK BACKGROUND */
+/* Entry Cards */
 .entry-card {
   aspect-ratio: 1 / 1;
-  background: #1a1a1a;
-  border-radius: 16px;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  border-radius: 20px;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  color: white;
+  color: #e2e8f0;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
 }
 
 .entry-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  box-shadow: 0 15px 40px rgba(45, 55, 72, 0.35);
   color: white;
-  background: #2a2a2a;
 }
 
 .entry-date {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.7);
+  color: rgba(226, 232, 240, 0.6);
   margin-bottom: 0.75rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .entry-content {
@@ -173,7 +162,7 @@
   font-weight: 600;
   flex: 1;
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.9);
+  color: rgba(226, 232, 240, 0.9);
   line-height: 1.5;
   overflow: hidden;
 }
@@ -185,50 +174,32 @@
 
 .entry-badge {
   background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.8);
+  color: rgba(226, 232, 240, 0.8);
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 6px;
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.7rem;
 }
 
-/* Empty State */
-.empty-state {
-  grid-column: span 2;
-}
+.empty-state { grid-column: span 2; }
 
-/* Mobile Responsive */
 @media (max-width: 1024px) {
-  .enterprise-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .enterprise-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
   .page-container { padding: 1rem; }
-  
-  .enterprise-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
+  .enterprise-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .page-header { flex-direction: column; align-items: flex-start; }
   .card-value { font-size: 1.75rem; }
   .card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
-  .card-label { font-size: 0.7rem; }
 }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-container">
-  
-  <!-- Header -->
   <div class="page-header">
     <div>
       <h2><i class="fas fa-book-open me-2"></i>My Diary</h2>
@@ -239,46 +210,39 @@
     </a>
   </div>
 
-  <!-- Stats Grid -->
   <div class="enterprise-grid">
     <div class="e-card">
       <div class="card-icon"><i class="fas fa-fire"></i></div>
       <div class="card-value">{{ streak }}</div>
       <div class="card-label">Day Streak</div>
     </div>
-    
     <div class="e-card">
       <div class="card-icon"><i class="fas fa-book"></i></div>
       <div class="card-value">{{ total_entries }}</div>
       <div class="card-label">Total Entries</div>
     </div>
-    
     <div class="e-card">
       <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
       <div class="card-value">{{ entries|length }}</div>
       <div class="card-label">This Month</div>
     </div>
-    
     <a href="{% url 'diary_summary' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-chart-line"></i></div>
       <div class="card-label">View Insights</div>
     </a>
   </div>
 
-  <!-- Quick Actions -->
   <div class="enterprise-grid" style="margin-bottom: 2rem;">
     <a href="{% url 'diary_write' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-pen"></i></div>
       <div class="card-label">Write Entry</div>
     </a>
-    
     <a href="{% url 'diary_calendar' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-calendar"></i></div>
       <div class="card-label">Calendar</div>
     </a>
   </div>
 
-  <!-- Recent Entries -->
   <h3 class="section-title"><i class="fas fa-history"></i> Recent Entries</h3>
   
   {% if entries %}
@@ -288,27 +252,17 @@
         <div class="entry-date">
           <span><i class="far fa-calendar me-1"></i>{{ entry.entry_date|date:"M d, Y" }}</span>
           {% if entry.mood %}
-            <span>
-              {% if entry.mood == 1 %}😔{% elif entry.mood == 2 %}😕{% elif entry.mood == 3 %}😐{% elif entry.mood == 4 %}🙂{% else %}😊{% endif %}
-            </span>
+            <span>{% if entry.mood == 1 %}😔{% elif entry.mood == 2 %}😕{% elif entry.mood == 3 %}😐{% elif entry.mood == 4 %}🙂{% else %}😊{% endif %}</span>
           {% endif %}
         </div>
         <div class="entry-content">
-          {% if entry.content %}
-            {{ entry.content|truncatechars:100 }}
-          {% else %}
-            <em style="color: rgba(255,255,255,0.5);">No text content</em>
-          {% endif %}
+          {% if entry.content %}{{ entry.content|truncatechars:100 }}{% else %}<em style="color: rgba(226,232,240,0.4);">No text content</em>{% endif %}
         </div>
         <div class="entry-footer">
           <span class="entry-badge">
-            {% if entry.input_method == 'voice' %}
-              <i class="fas fa-microphone me-1"></i> Voice
-            {% elif entry.input_method == 'stylus' %}
-              <i class="fas fa-pen me-1"></i> Written
-            {% else %}
-              <i class="fas fa-keyboard me-1"></i> Typed
-            {% endif %}
+            {% if entry.input_method == 'voice' %}<i class="fas fa-microphone me-1"></i> Voice
+            {% elif entry.input_method == 'stylus' %}<i class="fas fa-pen me-1"></i> Written
+            {% else %}<i class="fas fa-keyboard me-1"></i> Typed{% endif %}
           </span>
         </div>
       </a>
