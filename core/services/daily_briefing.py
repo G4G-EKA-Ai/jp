@@ -3,6 +3,11 @@ AI-Powered Daily Morning Briefing Service
 Generates personalized daily briefings using Gemini AI
 With caching to improve performance
 """
+import warnings
+# Suppress the FutureWarning for google.generativeai BEFORE importing
+warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+warnings.filterwarnings('ignore', message='.*google.generativeai.*')
+
 from django.conf import settings
 from django.utils import timezone
 from django.core.cache import cache
@@ -12,15 +17,13 @@ from diary.models import DiaryEntry
 from goals.models import Goal, Task
 from astro.models import BirthChart, PlanetPosition
 import json
-import warnings
-
-# Suppress the FutureWarning for google.generativeai
-warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
 
 
 def _get_genai():
     """Lazy import of google.generativeai to avoid startup warnings"""
-    import google.generativeai as genai
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', category=FutureWarning)
+        import google.generativeai as genai
     return genai
 
 
