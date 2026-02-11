@@ -2,11 +2,22 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from datetime import datetime, timedelta
-import google.generativeai as genai
+import warnings
+
+# Suppress the FutureWarning for google.generativeai
+warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+
+
+def _get_genai():
+    """Lazy import of google.generativeai"""
+    import google.generativeai as genai
+    return genai
+
 
 @login_required
 def daily_briefing(request):
     try:
+        genai = _get_genai()
         genai.configure(api_key=settings.GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-1.5-pro')
         
