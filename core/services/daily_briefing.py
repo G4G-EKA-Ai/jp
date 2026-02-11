@@ -7,12 +7,21 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.cache import cache
 from datetime import timedelta
-import google.generativeai as genai
 from notes.models import Note
 from diary.models import DiaryEntry
 from goals.models import Goal, Task
 from astro.models import BirthChart, PlanetPosition
 import json
+import warnings
+
+# Suppress the FutureWarning for google.generativeai
+warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+
+
+def _get_genai():
+    """Lazy import of google.generativeai to avoid startup warnings"""
+    import google.generativeai as genai
+    return genai
 
 
 class DailyBriefingService:
