@@ -18,9 +18,8 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8001
 
-# Run migrations and start server
-CMD python manage.py migrate && \
-    python manage.py create_initial_user && \
-    python manage.py runserver 0.0.0.0:8000
+# Run migrations and start server with ASGI
+CMD python manage.py migrate --noinput && \
+    gunicorn jaytipargal.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:${PORT:-8001} --workers 2 --timeout 120
