@@ -173,6 +173,9 @@ def calculate_historical_activity(user):
                 goals_created=goals_by_date.get(activity_date, 0),
                 tasks_completed=tasks_by_date.get(activity_date, 0),
             )
+    
+    # Mark as calculated for today (cache for 1 hour)
+    cache.set(cache_key, True, 60 * 60)
 
 
 def get_activity_calendar(user, year=None, month=None):
