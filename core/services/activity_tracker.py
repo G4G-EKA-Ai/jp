@@ -173,7 +173,14 @@ def get_activity_calendar(user, year=None, month=None):
     """
     Get activity data for calendar display.
     Returns all days from Feb 6, 2026 to today with activity status.
+    Cached for 10 minutes to improve performance.
     """
+    # Check cache first
+    cache_key = f"activity_calendar_{user.id}"
+    cached_data = cache.get(cache_key)
+    if cached_data:
+        return cached_data
+    
     ist_tz = pytz.timezone('Asia/Kolkata')
     today = timezone.now().astimezone(ist_tz).date()
     
