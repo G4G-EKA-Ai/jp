@@ -29,15 +29,22 @@
     
     <style>
         :root {
-            --cream: #FFF5F7;
-            --blush-rose: #F4C2C2;
-            --lavender-mist: #E6E6FA;
-            --mint-whisper: #F0FFF0;
-            --warm-charcoal: #4A4A4A;
-            --muted-mauve: #8B7B8B;
+            /* Pink/Rose Background Colors */
+            --bg-pink-light: #FFF0F3;
+            --bg-pink-medium: #FFE4EC;
+            --bg-rose: #FFDCE5;
+            
+            /* Teal/Turquoise Card Colors */
+            --teal-dark: #0D9488;
+            --teal-medium: #14B8A6;
+            --teal-light: #2DD4BF;
+            --teal-accent: #5EEAD4;
+            
+            /* Supporting Colors */
             --white: #FFFFFF;
-            --soft-peach: #FFDAB9;
-            --dusty-rose: #D4A5A5;
+            --warm-charcoal: #374151;
+            --text-light: #F0FDFA;
+            --text-muted: #99F6E4;
         }
         
         * {
@@ -47,9 +54,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #FFF5F7 0%, #FFE4E1 50%, #E6E6FA 100%);
+            background: linear-gradient(135deg, #FFF0F3 0%, #FFE4EC 50%, #FFDCE5 100%);
             background-attachment: fixed;
-            color: #2C2C2C;
+            color: #374151;
             font-family: 'Lato', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
@@ -59,24 +66,24 @@
         
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Playfair Display', serif;
-            color: #1A1A1A;
+            color: #1F2937;
         }
         
         p, span, div {
-            color: #2C2C2C;
+            color: #374151;
         }
         
         .font-script {
             font-family: 'Dancing Script', cursive;
         }
         
-        /* Navigation - Premium Enterprise Header */
+        /* Navigation - Teal Header */
         .navbar-custom {
-            background: #1a1a2e;
+            background: linear-gradient(135deg, #0D9488, #0F766E);
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             padding: 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.3);
         }
         
         .navbar-brand {
@@ -89,11 +96,11 @@
         }
         
         .navbar-brand i {
-            color: #f4c2c2;
+            color: #5EEAD4;
         }
         
         .nav-link {
-            color: rgba(255,255,255,0.85) !important;
+            color: rgba(255,255,255,0.9) !important;
             font-weight: 500;
             font-size: 0.9rem;
             transition: all 0.3s ease;
@@ -107,13 +114,13 @@
         
         .nav-link:hover {
             color: white !important;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.1);
         }
         
         .nav-link.active {
             color: white !important;
-            background: rgba(255,255,255,0.12);
-            border-bottom: 3px solid #f4c2c2;
+            background: rgba(255,255,255,0.15);
+            border-bottom: 3px solid #5EEAD4;
         }
         
         .nav-link i {
@@ -123,15 +130,15 @@
         }
         
         .dropdown-menu {
-            background: #1a1a2e;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #0D9488, #0F766E);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 8px;
             margin-top: 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.4);
         }
         
         .dropdown-item {
-            color: rgba(255,255,255,0.85);
+            color: rgba(255,255,255,0.9);
             padding: 0.75rem 1.25rem;
             transition: all 0.2s ease;
         }
@@ -142,15 +149,15 @@
         }
         
         .dropdown-item.text-danger {
-            color: #f87171 !important;
+            color: #FCA5A5 !important;
         }
         
         .dropdown-item.text-danger:hover {
-            background: rgba(248,113,113,0.15);
+            background: rgba(252,165,165,0.15);
         }
         
         .dropdown-divider {
-            border-color: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.15);
         }
         
         .navbar-toggler {
@@ -159,7 +166,7 @@
         }
         
         .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
         
         /* Cards */
