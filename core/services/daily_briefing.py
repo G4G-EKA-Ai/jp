@@ -182,6 +182,7 @@ Format: Plain text, 3-4 short paragraphs. NO EMOJIS.
             if not settings.GEMINI_API_KEY:
                 return self._fallback_briefing(diary_ctx, goals_ctx)
             
+            genai = _get_genai()
             genai.configure(api_key=settings.GEMINI_API_KEY)
             model = genai.GenerativeModel(settings.GEMINI_MODEL)
             
