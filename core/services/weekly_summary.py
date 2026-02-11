@@ -3,6 +3,11 @@ AI Weekly Summary Service
 Generates personalized weekly summaries using Gemini AI
 With caching for performance
 """
+import warnings
+# Suppress the FutureWarning BEFORE any imports
+warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+warnings.filterwarnings('ignore', message='.*google.generativeai.*')
+
 from django.conf import settings
 from django.utils import timezone
 from django.core.cache import cache
@@ -10,15 +15,13 @@ from datetime import timedelta
 from diary.models import DiaryEntry
 from goals.models import Task
 from notes.models import Note
-import warnings
-
-# Suppress the FutureWarning for google.generativeai
-warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
 
 
 def _get_genai():
     """Lazy import of google.generativeai"""
-    import google.generativeai as genai
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', category=FutureWarning)
+        import google.generativeai as genai
     return genai
 
 
