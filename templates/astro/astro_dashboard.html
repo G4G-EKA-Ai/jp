@@ -4,10 +4,7 @@
 
 {% block extra_css %}
 <style>
-/* ========================================
-   ASTRO PAGE - BLACK & WHITE THEME
-   Font: Lora Semi Bold
-======================================== */
+/* Enterprise Astro Page */
 .page-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -22,19 +19,18 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.5rem;
-  color: #1a1a1a;
+  color: #2d3748;
   margin: 0;
 }
 
 .page-header p {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: #6b7280;
+  color: #718096;
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
 }
 
-/* Grid System */
 .enterprise-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -42,45 +38,43 @@
   margin-bottom: 2rem;
 }
 
-.grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
 
-/* Enterprise Card - BLACK BACKGROUND */
 .e-card {
   aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  padding: 1.25rem;
+  border-radius: 20px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  background: #1a1a1a;
-  color: white;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  color: #e2e8f0;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .e-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 15px 40px rgba(45, 55, 72, 0.35);
   color: white;
-  background: #2a2a2a;
+  background: linear-gradient(145deg, #3d4a5c, #2d3748);
 }
 
 .card-icon {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 1rem;
-  color: white;
+  color: #e2e8f0;
 }
 
 .card-title {
@@ -95,17 +89,16 @@
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.8);
-  line-height: 1.4;
+  color: rgba(226, 232, 240, 0.7);
 }
 
-/* Info Cards - BLACK BACKGROUND */
+/* Info Cards */
 .info-card {
-  background: #1a1a1a;
-  border-radius: 16px;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  color: white;
+  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
+  color: #e2e8f0;
 }
 
 .info-card h5 {
@@ -119,10 +112,6 @@
   gap: 0.5rem;
 }
 
-.info-card h5 i {
-  color: rgba(255,255,255,0.8);
-}
-
 .info-list {
   list-style: none;
   padding: 0;
@@ -130,40 +119,23 @@
 }
 
 .info-list li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.9);
+  color: rgba(226, 232, 240, 0.85);
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.info-list li:last-child {
-  border-bottom: none;
-}
+.info-list li:last-child { border-bottom: none; }
+.info-list li i { width: 20px; color: rgba(226, 232, 240, 0.5); }
+.info-list li strong { color: white; }
 
-.info-list li i {
-  width: 20px;
-  color: rgba(255,255,255,0.6);
-}
-
-.info-list li strong {
-  color: white;
-}
-
-/* Ascendant Card */
-.ascendant-card {
-  text-align: center;
-}
-
-.ascendant-symbol {
-  font-size: 3.5rem;
-  margin-bottom: 0.5rem;
-}
-
+.ascendant-card { text-align: center; }
+.ascendant-symbol { font-size: 3.5rem; margin-bottom: 0.5rem; }
 .ascendant-name {
   font-family: 'Lora', serif;
   font-weight: 600;
@@ -171,67 +143,56 @@
   color: white;
   margin-bottom: 0.25rem;
 }
-
 .ascendant-quality {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 0.25rem;
+  color: rgba(226, 232, 240, 0.7);
 }
-
 .ascendant-lord {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.6);
+  color: rgba(226, 232, 240, 0.5);
 }
 
-/* Section Title */
 .section-title {
   font-family: 'Lora', serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #1a1a1a;
+  color: #2d3748;
   margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.section-title i {
-  color: #1a1a1a;
-}
-
-/* Dasha Card - BLACK BACKGROUND */
+/* Dasha Card */
 .dasha-card {
-  background: #1a1a1a;
-  border-radius: 16px;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
+  border-radius: 20px;
   padding: 1.5rem;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: #e2e8f0;
+  box-shadow: 0 8px 30px rgba(45, 55, 72, 0.2);
 }
 
 .dasha-card h4 {
   font-family: 'Lora', serif;
   font-weight: 600;
   color: white;
-  margin-bottom: 0.5rem;
 }
 
 .dasha-card h5 {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 0.5rem;
+  color: rgba(226, 232, 240, 0.6);
   font-size: 0.85rem;
 }
 
 .dasha-card p {
   font-family: 'Lora', serif;
   font-weight: 600;
-  color: rgba(255,255,255,0.8);
-  margin: 0;
+  color: rgba(226, 232, 240, 0.8);
 }
 
 .dasha-card .btn-view {
@@ -239,8 +200,7 @@
   color: white;
   border: none;
   padding: 0.6rem 1.25rem;
-  border-radius: 8px;
-  margin-top: 1rem;
+  border-radius: 10px;
   font-family: 'Lora', serif;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -251,51 +211,33 @@
   color: white;
 }
 
-/* Alert */
 .alert-enterprise {
-  background: #1a1a1a;
+  background: linear-gradient(145deg, #2d3748, #1a202c);
   border: none;
   border-radius: 12px;
-  color: white;
+  color: #e2e8f0;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   font-family: 'Lora', serif;
   font-weight: 600;
 }
 
-/* Mobile Responsive */
 @media (max-width: 1024px) {
-  .enterprise-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .enterprise-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .page-container { padding: 1rem; }
-  
-  .enterprise-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-  
+  .enterprise-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .grid-2 { grid-template-columns: 1fr; }
   .card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
-  .card-title { font-size: 0.9rem; }
-  .card-desc { font-size: 0.75rem; }
-  
   .ascendant-symbol { font-size: 2.5rem; }
-  .ascendant-name { font-size: 1.25rem; }
 }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-container">
-  
-  <!-- Header -->
   <div class="page-header">
     <h2><i class="fas fa-star me-2"></i>Your Astrology</h2>
     <p>Vedic birth chart and cosmic guidance based on your birth details.</p>
@@ -304,11 +246,10 @@
   {% if swisseph_unavailable %}
   <div class="alert-enterprise">
     <i class="fas fa-exclamation-triangle me-2"></i>
-    <strong>Astrology features temporarily unavailable.</strong> Please try again later.
+    <strong>Astrology features temporarily unavailable.</strong>
   </div>
   {% endif %}
 
-  <!-- Birth Info Cards -->
   <div class="enterprise-grid grid-2" style="margin-bottom: 2rem;">
     <div class="info-card">
       <h5><i class="fas fa-user-circle"></i> Birth Details</h5>
@@ -329,7 +270,6 @@
     </div>
   </div>
 
-  <!-- Navigation Cards -->
   <h3 class="section-title"><i class="fas fa-compass"></i> Explore Your Chart</h3>
   <div class="enterprise-grid">
     <a href="{% url 'birth_chart' %}" class="e-card">
@@ -337,19 +277,16 @@
       <div class="card-title">Birth Chart</div>
       <div class="card-desc">Complete Kundli</div>
     </a>
-
     <a href="{% url 'house_details' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-home"></i></div>
       <div class="card-title">12 Houses</div>
       <div class="card-desc">House Analysis</div>
     </a>
-
     <a href="{% url 'dasha_periods' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
       <div class="card-title">Dasha Periods</div>
       <div class="card-desc">Timeline</div>
     </a>
-
     <a href="{% url 'predictions' %}" class="e-card">
       <div class="card-icon"><i class="fas fa-magic"></i></div>
       <div class="card-title">Guidance</div>
@@ -357,23 +294,15 @@
     </a>
   </div>
 
-  <!-- Current Dasha -->
   {% if current_dasha %}
   <div class="dasha-card" style="margin-top: 1rem;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
       <div>
-        <h5>
-          <i class="fas fa-clock me-2"></i>Current Mahadasha
-        </h5>
+        <h5><i class="fas fa-clock me-2"></i>Current Mahadasha</h5>
         <h4>{{ current_dasha.lord }} Mahadasha</h4>
-        <p>
-          <i class="far fa-calendar-alt me-2"></i>
-          {{ current_dasha.start_date|date:"M d, Y" }} - {{ current_dasha.end_date|date:"M d, Y" }}
-        </p>
+        <p><i class="far fa-calendar-alt me-2"></i>{{ current_dasha.start_date|date:"M d, Y" }} - {{ current_dasha.end_date|date:"M d, Y" }}</p>
       </div>
-      <a href="{% url 'dasha_periods' %}" class="btn-view">
-        <i class="fas fa-eye me-2"></i>View Full Timeline
-      </a>
+      <a href="{% url 'dasha_periods' %}" class="btn-view"><i class="fas fa-eye me-2"></i>View Timeline</a>
     </div>
   </div>
   {% endif %}
