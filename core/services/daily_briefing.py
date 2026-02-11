@@ -201,6 +201,20 @@ Format: Plain text, 3-4 short paragraphs. NO EMOJIS.
 
 
 def get_daily_briefing(user):
-    """Main function to get daily briefing"""
+    """Main function to get daily briefing with caching"""
+    # Cache key based on user and date (briefing changes daily)
+    cache_key = f"daily_briefing_{user.id}_{timezone.now().strftime('%Y%m%d')}"
+    
+    # Try to get from cache first
+    cached_briefing = cache.get(cache_key)
+    if cached_briefing:
+        return cached_briefing
+    
+    # Generate new briefing
     service = DailyBriefingService(user)
-    return service.generate_briefing()
+    briefing = service.generate_briefing()
+    
+    # Cache for 4 hours (briefing is daily but we refresh a few times)
+    cache.set(cache_key, briefing, 60 * 60 * 4)
+    
+    return briefing
