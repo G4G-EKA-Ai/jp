@@ -408,21 +408,21 @@
 
 <div class="modal fade" id="createFolderModal" tabindex="-1">
   <div class="modal-dialog">
-    <div class="modal-content" style="background: linear-gradient(145deg, #14B8A6, #0D9488); color: white;">
+    <div class="modal-content" style="background: linear-gradient(145deg, #FB6F92, #FF8FAB); color: white;">
       <form method="post" action="{% url 'folder_create' %}">
         {% csrf_token %}
-        <div class="modal-header" style="border-color: rgba(255,255,255,0.15);">
+        <div class="modal-header" style="border-color: rgba(255,255,255,0.2);">
           <h5 class="modal-title" style="font-family: 'Lora', serif; font-weight: 600;">Create New Folder</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label" style="font-family: 'Lora', serif; font-weight: 600;">Folder Name</label>
-            <input type="text" name="name" class="form-control" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: white;" required>
+            <input type="text" name="name" class="form-control" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white;" required>
           </div>
           <div class="mb-3">
             <label class="form-label" style="font-family: 'Lora', serif; font-weight: 600;">Icon</label>
-            <select name="icon" class="form-control" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: white;">
+            <select name="icon" class="form-control" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white;">
               <option value="📁">📁 Folder</option>
               <option value="📄">📄 Document</option>
               <option value="💼">💼 Work</option>
@@ -432,9 +432,9 @@
             </select>
           </div>
         </div>
-        <div class="modal-footer" style="border-color: rgba(255,255,255,0.15);">
-          <button type="button" class="btn" style="background: rgba(255,255,255,0.15); color: white;" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn" style="background: #5EEAD4; color: #0F766E;">Create</button>
+        <div class="modal-footer" style="border-color: rgba(255,255,255,0.2);">
+          <button type="button" class="btn" style="background: rgba(255,255,255,0.2); color: white;" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn" style="background: white; color: #FB6F92;">Create</button>
         </div>
       </form>
     </div>
