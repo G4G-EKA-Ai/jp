@@ -289,6 +289,9 @@ if GOOGLE_CREDENTIALS_JSON:
 
 # Configure Gemini with service account if available
 try:
+    import warnings
+    warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+    
     if GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_CREDENTIALS_JSON:
         import google.generativeai as genai
         
