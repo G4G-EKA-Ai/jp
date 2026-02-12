@@ -114,6 +114,7 @@ def goal_create(request):
 
 def generate_ai_tasks(goal):
     """Generate tasks using Gemini AI based on goal details"""
+    gemini_client = get_gemini_client()
     if not gemini_client:
         return None
     
