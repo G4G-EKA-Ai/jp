@@ -60,7 +60,7 @@ Database - Supabase PostgreSQL (Production)
 - **Password:** jayati2026
 
 ## Preview URL
-https://squares-jayti.preview.emergentagent.com/
+https://love-notes-99.preview.emergentagent.com/
 
 ## Database
 - **Provider:** Supabase (Free Tier)
