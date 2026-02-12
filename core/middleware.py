@@ -13,12 +13,16 @@ class DynamicCSRFMiddleware:
     during Kubernetes probes.
     """
     
+    # Paths that should bypass CSRF and origin processing
+    EXEMPT_PATHS = {'/health', '/api', '/favicon.ico'}
+    
     def __init__(self, get_response):
         self.get_response = get_response
     
     def __call__(self, request):
-        # CRITICAL: Skip all processing for health checks - respond immediately
-        if request.path.rstrip('/') == '/health':
+        # CRITICAL: Skip all processing for exempt paths - respond immediately
+        path = request.path.rstrip('/')
+        if path in self.EXEMPT_PATHS or path.endswith('.php'):
             return self.get_response(request)
         
         # Get the host from the request
