@@ -8,12 +8,19 @@ class DynamicCSRFMiddleware:
     """
     Middleware that dynamically adds the request's Host to CSRF_TRUSTED_ORIGINS.
     This helps with production deployments where the exact domain may vary.
+    
+    CRITICAL: Skips processing for health check endpoints to ensure fast response
+    during Kubernetes probes.
     """
     
     def __init__(self, get_response):
         self.get_response = get_response
     
     def __call__(self, request):
+        # CRITICAL: Skip all processing for health checks - respond immediately
+        if request.path.rstrip('/') == '/health':
+            return self.get_response(request)
+        
         # Get the host from the request
         host = request.get_host()
         
