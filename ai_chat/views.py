@@ -295,8 +295,8 @@ def chat_interface(request):
     
     chat_messages = conversation.messages.all()[:50]  # Last 50 messages
     
-    # Check if Gemini is available
-    gemini_available = gemini_client is not None
+    # Check if Gemini is available (lazy check)
+    gemini_available = settings.GEMINI_API_KEY is not None and len(settings.GEMINI_API_KEY) > 0
     
     context = {
         'chat_messages': chat_messages,
