@@ -7,13 +7,34 @@ from django.conf import settings
 from django.utils import timezone
 from datetime import timedelta
 import json
-from google import genai
 from .models import AIConversation, AIMessage
 
-# Configure Gemini API
-gemini_client = None
-if settings.GEMINI_API_KEY:
-    gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
+# Lazy-loaded Gemini client to prevent blocking app startup during health checks
+_gemini_client = None
+_gemini_initialized = False
+
+
+def get_gemini_client():
+    """
+    Lazily initialize Gemini client on first use.
+    This prevents blocking the application startup during deployment health checks.
+    """
+    global _gemini_client, _gemini_initialized
+    
+    if _gemini_initialized:
+        return _gemini_client
+    
+    _gemini_initialized = True
+    
+    if settings.GEMINI_API_KEY:
+        try:
+            from google import genai
+            _gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        except Exception as e:
+            print(f"[AI Chat] Gemini initialization error: {e}")
+            _gemini_client = None
+    
+    return _gemini_client
 
 
 def get_user_context(user):
