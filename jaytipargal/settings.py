@@ -291,27 +291,38 @@ if GOOGLE_CREDENTIALS_JSON:
     except json.JSONDecodeError as e:
         print(f"⚠️ Invalid GOOGLE_CREDENTIALS_JSON: {e}")
 
-# Configure Gemini with service account if available
-try:
-    import warnings
-    warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+# Gemini configuration is now handled lazily in views/services to avoid blocking startup
+# The google.generativeai import is slow and blocks health checks during deployment
+# Each view that needs Gemini will configure it on first use
+GEMINI_CONFIGURED = False  # Flag to track if Gemini has been configured
+
+def configure_gemini_lazy():
+    """
+    Lazily configure Gemini on first use - called from views that need it.
+    This prevents blocking the application startup during deployment health checks.
+    """
+    global GEMINI_CONFIGURED
+    if GEMINI_CONFIGURED:
+        return True
     
-    if GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_CREDENTIALS_JSON:
-        import google.generativeai as genai
+    try:
+        import warnings
+        warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
+        warnings.filterwarnings('ignore', message='.*google.generativeai.*')
         
-        # If using service account, configure accordingly
-        if GOOGLE_APPLICATION_CREDENTIALS and os.path.exists(GOOGLE_APPLICATION_CREDENTIALS):
-            # For Vertex AI / Service account authentication
-            genai.configure()
-            print("✓ Gemini configured with service account")
-        elif GEMINI_API_KEY:
-            # Standard API key authentication
-            genai.configure(api_key=GEMINI_API_KEY)
-            print("✓ Gemini configured with API key")
-except ImportError:
-    print("⚠️ google-generativeai not installed")
-except Exception as e:
-    print(f"⚠️ Gemini configuration error: {e}")
+        if GOOGLE_APPLICATION_CREDENTIALS or GOOGLE_CREDENTIALS_JSON:
+            import google.generativeai as genai
+            
+            if GOOGLE_APPLICATION_CREDENTIALS and os.path.exists(GOOGLE_APPLICATION_CREDENTIALS):
+                genai.configure()
+            elif GEMINI_API_KEY:
+                genai.configure(api_key=GEMINI_API_KEY)
+            
+            GEMINI_CONFIGURED = True
+            return True
+    except Exception:
+        pass
+    return False
 
 # Logging configuration - Enhanced for Railway debugging
 LOGGING = {
