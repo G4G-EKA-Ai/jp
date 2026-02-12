@@ -349,7 +349,7 @@ def send_message(request):
         return JsonResponse({
             'response': ai_response,
             'timestamp': conversation.messages.last().timestamp.isoformat(),
-            'ai_engine': 'gemini' if gemini_client else 'fallback'
+            'ai_engine': 'gemini' if get_gemini_client() else 'fallback'
         })
     
     except Exception as e:
