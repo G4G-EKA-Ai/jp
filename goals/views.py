@@ -4,18 +4,39 @@ from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
 from datetime import timedelta
-from google import genai
 import logging
 from .models import Goal, Task, Milestone
 
 logger = logging.getLogger('goals')
 
-# Configure Gemini API
-gemini_client = None
-if settings.GEMINI_API_KEY:
-    gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
-else:
-    logger.warning("Gemini API key not configured. AI task generation will not work.")
+# Lazy-loaded Gemini client to prevent blocking app startup during health checks
+_gemini_client = None
+_gemini_initialized = False
+
+
+def get_gemini_client():
+    """
+    Lazily initialize Gemini client on first use.
+    This prevents blocking the application startup during deployment health checks.
+    """
+    global _gemini_client, _gemini_initialized
+    
+    if _gemini_initialized:
+        return _gemini_client
+    
+    _gemini_initialized = True
+    
+    if settings.GEMINI_API_KEY:
+        try:
+            from google import genai
+            _gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        except Exception as e:
+            logger.warning(f"Gemini initialization error: {e}")
+            _gemini_client = None
+    else:
+        logger.warning("Gemini API key not configured. AI task generation will not work.")
+    
+    return _gemini_client
 
 
 @login_required
