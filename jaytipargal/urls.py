@@ -6,6 +6,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
 def root_health_check(request):
@@ -18,10 +19,26 @@ def root_health_check(request):
         'timestamp': datetime.now().isoformat(),
     }, status=200)
 
+@csrf_exempt
+def api_not_found(request):
+    """
+    Catch-all for /api requests - this Django app doesn't use /api prefix.
+    Returns proper JSON response instead of 404 HTML.
+    """
+    return JsonResponse({
+        'error': 'API endpoint not found',
+        'message': 'This application does not use /api prefix. Please check documentation.',
+        'available_endpoints': ['/health', '/notes/', '/diary/', '/goals/', '/astro/', '/ai-chat/']
+    }, status=404)
+
 urlpatterns = [
     # Health check at root level - responds BEFORE any middleware/DB
     path('health', root_health_check, name='root_health'),
     path('health/', root_health_check, name='root_health_slash'),
+    
+    # Catch-all for /api requests (reduces 404 noise from scanners)
+    path('api', api_not_found, name='api_not_found'),
+    path('api/', api_not_found, name='api_not_found_slash'),
     
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
