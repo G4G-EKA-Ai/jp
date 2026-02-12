@@ -136,6 +136,7 @@ CONTEXT AWARENESS:
 
 def get_ai_response(user_input, user, conversation_history=None):
     """Get response from Gemini API with Mentor Mode context"""
+    gemini_client = get_gemini_client()
     if not gemini_client:
         return get_fallback_response(user_input)
     
