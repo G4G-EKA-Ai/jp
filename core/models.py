@@ -167,3 +167,76 @@ class DailyActivity(models.Model):
         score += min(self.tasks_completed * 5, 15)  # Max 15 for tasks
         score += min(self.ai_chats * 2, 10)  # Max 10 for chats
         return min(score, 100)
+
+
+class UserSession(models.Model):
+    """Track user login sessions with IP and device information"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tracked_sessions')
+    session_key = models.CharField(max_length=40, unique=True)
+    
+    # IP Address information
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    ip_city = models.CharField(max_length=100, blank=True)
+    ip_country = models.CharField(max_length=100, blank=True)
+    ip_region = models.CharField(max_length=100, blank=True)
+    
+    # Device information
+    user_agent = models.TextField(blank=True)
+    device_type = models.CharField(max_length=20, default='unknown', choices=[
+        ('desktop', 'Desktop'),
+        ('mobile', 'Mobile'),
+        ('tablet', 'Tablet'),
+        ('bot', 'Bot'),
+        ('unknown', 'Unknown'),
+    ])
+    browser = models.CharField(max_length=100, blank=True)
+    browser_version = models.CharField(max_length=50, blank=True)
+    os = models.CharField(max_length=100, blank=True)
+    os_version = models.CharField(max_length=50, blank=True)
+    
+    # Session timing
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_activity = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'User Session'
+        verbose_name_plural = 'User Sessions'
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.ip_address} - {self.device_type}"
+    
+    @property
+    def duration(self):
+        """Calculate session duration"""
+        if self.last_activity and self.created_at:
+            diff = self.last_activity - self.created_at
+            hours, remainder = divmod(diff.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            if diff.days > 0:
+                return f"{diff.days}d {hours}h {minutes}m"
+            elif hours > 0:
+                return f"{hours}h {minutes}m"
+            else:
+                return f"{minutes}m {seconds}s"
+        return "N/A"
+    
+    @property
+    def device_icon(self):
+        """Return appropriate icon class"""
+        icons = {
+            'desktop': '💻',
+            'mobile': '📱',
+            'tablet': '📲',
+            'bot': '🤖',
+            'unknown': '❓',
+        }
+        return icons.get(self.device_type, '❓')
+    
+    @property
+    def is_suspicious(self):
+        """Flag suspicious sessions"""
+        # Flag if from known datacenter IP ranges or unusual patterns
+        suspicious_countries = ['RU', 'CN', 'KP', 'IR']  # Example
+        return self.ip_country in suspicious_countries or self.device_type == 'bot'

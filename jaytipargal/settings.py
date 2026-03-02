@@ -106,6 +106,7 @@ MIDDLEWARE = [
     'core.middleware.DynamicCSRFMiddleware',  # Dynamic CSRF origin handling
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'core.middleware.UserSessionTrackingMiddleware',  # Track IP and device info
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

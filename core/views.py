@@ -282,3 +282,95 @@ def health_check(request):
     })
     
     return HttpResponse(health_data, content_type='application/json', status=200)
+
+
+@login_required
+def session_dashboard(request):
+    """
+    Dashboard to view all login sessions with IP and device information.
+    Only accessible to the user viewing their own sessions (for privacy).
+    """
+    from .models import UserSession
+    from collections import defaultdict
+    
+    # Get all tracked sessions for this user
+    sessions = UserSession.objects.filter(user=request.user).order_by('-created_at')
+    
+    # Calculate statistics
+    total_sessions = sessions.count()
+    active_sessions = sessions.filter(is_active=True).count()
+    
+    # Get unique IPs
+    unique_ips = sessions.exclude(ip_address=None).values_list('ip_address', flat=True).distinct()
+    
+    # Get unique devices by user agent
+    unique_devices = sessions.values_list('user_agent', flat=True).distinct()
+    
+    # Group by device type
+    device_stats = defaultdict(int)
+    for session in sessions:
+        device_stats[session.device_type] += 1
+    
+    # Group by browser
+    browser_stats = defaultdict(int)
+    for session in sessions:
+        if session.browser:
+            browser_stats[session.browser] += 1
+    
+    # Group by OS
+    os_stats = defaultdict(int)
+    for session in sessions:
+        if session.os:
+            os_stats[session.os] += 1
+    
+    # Recent sessions (last 10)
+    recent_sessions = sessions[:10]
+    
+    # Active sessions
+    current_sessions = sessions.filter(is_active=True)[:10]
+    
+    # Suspicious sessions
+    suspicious_sessions = [s for s in sessions if s.is_suspicious][:10]
+    
+    context = {
+        'total_sessions': total_sessions,
+        'active_sessions': active_sessions,
+        'unique_ip_count': len(unique_ips),
+        'unique_device_count': len(unique_devices),
+        'device_stats': dict(device_stats),
+        'browser_stats': dict(browser_stats),
+        'os_stats': dict(os_stats),
+        'recent_sessions': recent_sessions,
+        'current_sessions': current_sessions,
+        'suspicious_sessions': suspicious_sessions,
+        'unique_ips': unique_ips[:20],
+    }
+    
+    return render(request, 'core/session_dashboard.html', context)
+
+
+@login_required
+@require_POST
+def terminate_session(request, session_id):
+    """Terminate a specific session (log out from that device)"""
+    from .models import UserSession
+    from django.contrib.sessions.models import Session as DjangoSession
+    
+    try:
+        user_session = UserSession.objects.get(id=session_id, user=request.user)
+        
+        # Delete the Django session
+        try:
+            DjangoSession.objects.filter(session_key=user_session.session_key).delete()
+        except:
+            pass
+        
+        # Mark as inactive
+        user_session.is_active = False
+        user_session.save()
+        
+        messages.success(request, 'Session terminated successfully.')
+    except UserSession.DoesNotExist:
+        messages.error(request, 'Session not found.')
+    
+    return redirect('session_dashboard')

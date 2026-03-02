@@ -36,4 +36,8 @@ urlpatterns = [
     
     # Health check for Railway deployment
     path('health/', views.health_check, name='health_check'),
+    
+    # Session tracking dashboard
+    path('sessions/', views.session_dashboard, name='session_dashboard'),
+    path('sessions/terminate/<int:session_id>/', views.terminate_session, name='terminate_session'),
 ]

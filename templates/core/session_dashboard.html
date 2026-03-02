@@ -1,0 +1,436 @@
+{% extends 'base.html' %}
+
+{% block title %}Session Dashboard - Login Activity{% endblock %}
+
+{% block extra_css %}
+<style>
+    .session-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .session-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    
+    .stat-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+    }
+    
+    .stat-box.warning {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .stat-box.success {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .device-icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+    }
+    
+    .session-item {
+        border-bottom: 1px solid #e0e0e0;
+        padding: 1rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .session-item:last-child {
+        border-bottom: none;
+    }
+    
+    .session-info {
+        flex: 1;
+    }
+    
+    .session-meta {
+        color: #666;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+    
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .status-active {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .status-expired {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .status-suspicious {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+    }
+    
+    .chart-bar {
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+    }
+    
+    .chart-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 4px;
+        transition: width 0.3s;
+    }
+    
+    .device-stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .device-stat:last-child {
+        border-bottom: none;
+    }
+    
+    .btn-terminate {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    
+    .btn-terminate:hover {
+        background: #c82333;
+    }
+    
+    .ip-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .ip-tag {
+        background: #e9ecef;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-family: monospace;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #666;
+    }
+    
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">📊 Session Dashboard</h1>
+            <p class="text-muted mb-0">Monitor login activity and devices</p>
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Statistics Row -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="stat-box">
+                <div class="stat-number">{{ total_sessions }}</div>
+                <div class="stat-label">Total Sessions</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-box success">
+                <div class="stat-number">{{ active_sessions }}</div>
+                <div class="stat-label">Active Now</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-box warning">
+                <div class="stat-number">{{ unique_ip_count }}</div>
+                <div class="stat-label">Unique IPs</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-box">
+                <div class="stat-number">{{ unique_device_count }}</div>
+                <div class="stat-label">Unique Devices</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left Column: Charts & Stats -->
+        <div class="col-lg-4 mb-4">
+            <!-- Device Types -->
+            <div class="session-card">
+                <div class="section-title">
+                    📱 Device Types
+                </div>
+                {% if device_stats %}
+                    {% for device, count in device_stats.items %}
+                    <div class="device-stat">
+                        <span>
+                            {% if device == 'desktop' %}💻{% endif %}
+                            {% if device == 'mobile' %}📱{% endif %}
+                            {% if device == 'tablet' %}📲{% endif %}
+                            {% if device == 'bot' %}🤖{% endif %}
+                            {% if device == 'unknown' %}❓{% endif %}
+                            {{ device|title }}
+                        </span>
+                        <div style="flex: 1; margin: 0 1rem;">
+                            <div class="chart-bar">
+                                <div class="chart-fill" style="width: {% widthratio count total_sessions 100 %}%"></div>
+                            </div>
+                        </div>
+                        <strong>{{ count }}</strong>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <p>No device data available</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Browser Stats -->
+            <div class="session-card">
+                <div class="section-title">
+                    🌐 Browsers
+                </div>
+                {% if browser_stats %}
+                    {% for browser, count in browser_stats.items %}
+                    <div class="device-stat">
+                        <span>{{ browser }}</span>
+                        <div style="flex: 1; margin: 0 1rem;">
+                            <div class="chart-bar">
+                                <div class="chart-fill" style="width: {% widthratio count total_sessions 100 %}%"></div>
+                            </div>
+                        </div>
+                        <strong>{{ count }}</strong>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🌐</div>
+                        <p>No browser data available</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- OS Stats -->
+            <div class="session-card">
+                <div class="section-title">
+                    💻 Operating Systems
+                </div>
+                {% if os_stats %}
+                    {% for os, count in os_stats.items %}
+                    <div class="device-stat">
+                        <span>{{ os }}</span>
+                        <div style="flex: 1; margin: 0 1rem;">
+                            <div class="chart-bar">
+                                <div class="chart-fill" style="width: {% widthratio count total_sessions 100 %}%"></div>
+                            </div>
+                        </div>
+                        <strong>{{ count }}</strong>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💻</div>
+                        <p>No OS data available</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Unique IPs -->
+            <div class="session-card">
+                <div class="section-title">
+                    🌐 Unique IP Addresses
+                </div>
+                {% if unique_ips %}
+                    <div class="ip-list">
+                        {% for ip in unique_ips %}
+                            <span class="ip-tag">{{ ip }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🌐</div>
+                        <p>No IP data recorded</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Column: Session Lists -->
+        <div class="col-lg-8">
+            <!-- Active Sessions -->
+            <div class="session-card">
+                <div class="section-title">
+                    🔵 Currently Active Sessions
+                    <span class="badge bg-success ms-2">{{ active_sessions }}</span>
+                </div>
+                {% if current_sessions %}
+                    {% for session in current_sessions %}
+                    <div class="session-item">
+                        <div class="device-icon">{{ session.device_icon }}</div>
+                        <div class="session-info">
+                            <div><strong>{{ session.browser }}</strong> on {{ session.os }}</div>
+                            <div class="session-meta">
+                                IP: {{ session.ip_address|default:"Unknown" }} | 
+                                Started: {{ session.created_at|date:"M d, Y H:i" }}
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="status-badge status-active">Active</span>
+                            <form method="post" action="{% url 'terminate_session' session.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-terminate" onclick="return confirm('Terminate this session?');">
+                                    Terminate
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">😴</div>
+                        <p>No active sessions</p>
+                        <small>User is currently offline</small>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Recent Sessions -->
+            <div class="session-card">
+                <div class="section-title">
+                    🕐 Recent Sessions (Last 10)
+                </div>
+                {% if recent_sessions %}
+                    {% for session in recent_sessions %}
+                    <div class="session-item">
+                        <div class="device-icon">{{ session.device_icon }}</div>
+                        <div class="session-info">
+                            <div>
+                                <strong>{{ session.browser }}</strong> on {{ session.os }}
+                                {% if session.is_suspicious %}
+                                    <span class="badge bg-warning text-dark ms-2">⚠️ Suspicious</span>
+                                {% endif %}
+                            </div>
+                            <div class="session-meta">
+                                IP: {{ session.ip_address|default:"Unknown" }} | 
+                                Duration: {{ session.duration }}
+                            </div>
+                        </div>
+                        <span class="status-badge {% if session.is_active %}status-active{% else %}status-expired{% endif %}">
+                            {% if session.is_active %}Active{% else %}Expired{% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No recent sessions</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Suspicious Sessions -->
+            {% if suspicious_sessions %}
+            <div class="session-card" style="border: 2px solid #ffc107;">
+                <div class="section-title">
+                    ⚠️ Suspicious Sessions
+                </div>
+                {% for session in suspicious_sessions %}
+                <div class="session-item">
+                    <div class="device-icon">🚨</div>
+                    <div class="session-info">
+                        <div><strong>{{ session.browser }}</strong> on {{ session.os }}</div>
+                        <div class="session-meta">
+                            IP: {{ session.ip_address|default:"Unknown" }} | 
+                            Country: {{ session.ip_country|default:"Unknown" }} |
+                            Device: {{ session.device_type|title }}
+                        </div>
+                    </div>
+                    <span class="status-badge status-suspicious">Suspicious</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Information Footer -->
+    <div class="session-card mt-4" style="background: #f8f9fa;">
+        <div class="section-title">ℹ️ About This Dashboard</div>
+        <ul class="mb-0">
+            <li>This dashboard tracks login sessions from the moment it was enabled</li>
+            <li>Historical sessions from before tracking was enabled will not appear</li>
+            <li>Sessions expire after 24 hours of inactivity</li>
+            <li>You can terminate active sessions to force logout from specific devices</li>
+            <li>IP geolocation data may not be 100% accurate</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
